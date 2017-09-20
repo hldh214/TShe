@@ -65,7 +65,7 @@
     <div class="canvas-wrap">
         <div class="canvas-item front-side">
             <div class="canvas-background">
-                <img src="/img/default_t_back.png"
+                <img src="/img/front.png"
                      alt="" class="bg-img">
             </div>
 
@@ -73,7 +73,7 @@
         </div>
         <div class="canvas-item back-side collapse">
             <div class="canvas-background">
-                <img src="https://o86bvekvw.qnssl.com/uploads/images/StyleBackImage/adc63ec8dc3a3b4f4766d126b731fde2.png"
+                <img src="/img/back.png"
                      alt="" class="bg-img">
             </div>
 
@@ -188,7 +188,7 @@
 
     front_side.add(rect_f);
     back_side.add(rect_b);
-//    rect.center().setCoords();
+    //    rect.center().setCoords();
 
 
     // functions
