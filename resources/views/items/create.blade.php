@@ -29,7 +29,7 @@
             width: 450px;
             height: 514px;
             position: absolute;
-            top: 45%;
+            top: 48%;
             left: 50%;
             transform: translate(-50%, -50%) scale(0.7);
         }
@@ -42,7 +42,7 @@
 
         .switch {
             position: absolute;
-            top: 80%;
+            top: 85%;
             left: 50%;
             transform: translate(-50%, -50%);
         }
@@ -50,7 +50,7 @@
     <title>Laravel</title>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-light" style="background-color: white;">
     <a class="navbar-brand" href="javascript:history.back()">
         <i class="fa fa-chevron-left" aria-hidden="true" style="font-size: 16px; color: rgb(203,203,203);"></i>
     </a>
