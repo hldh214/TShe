@@ -283,7 +283,7 @@
 
     var selected_object = null;
     var canvas = null;
-    // idk why object:removed && object:selected will called together
+    // object:removed && object:selected will called together
     var deleting = false;
     var object_count = 0;
 
@@ -328,6 +328,8 @@
         'object:rotating': updateControls,
         'object:selected': function (obj) {
             if (deleting === true) {
+                // mobile platform problem
+                canvas.deactivateAllWithDispatch().renderAll();
                 deleting = false;
                 return;
             }
