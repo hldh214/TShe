@@ -196,7 +196,7 @@
         canvas.renderAll();
     });
 
-    $('.navbar, .navbar *, .canvas-background').on('click', function () {
+    $('.navbar, .navbar *, .canvas-background, .switch').on('click', function () {
         canvas.deactivateAllWithDispatch().renderAll();
     })
 
