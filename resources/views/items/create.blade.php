@@ -46,6 +46,114 @@
             left: 50%;
             transform: translate(-50%, -50%);
         }
+
+        .fixed-bottom {
+            background-color: white;
+
+        }
+    </style>
+    <style>
+        /*https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/*/
+        input[type=range] {
+            -webkit-appearance: none;
+            margin: 18px 0;
+            /*width: 100%;*/
+        }
+
+        input[type=range]:focus {
+            outline: none;
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 8.4px;
+            cursor: pointer;
+            animate: 0.2s;
+            box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+            background: #3071a9;
+            border-radius: 1.3px;
+            border: 0.2px solid #010101;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+            border: 1px solid #000000;
+            height: 36px;
+            width: 16px;
+            border-radius: 3px;
+            background: #ffffff;
+            cursor: pointer;
+            -webkit-appearance: none;
+            margin-top: -14px;
+        }
+
+        input[type=range]:focus::-webkit-slider-runnable-track {
+            background: #367ebd;
+        }
+
+        input[type=range]::-moz-range-track {
+            width: 100%;
+            height: 8.4px;
+            cursor: pointer;
+            animate: 0.2s;
+            box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+            background: #3071a9;
+            border-radius: 1.3px;
+            border: 0.2px solid #010101;
+        }
+
+        input[type=range]::-moz-range-thumb {
+            box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+            border: 1px solid #000000;
+            height: 36px;
+            width: 16px;
+            border-radius: 3px;
+            background: #ffffff;
+            cursor: pointer;
+        }
+
+        input[type=range]::-ms-track {
+            width: 100%;
+            height: 8.4px;
+            cursor: pointer;
+            animate: 0.2s;
+            background: transparent;
+            border-color: transparent;
+            border-width: 16px 0;
+            color: transparent;
+        }
+
+        input[type=range]::-ms-fill-lower {
+            background: #2a6495;
+            border: 0.2px solid #010101;
+            border-radius: 2.6px;
+            box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+        }
+
+        input[type=range]::-ms-fill-upper {
+            background: #3071a9;
+            border: 0.2px solid #010101;
+            border-radius: 2.6px;
+            box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+        }
+
+        input[type=range]::-ms-thumb {
+            box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+            border: 1px solid #000000;
+            height: 36px;
+            width: 16px;
+            border-radius: 3px;
+            background: #ffffff;
+            cursor: pointer;
+        }
+
+        input[type=range]:focus::-ms-fill-lower {
+            background: #3071a9;
+        }
+
+        input[type=range]:focus::-ms-fill-upper {
+            background: #367ebd;
+        }
     </style>
     <title>Laravel</title>
 </head>
@@ -58,8 +166,8 @@
         品类 款式 颜色
         <i class="fa fa-chevron-down" aria-hidden="true" style="font-size: 12px; color: rgb(203,203,203);"></i>
     </span>
-    {{--btn-secondary 4 disabled, btn-success 4 enabled--}}
-    <button type="button" class="btn btn-secondary btn-sm" disabled>完成定制</button>
+    {{--btn-secondary 4 disabled, btn-warning 4 enabled--}}
+    <button id="submit-button" type="button" class="btn btn-secondary btn-sm" disabled>完成定制</button>
 </nav>
 <div class="container">
     <div class="canvas-wrap">
@@ -96,13 +204,19 @@
 <div class="fixed-bottom">
     <div class="controls collapse">
         <p>
-            <label><span>旋转</span> <input type="range" id="angle-control" value="0" min="0" max="360"></label>
+            <label>
+                <span>旋转</span>
+                <input type="range" id="angle-control" value="0" min="0" max="360">
+            </label>
         </p>
         <p>
-            <label><span>大小</span> <input type="range" id="scale-control" value="1" min="0.1" max="3"
-                                          step="0.1"></label>
+            <label>
+                <span>大小</span>
+                <input type="range" id="scale-control" value="1" min="0.1" max="3" step="0.1">
+            </label>
         </p>
     </div>
+
 </div>
 <script src="https://cdn.bootcss.com/fabric.js/1.7.17/fabric.min.js"></script>
 <script src="/js/customiseControls.min.js"></script>
@@ -169,6 +283,9 @@
 
     var selected_object = null;
     var canvas = null;
+    // idk why object:removed && object:selected will called together
+    var deleting = false;
+    var object_count = 0;
 
     var front_side = new fabric.Canvas('front-side-container');
     var back_side = new fabric.Canvas('back-side-container');
@@ -180,6 +297,11 @@
     function updateControls() {
         scaleControl.val(selected_object.scaleX);
         angleControl.val(selected_object.angle);
+    }
+
+    function onSelectionCleared() {
+        $('.canvas-container').css('border', '');
+        $('.controls').hide();
     }
 
 
@@ -205,17 +327,32 @@
         'object:resizing': updateControls,
         'object:rotating': updateControls,
         'object:selected': function (obj) {
+            if (deleting === true) {
+                deleting = false;
+                return;
+            }
             selected_object = obj.target;
             updateControls();
             $('.canvas-container').css('border', '1px solid');
             $('.controls').show();
         },
-        'selection:cleared': function () {
-            $('.canvas-container').css('border', '');
-            $('.controls').hide();
-        },
+        'selection:cleared': onSelectionCleared,
         'object:added': function (obj) {
+            object_count++;
             obj.target.center().setCoords();
+        },
+        'object:removed': function () {
+            object_count--;
+            deleting = true;
+            onSelectionCleared();
+            // todo: disable submit button
+        },
+        'after:render': function () {
+            if (object_count === 0) {
+                $('#submit-button').prop('disabled', true).addClass('btn-secondary').removeClass('btn-warning');
+                return;
+            }
+            $('#submit-button').prop('disabled', false).addClass('btn-warning').removeClass('btn-secondary');
         }
     };
 
