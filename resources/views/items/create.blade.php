@@ -167,8 +167,6 @@
     fabric.Canvas.prototype.height = '360';
     fabric.Canvas.prototype.width = '280';
 
-
-    // logic
     var selected_object = null;
     var canvas = null;
 
@@ -177,29 +175,11 @@
 
     canvas = front_side;
 
-    var rect_f = new fabric.Circle({
-        radius: 100,
-        fill: 'rgba(255,0,0,0.6)'
-    });
-    var rect_b = new fabric.Circle({
-        radius: 100,
-        fill: 'rgba(255,0,0,0.6)'
-    });
-
-    front_side.add(rect_f);
-    back_side.add(rect_b);
-    //    rect.center().setCoords();
-
 
     // functions
     function updateControls() {
         scaleControl.val(selected_object.scaleX);
         angleControl.val(selected_object.angle);
-    }
-
-    function onSelectionCleared() {
-        $('.canvas-container').css('border', '');
-        $('.controls').hide();
     }
 
 
@@ -220,7 +200,7 @@
         canvas.deactivateAllWithDispatch().renderAll();
     })
 
-    front_side.on({
+    var fabric_event = {
         'object:scaling': updateControls,
         'object:resizing': updateControls,
         'object:rotating': updateControls,
@@ -230,20 +210,17 @@
             $('.canvas-container').css('border', '1px solid');
             $('.controls').show();
         },
-        'selection:cleared': onSelectionCleared
-    });
-    back_side.on({
-        'object:scaling': updateControls,
-        'object:resizing': updateControls,
-        'object:rotating': updateControls,
-        'object:selected': function (obj) {
-            selected_object = obj.target;
-            updateControls();
-            $('.canvas-container').css('border', '1px solid');
-            $('.controls').show();
+        'selection:cleared': function () {
+            $('.canvas-container').css('border', '');
+            $('.controls').hide();
         },
-        'selection:cleared': onSelectionCleared
-    });
+        'object:added': function (obj) {
+            obj.target.center().setCoords();
+        }
+    };
+
+    front_side.on(fabric_event);
+    back_side.on(fabric_event);
 
     $('.switch').on('change', function (obj) {
         if (obj.target.value === 'front-side') {
@@ -255,7 +232,21 @@
         $('.back-side').show();
         $('.front-side').hide();
         canvas = back_side;
-    })
+    });
+
+
+    // logic
+    var rect_f = new fabric.Circle({
+        radius: 100,
+        fill: 'rgba(255,0,0,0.6)'
+    });
+    var rect_b = new fabric.Circle({
+        radius: 100,
+        fill: 'rgba(255,0,0,0.6)'
+    });
+
+    front_side.add(rect_f);
+    back_side.add(rect_b);
 </script>
 </body>
 </html>
