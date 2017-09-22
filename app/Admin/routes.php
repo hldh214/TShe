@@ -11,4 +11,5 @@ Route::group([
 ], function (Router $router) {
     $router->get('/', 'HomeController@index');
     $router->resource('materials', MaterialController::class);
+    $router->resource('MaterialType', MaterialTypeController::class);
 });

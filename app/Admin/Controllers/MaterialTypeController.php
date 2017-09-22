@@ -2,9 +2,8 @@
 
 namespace App\Admin\Controllers;
 
-use App\Models\Material;
-
 use App\Models\MaterialType;
+
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Facades\Admin;
@@ -12,7 +11,7 @@ use Encore\Admin\Layout\Content;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
 
-class MaterialController extends Controller
+class MaterialTypeController extends Controller
 {
     use ModelForm;
 
@@ -25,7 +24,7 @@ class MaterialController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('素材列表');
+            $content->header('素材分类列表');
 
             $content->body($this->grid());
         });
@@ -56,7 +55,8 @@ class MaterialController extends Controller
     public function create()
     {
         return Admin::content(function (Content $content) {
-            $content->header('创建素材');
+
+            $content->header('创建素材分类');
 
             $content->body($this->form());
         });
@@ -69,18 +69,9 @@ class MaterialController extends Controller
      */
     protected function grid()
     {
-        return Admin::grid(Material::class, function (Grid $grid) {
-            $grid->filter(function ($filter) {
-                $filter->where(function ($query) {
-                    $query->whereHas('material_type', function ($query) {
-                        $query->where('name', '=', $this->input);
-                    });
-                }, '分类名称');
-            });
-
-            $grid->id('素材ID')->sortable();
-            $grid->material_type()->name('分类');
-            $grid->uri('素材内容')->image(null, 100, 100);
+        return Admin::grid(MaterialType::class, function (Grid $grid) {
+            $grid->id('分类ID')->sortable();
+            $grid->name('分类名称');
             $grid->created_at();
             $grid->updated_at();
         });
@@ -93,15 +84,9 @@ class MaterialController extends Controller
      */
     protected function form()
     {
-        return Admin::form(Material::class, function (Form $form) {
-            $materialType = new MaterialType();
-            $materialType = $materialType->all()->mapWithKeys(function ($item) {
-                return [$item['id'] => $item['name']];
-            });
-
+        return Admin::form(MaterialType::class, function (Form $form) {
             $form->display('id', 'ID');
-            $form->image('uri', '素材上传')->uniqueName();
-            $form->select('material_type_id', '素材分类')->options($materialType);
+            $form->text('name', '分类名称');
             $form->display('created_at', 'Created At');
             $form->display('updated_at', 'Updated At');
         });
