@@ -70,6 +70,7 @@ class StyleController extends Controller
             $grid->id('ID')->sortable();
             $grid->name('款式名称');
             $grid->category()->name('品类名称');
+            $grid->size()->parse_size('尺寸');
             $grid->front('正面款式')->image(null, 100, 100);
             $grid->back('反面款式')->image(null, 100, 100);
             $grid->created_at();
@@ -92,9 +93,10 @@ class StyleController extends Controller
 
             $form->display('id', 'ID');
             $form->text('name', '款式名称');
+            $form->select('category_id', '品类')->options($category);
+            $form->multipleSelect('size', '尺寸')->options(Style::sizes);
             $form->image('front', '正面款式上传')->uniqueName();
             $form->image('back', '反面款式上传')->uniqueName();
-            $form->select('category_id', '品类')->options($category);
             $form->display('created_at', 'Created At');
             $form->display('updated_at', 'Updated At');
         });

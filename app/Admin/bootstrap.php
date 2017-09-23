@@ -23,3 +23,11 @@ Encore\Admin\Form::forget(['map', 'editor']);
 \Encore\Admin\Grid\Column::extend('color', function ($color) {
     return "<span style='color: $color'>$color</span>";
 });
+
+\Encore\Admin\Grid\Column::extend('parse_size', function ($size) {
+    $res = [];
+    foreach ($size as $each_size) {
+        $res[] = self::sizes[$each_size];
+    }
+    return implode(',', $res);
+});

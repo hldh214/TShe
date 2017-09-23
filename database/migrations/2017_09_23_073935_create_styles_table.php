@@ -19,6 +19,7 @@ class CreateStylesTable extends Migration
             $table->string('name');
             $table->string('front');
             $table->string('back');
+            $table->string('size');
             $table->timestamps();
             $table->softDeletes();
         });
