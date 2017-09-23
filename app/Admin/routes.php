@@ -13,4 +13,5 @@ Route::group([
     $router->resource('materials', MaterialController::class);
     $router->resource('materialType', MaterialTypeController::class);
     $router->resource('word', WordController::class);
+    $router->resource('item', ItemController::class);
 });
