@@ -11,7 +11,7 @@ class MaterialType extends Model
 
 //    protected $table = 'material_types';
 
-    public function material()
+    public function materials()
     {
         return $this->hasMany(Material::class);
     }

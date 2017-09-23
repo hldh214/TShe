@@ -29,7 +29,7 @@
             width: 450px;
             height: 514px;
             position: absolute;
-            top: 48%;
+            top: 44%;
             left: 50%;
             transform: translate(-50%, -50%) scale(0.7);
         }
@@ -42,7 +42,7 @@
 
         .switch {
             position: absolute;
-            top: 85%;
+            top: 79%;
             left: 50%;
             transform: translate(-50%, -50%);
         }
@@ -51,6 +51,7 @@
             background-color: white;
 
         }
+
     </style>
     <style>
         /*https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/*/
@@ -155,10 +156,109 @@
             background: #367ebd;
         }
     </style>
+    <style>
+        /*https://o86bsrpha.qnssl.com/assets/java_mobile_editors_bundle-4d8b6fa5312559f75405.css*/
+        .icon_image {
+            background: url(https://o86bsrpha.qnssl.com/assets/image2-7550a6716111b2e5422918eb526df339.png) no-repeat
+        }
+
+        .icon_txt {
+            background: url(https://o86bsrpha.qnssl.com/assets/txt2-ee189bcc1dfe91cc5ae28d0c628c7306.png) no-repeat
+        }
+
+        .me_icon {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            background-size: 24px 24px
+        }
+
+        .options_icon_picture {
+            position: absolute;
+            top: -44%;
+            left: 50%;
+            padding: 8px;
+            width: 64px;
+            height: 64px;
+            background: #fff;
+            box-shadow: 0 -3px 5px rgba(55, 52, 52, .05);
+            border-radius: 100px;
+            -webkit-transform: translateX(-50%);
+            transform: translateX(-50%)
+        }
+
+        .icon_picture {
+            display: inline-block;
+            height: 100%;
+            background: url(https://o86bsrpha.qnssl.com/assets/picture2-7cccd348dfbe30386ed679681a1f9e2b.png) no-repeat;
+            background-size: 48px 48px;
+            width: 100%;
+            transition: -webkit-transform .05s;
+            transition: transform .05s;
+            transition: transform .05s, -webkit-transform .05s;
+            box-shadow: 0 3px 6px rgba(255, 204, 101, .5);
+            border-radius: 50%;;
+        }
+
+        .options {
+            position: relative;
+            bottom: 0;
+            height: 60px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, .5);
+            transition: bottom .25s
+        }
+
+        .options_select {
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            overflow-x: scroll;
+            overflow-y: hidden
+        }
+
+        .options_select_box {
+            display: inline-block
+        }
+
+        .options_select_item {
+            display: inline-block;
+            width: 92px;
+            height: 60px;
+            text-align: center;
+            color: #141414;
+            font-size: 0
+        }
+
+        .options_select_item.options_item_relative {
+            position: relative
+        }
+
+        .options_select_item .me_icon {
+            margin-top: 10px
+        }
+
+        .options_item_txt {
+            margin-top: 3px;
+            color: #767676;
+            font-size: 12px
+        }
+
+        .options_input_file {
+            display: inline-block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            opacity: 0
+        }
+    </style>
     <title>Laravel</title>
 </head>
 <body>
-<nav class="navbar navbar-light" style="background-color: white;">
+<nav class="navbar navbar-light" style="background-color: white; height: 44px;">
     <a class="navbar-brand" href="javascript:history.back()">
         <i class="fa fa-chevron-left" aria-hidden="true" style="font-size: 16px; color: rgb(203,203,203);"></i>
     </a>
@@ -216,13 +316,103 @@
             </label>
         </p>
     </div>
-
+    <div class="options"><div class="options_select"><div class="options_select_box" style="width: 276px;"><div class="options_select_item options_item_relative"><i class="me_icon icon_image"></i><div class="options_item_txt">相册</div><input type="file" class="options_input_file editor-active" id="materials-upload"></div><div class="options_select_item" id="show-materials-modal"><div class="options_select_item options_item_relative"><i class="me_icon"></i><div class="options_item_txt">素材库</div></div><div class="options_icon_picture"><i class="icon_picture"></i></div></div><div class="options_select_item"><i class="me_icon icon_txt"></i><div class="options_item_txt">文字</div></div></div></div></div>
+</div>
+<div class="modal fade" id="materials-modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">素材库</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="accordion">
+                    @foreach($material_types as $material_type)
+                        <div class="card">
+                            <div class="card-header" role="tab">
+                                <h5 class="mb-0">
+                                    <a data-toggle="collapse" href="#collapse{{ $material_type->id }}">
+                                        {{ $material_type->name }}
+                                    </a>
+                                </h5>
+                            </div>
+                            <div id="collapse{{ $material_type->id }}" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="container-fluid">
+                                        @foreach($material_type->materials as $material)
+                                            @if(($loop->iteration - 1) % 3 === 0)
+                                                <div class="row">
+                                            @endif
+                                                <div class="col">
+                                                    <img class="img-fluid" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/uploads/{{ $material->uri }}" alt="material">
+                                                </div>
+                                            @if($loop->iteration % 3 === 0)
+                                                </div>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="words-modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">编辑文字</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="accordion">
+                    @foreach($material_types as $material_type)
+                        <div class="card">
+                            <div class="card-header" role="tab">
+                                <h5 class="mb-0">
+                                    <a data-toggle="collapse" href="#collapse{{ $material_type->id }}">
+                                        {{ $material_type->name }}
+                                    </a>
+                                </h5>
+                            </div>
+                            <div id="collapse{{ $material_type->id }}" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="container-fluid">
+                                        @foreach($material_type->materials as $material)
+                                            @if(($loop->iteration - 1) % 3 === 0)
+                                                <div class="row">
+                                                    @endif
+                                                    <div class="col">
+                                                        <img class="img-fluid" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/uploads/{{ $material->uri }}" alt="material">
+                                                    </div>
+                                                    @if($loop->iteration % 3 === 0)
+                                                </div>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script src="https://cdn.bootcss.com/fabric.js/1.7.17/fabric.min.js"></script>
 <script src="/js/customiseControls.min.js"></script>
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery.lazyloadxt/1.1.0/jquery.lazyloadxt.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery.lazyloadxt/1.1.0/jquery.lazyloadxt.bootstrap.min.js"></script>
 <script>
     // settings
     fabric.Canvas.prototype.customiseControls({
@@ -302,6 +492,7 @@
     function onSelectionCleared() {
         $('.canvas-container').css('border', '');
         $('.controls').hide();
+        $('.options').show();
     }
 
 
@@ -337,6 +528,7 @@
             updateControls();
             $('.canvas-container').css('border', '1px solid');
             $('.controls').show();
+            $('.options').hide();
         },
         'selection:cleared': onSelectionCleared,
         'object:added': function (obj) {
@@ -373,19 +565,27 @@
         canvas = back_side;
     });
 
-
-    // logic
-    var rect_f = new fabric.Circle({
-        radius: 100,
-        fill: 'rgba(255,0,0,0.6)'
-    });
-    var rect_b = new fabric.Circle({
-        radius: 100,
-        fill: 'rgba(255,0,0,0.6)'
+    $('#show-materials-modal').on('click', function () {
+        $('#materials-modal').modal();
     });
 
-    front_side.add(rect_f);
-    back_side.add(rect_b);
+    $('.img-fluid').on('click', function (event) {
+        canvas.add(new fabric.Image(event.target));
+        $('#materials-modal').modal('hide');
+    });
+
+    $('#materials-upload').on("change", function (e) {
+        var file = e.target.files[0];
+        var reader = new FileReader();
+        reader.onload = function (f) {
+            var data = f.target.result;
+            fabric.Image.fromURL(data, function (img) {
+                canvas.add(img).renderAll();
+                canvas.setActiveObject(img);
+            });
+        };
+        reader.readAsDataURL(file);
+    });
 </script>
 </body>
 </html>
