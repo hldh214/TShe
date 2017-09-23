@@ -51,7 +51,6 @@
             background-color: white;
 
         }
-
     </style>
     <style>
         /*https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/*/
@@ -316,7 +315,24 @@
             </label>
         </p>
     </div>
-    <div class="options"><div class="options_select"><div class="options_select_box" style="width: 276px;"><div class="options_select_item options_item_relative"><i class="me_icon icon_image"></i><div class="options_item_txt">相册</div><input type="file" class="options_input_file editor-active" id="materials-upload"></div><div class="options_select_item" id="show-materials-modal"><div class="options_select_item options_item_relative"><i class="me_icon"></i><div class="options_item_txt">素材库</div></div><div class="options_icon_picture"><i class="icon_picture"></i></div></div><div class="options_select_item"><i class="me_icon icon_txt"></i><div class="options_item_txt">文字</div></div></div></div></div>
+    <div class="options">
+        <div class="options_select">
+            <div class="options_select_box" style="width: 276px;">
+                <div class="options_select_item options_item_relative"><i class="me_icon icon_image"></i>
+                    <div class="options_item_txt">相册</div>
+                    <input type="file" class="options_input_file editor-active" id="materials-upload"></div>
+                <div class="options_select_item" id="show-materials-modal">
+                    <div class="options_select_item options_item_relative"><i class="me_icon"></i>
+                        <div class="options_item_txt">素材库</div>
+                    </div>
+                    <div class="options_icon_picture"><i class="icon_picture"></i></div>
+                </div>
+                <div class="options_select_item" id="show-words-modal"><i class="me_icon icon_txt"></i>
+                    <div class="options_item_txt">文字</div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="modal fade" id="materials-modal">
     <div class="modal-dialog" role="document">
@@ -341,17 +357,38 @@
                             <div id="collapse{{ $material_type->id }}" class="collapse" data-parent="#accordion">
                                 <div class="card-body">
                                     <div class="container-fluid">
-                                        @foreach($material_type->materials as $material)
-                                            @if(($loop->iteration - 1) % 3 === 0)
-                                                <div class="row">
-                                            @endif
+                                        @for($i=0; $i<count($material_type->materials); $i+=3)
+                                            <div class="row">
                                                 <div class="col">
-                                                    <img class="img-fluid" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/uploads/{{ $material->uri }}" alt="material">
+                                                    <img class="img-fluid"
+                                                         data-src="/uploads/{{ $material_type->materials->get($i, function() {
+                                                            return new class {
+                                                                public $uri = null;
+                                                            };
+                                                         })
+                                                         ->uri
+                                                          }}">
                                                 </div>
-                                            @if($loop->iteration % 3 === 0)
+                                                <div class="col">
+                                                    <img class="img-fluid"
+                                                         data-src="/uploads/{{ $material_type->materials->get($i+1, function() {
+                                                            return new class {
+                                                                public $uri = null;
+                                                            };
+                                                         })->uri
+                                                          }}">
                                                 </div>
-                                            @endif
-                                        @endforeach
+                                                <div class="col">
+                                                    <img class="img-fluid"
+                                                         data-src="/uploads/{{ $material_type->materials->get($i+2, function() {
+                                                            return new class {
+                                                                public $uri = null;
+                                                            };
+                                                         })->uri
+                                                          }}">
+                                                </div>
+                                            </div>
+                                        @endfor
                                     </div>
                                 </div>
                             </div>
@@ -372,34 +409,25 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div id="accordion">
-                    @foreach($material_types as $material_type)
-                        <div class="card">
-                            <div class="card-header" role="tab">
-                                <h5 class="mb-0">
-                                    <a data-toggle="collapse" href="#collapse{{ $material_type->id }}">
-                                        {{ $material_type->name }}
-                                    </a>
-                                </h5>
-                            </div>
-                            <div id="collapse{{ $material_type->id }}" class="collapse" data-parent="#accordion">
-                                <div class="card-body">
-                                    <div class="container-fluid">
-                                        @foreach($material_type->materials as $material)
-                                            @if(($loop->iteration - 1) % 3 === 0)
-                                                <div class="row">
-                                                    @endif
-                                                    <div class="col">
-                                                        <img class="img-fluid" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="/uploads/{{ $material->uri }}" alt="material">
-                                                    </div>
-                                                    @if($loop->iteration % 3 === 0)
-                                                </div>
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                </div>
-                            </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-8">
+                            <textarea class="form-control" placeholder="请输入要定制的文字" id="word"></textarea>
                         </div>
+                        <div class="col">
+                            <button class="btn btn-warning btn-lg" type="button" id="set-word">完成</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="list-group">
+                    @foreach($words as $word)
+                        <a class="list-group-item list-group-item-action flex-column align-items-start word-item"
+                           data-content="{{ $word->content }}">
+                            <div>
+                                <pre style="font-size: 16px">{{ $word->content }}</pre>
+                            </div>
+                            <small class="text-muted">{{ $word->comment }}</small>
+                        </a>
                     @endforeach
                 </div>
             </div>
@@ -539,7 +567,6 @@
             object_count--;
             deleting = true;
             onSelectionCleared();
-            // todo: disable submit button
         },
         'after:render': function () {
             if (object_count === 0) {
@@ -569,9 +596,19 @@
         $('#materials-modal').modal();
     });
 
+    $('#show-words-modal').on('click', function () {
+        $('#word').val('');
+        $('#words-modal').modal();
+    });
+
     $('.img-fluid').on('click', function (event) {
         canvas.add(new fabric.Image(event.target));
         $('#materials-modal').modal('hide');
+    });
+
+    $('#set-word').on('click', function () {
+        canvas.add(new fabric.Text($('#word').val()));
+        $('#words-modal').modal('hide');
     });
 
     $('#materials-upload').on("change", function (e) {
@@ -585,6 +622,10 @@
             });
         };
         reader.readAsDataURL(file);
+    });
+
+    $('.word-item').on('click', function (event) {
+        $('#word').val($(event.currentTarget).data('content'));
     });
 </script>
 </body>
