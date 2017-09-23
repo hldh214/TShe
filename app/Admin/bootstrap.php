@@ -19,3 +19,7 @@
  */
 
 Encore\Admin\Form::forget(['map', 'editor']);
+
+\Encore\Admin\Grid\Column::extend('color', function ($color) {
+    return "<span style='color: $color'>$color</span>";
+});
