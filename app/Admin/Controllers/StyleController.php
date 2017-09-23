@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Models\Category;
 use App\Models\Style;
 
 use Encore\Admin\Form;
@@ -23,10 +24,7 @@ class StyleController extends Controller
     public function index()
     {
         return Admin::content(function (Content $content) {
-
-            $content->header('header');
-            $content->description('description');
-
+            $content->header('款式列表');
             $content->body($this->grid());
         });
     }
@@ -56,10 +54,7 @@ class StyleController extends Controller
     public function create()
     {
         return Admin::content(function (Content $content) {
-
-            $content->header('header');
-            $content->description('description');
-
+            $content->header('创建款式');
             $content->body($this->form());
         });
     }
@@ -72,9 +67,11 @@ class StyleController extends Controller
     protected function grid()
     {
         return Admin::grid(Style::class, function (Grid $grid) {
-
             $grid->id('ID')->sortable();
-
+            $grid->name('款式名称');
+            $grid->category()->name('品类名称');
+            $grid->front('正面款式')->image(null, 100, 100);
+            $grid->back('反面款式')->image(null, 100, 100);
             $grid->created_at();
             $grid->updated_at();
         });
@@ -88,9 +85,16 @@ class StyleController extends Controller
     protected function form()
     {
         return Admin::form(Style::class, function (Form $form) {
+            $category = new Category();
+            $category = $category->all()->mapWithKeys(function ($item) {
+                return [$item['id'] => $item['name']];
+            });
 
             $form->display('id', 'ID');
-
+            $form->text('name', '款式名称');
+            $form->image('front', '正面款式上传')->uniqueName();
+            $form->image('back', '反面款式上传')->uniqueName();
+            $form->select('category_id', '品类')->options($category);
             $form->display('created_at', 'Created At');
             $form->display('updated_at', 'Updated At');
         });
