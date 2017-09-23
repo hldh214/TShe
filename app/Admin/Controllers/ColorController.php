@@ -2,7 +2,7 @@
 
 namespace App\Admin\Controllers;
 
-use App\Models\Item;
+use App\Models\Color;
 
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -11,7 +11,7 @@ use Encore\Admin\Layout\Content;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
 
-class ItemController extends Controller
+class ColorController extends Controller
 {
     use ModelForm;
 
@@ -23,7 +23,10 @@ class ItemController extends Controller
     public function index()
     {
         return Admin::content(function (Content $content) {
-            $content->header('商品列表');
+
+            $content->header('header');
+            $content->description('description');
+
             $content->body($this->grid());
         });
     }
@@ -68,9 +71,10 @@ class ItemController extends Controller
      */
     protected function grid()
     {
-        return Admin::grid(Item::class, function (Grid $grid) {
+        return Admin::grid(Color::class, function (Grid $grid) {
+
             $grid->id('ID')->sortable();
-            $grid->disableCreation();
+
             $grid->created_at();
             $grid->updated_at();
         });
@@ -83,7 +87,7 @@ class ItemController extends Controller
      */
     protected function form()
     {
-        return Admin::form(Item::class, function (Form $form) {
+        return Admin::form(Color::class, function (Form $form) {
 
             $form->display('id', 'ID');
 
