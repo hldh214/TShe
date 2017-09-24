@@ -49,7 +49,16 @@
 
         .fixed-bottom {
             background-color: white;
+        }
 
+        .nowrap {
+            white-space:nowrap;
+            margin: auto;
+            margin-right: 5px;
+        }
+
+        .mb-15 {
+            margin-bottom: 15px;
         }
     </style>
     <style>
@@ -158,11 +167,11 @@
     <style>
         /*https://o86bsrpha.qnssl.com/assets/java_mobile_editors_bundle-4d8b6fa5312559f75405.css*/
         .icon_image {
-            background: url(https://o86bsrpha.qnssl.com/assets/image2-7550a6716111b2e5422918eb526df339.png) no-repeat
+            background: url(/img/image.png) no-repeat
         }
 
         .icon_txt {
-            background: url(https://o86bsrpha.qnssl.com/assets/txt2-ee189bcc1dfe91cc5ae28d0c628c7306.png) no-repeat
+            background: url(/img/txt.png) no-repeat
         }
 
         .me_icon {
@@ -189,7 +198,7 @@
         .icon_picture {
             display: inline-block;
             height: 100%;
-            background: url(https://o86bsrpha.qnssl.com/assets/picture2-7cccd348dfbe30386ed679681a1f9e2b.png) no-repeat;
+            background: url(/img/picture.png) no-repeat;
             background-size: 48px 48px;
             width: 100%;
             transition: -webkit-transform .05s;
@@ -261,7 +270,7 @@
     <a class="navbar-brand" href="javascript:history.back()">
         <i class="fa fa-chevron-left" aria-hidden="true" style="font-size: 16px; color: rgb(203,203,203);"></i>
     </a>
-    <span style="font-size:15px;">
+    <span style="font-size:15px;" data-toggle="modal" data-target="#cate-modal">
         品类 款式 颜色
         <i class="fa fa-chevron-down" aria-hidden="true" style="font-size: 12px; color: rgb(203,203,203);"></i>
     </span>
@@ -272,16 +281,16 @@
     <div class="canvas-wrap">
         <div class="canvas-item front-side">
             <div class="canvas-background">
-                <img src="/img/front.png"
-                     alt="" class="bg-img">
+                <img src=""
+                     alt="front" class="bg-img" id="front-img">
             </div>
 
             <canvas id="front-side-container"></canvas>
         </div>
         <div class="canvas-item back-side collapse">
             <div class="canvas-background">
-                <img src="/img/back.png"
-                     alt="" class="bg-img">
+                <img src=""
+                     alt="back" class="bg-img" id="back-img">
             </div>
 
             <canvas id="back-side-container"></canvas>
@@ -412,6 +421,32 @@
                             <small class="text-muted">{{ $word->comment }}</small>
                         </a>
                     @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="cate-modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body" style="overflow: auto;">
+                <div id="categories" class="btn-group btn-group-sm mb-15" data-toggle="buttons">
+                    <span class="nowrap">品类: </span>
+                    @foreach($categories as $category)
+                        <label class="btn btn-outline-warning category" data-category-id="{{ $category->id }}">
+                            <input type="radio">{{ $category->name }}
+                        </label>
+                    @endforeach
+                </div>
+
+                <div id="styles" class="btn-group btn-group-sm mb-15" data-toggle="buttons">
+                    <label class="nowrap">款式: </label>
+
+                </div>
+
+                <div id="colors" class="btn-group btn-group-sm mb-15" data-toggle="buttons">
+                    <label class="nowrap">颜色: </label>
+
                 </div>
             </div>
         </div>
@@ -610,6 +645,69 @@
     $('.word-item').on('click', function (event) {
         $('#word').val($(event.currentTarget).data('content'));
     });
+
+    $('.category').on('click', function (event) {
+        var found_styles = $.grep(styles, function(v) {
+            return v.category_id === $(event.target).data('category-id');
+        });
+
+        $('.style').remove();
+
+        found_styles.forEach(function (each) {
+            $('#styles').append(
+                '<label class="btn btn-outline-warning style" data-style-id="'
+                + each.id + '"><input '
+                + 'type="radio">' + each.name + '</label>'
+            );
+        });
+
+        $('.style:first').click();
+    });
+
+    // dynamic binding
+    $(document).on('click', '.style', function(event) {
+        var found_colors = $.grep(colors, function(v) {
+            return v.style_id === $(event.target).data('style-id');
+        });
+
+        var current_style = $.grep(styles, function(v) {
+            return v.id === $(event.target).data('style-id');
+        })[0];
+
+        $('#front-img').attr('src', '/uploads/' + current_style.front);
+        $('#back-img').attr('src', '/uploads/' + current_style.back);
+
+        $('.color').remove();
+
+        found_colors.forEach(function (each) {
+            $('#colors').append(
+                '<label class="btn btn-outline-warning color" data-color-id="'
+                + each.id + '"><input '
+                + 'type="radio">' + each.name + '</label>'
+            );
+        });
+
+        $('.color:first').click();
+    });
+
+    $(document).on('click', '.color', function(event) {
+        var current_color = $.grep(colors, function(v) {
+            return v.id === $(event.target).data('color-id');
+        })[0];
+
+        $('.canvas-background').css('background-color', current_color.value);
+    });
+
+
+    // data assignment
+    var styles = JSON.parse('{!! $styles !!}');
+    var colors = JSON.parse('{!! $colors !!}');
+
+
+    // logic
+    $('.category:first').click();
+    $('.style:first').click();
+    $('.color:first').click();
 </script>
 </body>
 </html>

@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Color;
 use App\Models\MaterialType;
+use App\Models\Style;
 use App\Models\Word;
 use Illuminate\Http\Request;
 
@@ -26,9 +29,12 @@ class ItemsController extends Controller
     public function create()
     {
         $material_types = MaterialType::all();
-        $words = Word::all();
+        $words          = Word::all();
+        $categories     = Category::all();
+        $styles         = Style::all();
+        $colors         = Color::all();
 
-        return view('items.create', compact('material_types', 'words'));
+        return view('items.create', compact('material_types', 'words', 'categories', 'styles', 'colors'));
     }
 
     /**
