@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
     <meta name="theme-color" content="#db5945">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="https://cdn.bootcss.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <style>
@@ -275,7 +276,7 @@
         <i class="fa fa-chevron-down" aria-hidden="true" style="font-size: 12px; color: rgb(203,203,203);"></i>
     </span>
     {{--btn-secondary 4 disabled, btn-warning 4 enabled--}}
-    <button id="submit-button" type="button" class="btn btn-secondary btn-sm" disabled>完成定制</button>
+    <button id="submit-button" type="button" class="btn btn-secondary btn-sm" >完成定制</button>
 </nav>
 <div class="container">
     <div class="canvas-wrap">
@@ -447,6 +448,20 @@
                 <div id="colors" class="btn-group btn-group-sm mb-15" data-toggle="buttons">
                     <label class="nowrap">颜色: </label>
 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div data-backdrop="static" class="modal fade" id="submit-modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="progress">
+                    <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated"
+                         style="width: 100%; height: 40px; font-size: 25px;">
+                        <span style="vertical-align: middle;">提交中, 请稍后...</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -698,16 +713,40 @@
         $('.canvas-background').css('background-color', current_color.value);
     });
 
+    $('#submit-button').on('click', function () {
+        $('#submit-modal').modal();
+
+        $.ajax({
+            url: '{{ route("items.store") }}',
+            method: 'POST',
+            data: {
+                category_id: $('.category.active').data('category-id'),
+                style_id: $('.style.active').data('style-id'),
+                color_id: $('.color.active').data('color-id'),
+                front: front_side.toDataURL('png'),
+                back: back_side.toDataURL('png')
+            },
+            success: function (res) {
+                console.log(res);
+            }
+        });
+    });
+
 
     // data assignment
     var styles = JSON.parse('{!! $styles !!}');
     var colors = JSON.parse('{!! $colors !!}');
 
 
-    // logic
+    // inital
     $('.category:first').click();
     $('.style:first').click();
     $('.color:first').click();
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
 </script>
 </body>
 </html>

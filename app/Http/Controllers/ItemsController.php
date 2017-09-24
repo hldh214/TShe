@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Color;
+use App\Models\Item;
 use App\Models\MaterialType;
 use App\Models\Style;
 use App\Models\Word;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ItemsController extends Controller
 {
@@ -45,7 +47,26 @@ class ItemsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $filename = date('YmdHis') . '-' . uniqid();
+        $front    = "items/{$filename}-front.png";
+        $back     = "items/{$filename}-back.png";
+        Storage::disk('admin')->put($front, base64_decode(explode(',',
+            $request->input('front'))
+        [1]));
+        Storage::disk('admin')->put($back, base64_decode(explode(',',
+            $request->input('back'))
+        [1]));
+
+        $item              = new Item();
+        $item->category_id = $request->input('category_id');
+        $item->style_id    = $request->input('style_id');
+        $item->color_id    = $request->input('color_id');
+        $item->front       = $front;
+        $item->back        = $back;
+        $item->save();
+
+        // todo: redirect to item page
+        return response(['code' => 0]);
     }
 
     /**

@@ -69,7 +69,13 @@ class ItemController extends Controller
     protected function grid()
     {
         return Admin::grid(Item::class, function (Grid $grid) {
+            $grid->disableActions();
             $grid->id('ID')->sortable();
+            $grid->category()->name('品类');
+            $grid->style()->name('款式');
+            $grid->color()->name('颜色');
+            $grid->front('正面')->image(null, 100, 100);
+            $grid->back('反面')->image(null, 100, 100);
             $grid->disableCreation();
             $grid->created_at();
             $grid->updated_at();
