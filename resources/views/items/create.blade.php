@@ -727,7 +727,7 @@
                 back: back_side.toDataURL('png')
             },
             success: function (res) {
-                console.log(res);
+                window.location.href = '{{ route('items.index') }}/'  + res.data.id;
             }
         });
     });

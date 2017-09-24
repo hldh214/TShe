@@ -65,8 +65,13 @@ class ItemsController extends Controller
         $item->back        = $back;
         $item->save();
 
-        // todo: redirect to item page
-        return response(['code' => 0]);
+
+        return response([
+            'code' => 0,
+            'data' => [
+                'id' => $item->id
+            ]
+        ]);
     }
 
     /**
@@ -77,7 +82,7 @@ class ItemsController extends Controller
      */
     public function show($id)
     {
-        //
+        dd($id);
     }
 
     /**
