@@ -63,36 +63,94 @@
         .img-container .top {
             position: absolute;
             z-index: 1;
-            /*width: 40%;*/
             top: 58%;
             left: 49.5%;
             transform: translate(-50%, -50%) scale(0.2);
+        }
+
+        .info {
+            text-align: left;
+        }
+
+        .user-info {
+            position: relative;
+            z-index: 2;
+        }
+
+        .user-info img {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            left: 0;
+            bottom: 2px;
+            background-color: #fff;
+            border: 3px solid #fff;
+            border-radius: 50%;
+        }
+
+        .username {
+            color: gray;
+            padding-left: 60px;
+        }
+
+        .title-content {
+            font-size: 16px;
+            font-weight: 700;
+            color: #161616;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            display: block;
+            overflow: hidden;
+        }
+
+        .price {
+            color: #ff5859;
+            margin-top: 10px;
+            font-weight: 700;
+        }
+
+        .price-content {
+            font-size: 20px;
         }
     </style>
     <title>Laravel</title>
 </head>
 <body>
-<div class="container-fluid" style="padding: 0;">
-    <div class="slider">
-        <div class="swiper-container" style="background-color: #f4f7fa;">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <div class="img-container">
-                        <img class="top" src="/uploads/{{ $item->front }}" alt="front">
-                        <img style="background-color: {{ $item->color->value }};" class="bottom" src="/uploads/{{ $item->style->front }}" alt="style->front">
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="img-container">
-                        <img class="top" src="/uploads/{{ $item->back }}" alt="back">
-                        <img style="background-color: {{ $item->color->value }};" class="bottom" src="/uploads/{{ $item->style->back }}" alt="style->back">
-                    </div>
+<div class="slider">
+    <div class="swiper-container" style="background-color: #f4f7fa;">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <div class="img-container">
+                    <img class="top" src="/uploads/{{ $item->front }}" alt="front">
+                    <img style="background-color: {{ $item->color->value }};" class="bottom"
+                         src="/uploads/{{ $item->style->front }}" alt="style->front">
                 </div>
             </div>
-            <div class="swiper-pagination"></div>
+            <div class="swiper-slide">
+                <div class="img-container">
+                    <img class="top" src="/uploads/{{ $item->back }}" alt="back">
+                    <img style="background-color: {{ $item->color->value }};" class="bottom"
+                         src="/uploads/{{ $item->style->back }}" alt="style->back">
+                </div>
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="info">
+        <div class="user-info">
+            <img src="/img/picture.png" alt="avatar">
+            <small class="username">username</small>
+        </div>
+        <div class="title">
+            <p class="title-content">username的{{ $item->style->name }}{{ $item->category->name }}{{ date('md') }}</p>
+        </div>
+        <div class="price">
+            <i class="fa fa-jpy" aria-hidden="true"></i>
+            <span class="price-content">{{ $item->style->price }}</span>
         </div>
     </div>
-    <div class="info"></div>
     <div class="select-modal-trigger"></div>
     <div class="detail"></div>
     <nav class="navbar fixed-bottom  buy-button">

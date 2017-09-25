@@ -16,6 +16,7 @@ class CreateStylesTable extends Migration
         Schema::create('styles', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('category_id');
+            $table->integer('price');
             $table->string('name');
             $table->string('front');
             $table->string('back');
