@@ -179,12 +179,19 @@
         </div>
     </div>
     <div class="select-modal-trigger">
-        <button class="btn btn-outline-dark btn-block">选择 款式 颜色 尺码</button>
+        <button class="btn btn-outline-dark btn-block" data-target="#select-modal" data-toggle="modal">选择 款式 颜色 尺码
+        </button>
     </div>
     <div class="detail">
         <div class="detail-header">
-            <a href="#intro" class="btn btn-outline-warning" style="width: 45%">产品详情</a>
-            <a href="#notice" class="btn btn-outline-warning" style="width: 45%">购买须知</a>
+            <div class="row">
+                <div class="col-6">
+                    <a href="#intro" class="btn btn-outline-warning btn-block">产品详情</a>
+                </div>
+                <div class="col-6">
+                    <a href="#notice" class="btn btn-outline-warning btn-block">购买须知</a>
+                </div>
+            </div>
         </div>
         <div class="detail-content">
             <a name="intro"></a>
@@ -249,25 +256,100 @@
         <input class="buy-immediately" type="button" value="立即购买">
     </nav>
 </div>
-<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
-<script src="https://cdn.bootcss.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
-<script src="https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.jquery.min.js"></script>
-<script>
-    // slider
-    new Swiper('.swiper-container', {
-        loop: true,
-        pagination: '.swiper-pagination',
-        paginationClickable: true,
-    })
+<div class="modal fade" id="select-modal" style="text-align: left;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <div class="img-container" style="zoom: 0.1; float: left">
+                        <img class="top" src="/uploads/{{ $item->front }}" alt="front">
+                        <img style="background-color: {{ $item->color->value }};" class="bottom"
+                             src="/uploads/{{ $item->style->front }}" alt="style->front">
+                    </div>
+                    <div class="price" style="float: left">
+                        <div class="price-red">
+                            <i class="fa fa-jpy" aria-hidden="true"></i>
+                            <span class="price-content" id="modal-price">{{ $item->style->price }}</span>
+                        </div>
+                        <small style="color: gray;">快递: 免费</small>
+                    </div>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="sizes">
+                    <p>尺码</p>
+                    <div class="btn-group" data-toggle="buttons">
+                        @foreach($item->style->parse_size() as $size)
+                            <label class="btn btn-outline-dark btn-sm size" data-size-id="{{ $loop->index }}">
+                                <input type="radio">{{ $size }}
+                            </label>
+                        @endforeach
+                    </div>
+                </div>
+                <hr>
+                <div class="quantity">
+                    <label for="quantity">数量</label>
+                    <div class="input-group" style="width: 40%">
+                        <span class="input-group-btn">
+                            <button class="btn btn-outline-secondary" type="button" id="minus">-</button>
+                        </span>
+                        <input type="number" min="1" class="form-control" id="quantity" value="1">
+                        <span class="input-group-btn">
+                            <button class="btn btn-outline-secondary" type="button" id="plus">+</button>
+                        </span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-block" style="background-color: rgb(255,88,89); color: white;">
+                        确定
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.jquery.min.js"></script>
+    <script>
+        // data assign
+        let price = parseInt('{{ $item->style->price }}');
 
+        // slider
+        new Swiper('.swiper-container', {
+            loop: true,
+            pagination: '.swiper-pagination',
+            paginationClickable: true,
+        })
 
-    // initial
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-</script>
+        // events
+        $('#plus').on('click', function () {
+            let res = parseInt($('#quantity').val()) + 1
+            $('#quantity').val(res).trigger('input');
+        })
+
+        $('#minus').on('click', function () {
+            let res = parseInt($('#quantity').val()) - 1;
+            res = res < 1 ? 1 : res;
+            $('#quantity').val(res).trigger('input');
+        })
+
+        $('#quantity').on('input', function (event) {
+            if (!event.target.value) {
+                $('#quantity').val(1);
+            }
+            $('#modal-price').text(price * parseInt($('#quantity').val()));
+        })
+
+        // initial
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    </script>
 </body>
 </html>

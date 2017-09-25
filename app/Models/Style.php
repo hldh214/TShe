@@ -20,6 +20,16 @@ class Style extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function parse_size()
+    {
+        $res = [];
+
+        foreach ($this->size as $each_size) {
+            $res[$each_size] = self::sizes[$each_size];
+        }
+        return $res;
+    }
+    
     public function getPriceAttribute($value)
     {
         return number_format($value / 100, 2);
