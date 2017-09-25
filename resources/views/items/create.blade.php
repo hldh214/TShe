@@ -276,7 +276,7 @@
         <i class="fa fa-chevron-down" aria-hidden="true" style="font-size: 12px; color: rgb(203,203,203);"></i>
     </span>
     {{--btn-secondary 4 disabled, btn-warning 4 enabled--}}
-    <button id="submit-button" type="button" class="btn btn-secondary btn-sm" >完成定制</button>
+    <button id="submit-button" type="button" class="btn btn-secondary btn-sm" disabled>完成定制</button>
 </nav>
 <div class="container">
     <div class="canvas-wrap">
