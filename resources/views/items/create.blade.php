@@ -459,8 +459,7 @@
             <div class="modal-body">
                 <div class="progress">
                     <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated"
-                         style="width: 100%; height: 40px; font-size: 25px;">
-                        <span style="vertical-align: middle;">提交中, 请稍后...</span>
+                         style="width: 100%; height: 40px;">
                     </div>
                 </div>
             </div>

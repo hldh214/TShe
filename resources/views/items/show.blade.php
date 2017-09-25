@@ -136,6 +136,11 @@
             text-decoration: none;
             margin-top: 20px;
         }
+
+        #submit {
+            background-color: rgb(255, 88, 89);
+            color: white;
+        }
     </style>
     <title>Laravel</title>
 </head>
@@ -265,7 +270,6 @@
             <div class="modal-header">
                 <div class="modal-title">
                     <div class="img-container" style="zoom: 0.1; float: left">
-                        <img class="top" src="/uploads/{{ $item->front }}" alt="front">
                         <img style="background-color: {{ $item->color->value }};" class="bottom"
                              src="/uploads/{{ $item->style->front }}" alt="style->front">
                     </div>
@@ -305,13 +309,11 @@
                         </span>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" id="submit" class="btn btn-block" style="background-color: rgb(255,88,89);
-                    color:
-                    white;">
-                        确定
-                    </button>
-                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="submit" class="btn btn-block">
+                    确定
+                </button>
             </div>
         </div>
     </div>
@@ -351,11 +353,25 @@
     });
 
     $('.add-to-cart-cmd').on('click', function () {
-        $('#submit').html('确定')
-    })
+        $('#submit').html('确定').data('action', 'cart');
+
+    });
 
     $('.buy-immediately').on('click', function () {
-        $('#submit').html('确认购买')
+        $('#submit').html('确认购买').data('action', 'buy');
+    });
+    
+    $('#submit').on('click', function (event) {
+        console.log({
+            size: $('.size.active').data('size-id'),
+            quantity: $('#quantity').val(),
+            item_id: '{{ $item->id }}',
+        });
+        if ($(event.target).data('action') === 'cart') {
+
+        } else {
+
+        }
     })
 
     // initial
