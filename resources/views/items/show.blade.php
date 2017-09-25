@@ -179,7 +179,8 @@
         </div>
     </div>
     <div class="select-modal-trigger">
-        <button class="btn btn-outline-dark btn-block" data-target="#select-modal" data-toggle="modal">选择 款式 颜色 尺码
+        <button class="btn btn-outline-dark btn-block add-to-cart-cmd" data-target="#select-modal" data-toggle="modal">
+            选择 款式 颜色 尺码
         </button>
     </div>
     <div class="detail">
@@ -252,8 +253,10 @@
             </div>
             <p>购物车</p>
         </a>
-        <input class="add-to-cart" type="button" value="加入购物车">
-        <input class="buy-immediately" type="button" value="立即购买">
+        <input class="add-to-cart add-to-cart-cmd" type="button" value="加入购物车" data-target="#select-modal"
+               data-toggle="modal">
+        <input class="buy-immediately" type="button" value="立即购买" data-target="#select-modal"
+               data-toggle="modal">
     </nav>
 </div>
 <div class="modal fade" id="select-modal" style="text-align: left;">
@@ -303,53 +306,64 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-block" style="background-color: rgb(255,88,89); color: white;">
+                    <button type="button" id="submit" class="btn btn-block" style="background-color: rgb(255,88,89);
+                    color:
+                    white;">
                         确定
                     </button>
                 </div>
             </div>
         </div>
     </div>
-    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
-    <script src="https://cdn.bootcss.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
-    <script src="https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.jquery.min.js"></script>
-    <script>
-        // data assign
-        let price = parseInt('{{ $item->style->price }}');
+</div>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+<script src="https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.jquery.min.js"></script>
+<script>
+    // data assign
+    let price = parseInt('{{ $item->style->price }}');
 
-        // slider
-        new Swiper('.swiper-container', {
-            loop: true,
-            pagination: '.swiper-pagination',
-            paginationClickable: true,
-        })
+    // slider
+    new Swiper('.swiper-container', {
+        loop: true,
+        pagination: '.swiper-pagination',
+        paginationClickable: true,
+    });
 
-        // events
-        $('#plus').on('click', function () {
-            let res = parseInt($('#quantity').val()) + 1
-            $('#quantity').val(res).trigger('input');
-        })
+    // events
+    $('#plus').on('click', function () {
+        let res = parseInt($('#quantity').val()) + 1
+        $('#quantity').val(res).trigger('input');
+    });
 
-        $('#minus').on('click', function () {
-            let res = parseInt($('#quantity').val()) - 1;
-            res = res < 1 ? 1 : res;
-            $('#quantity').val(res).trigger('input');
-        })
+    $('#minus').on('click', function () {
+        let res = parseInt($('#quantity').val()) - 1;
+        res = res < 1 ? 1 : res;
+        $('#quantity').val(res).trigger('input');
+    });
 
-        $('#quantity').on('input', function (event) {
-            if (!event.target.value) {
-                $('#quantity').val(1);
-            }
-            $('#modal-price').text(price * parseInt($('#quantity').val()));
-        })
+    $('#quantity').on('input', function (event) {
+        if (!event.target.value) {
+            $('#quantity').val(1);
+        }
+        $('#modal-price').text(price * parseInt($('#quantity').val()));
+    });
 
-        // initial
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-    </script>
+    $('.add-to-cart-cmd').on('click', function () {
+        $('#submit').html('确定')
+    })
+
+    $('.buy-immediately').on('click', function () {
+        $('#submit').html('确认购买')
+    })
+
+    // initial
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+</script>
 </body>
 </html>
