@@ -661,7 +661,7 @@
     });
 
     $('.category').on('click', function (event) {
-        var found_styles = $.grep(styles, function(v) {
+        var found_styles = $.grep(styles, function (v) {
             return v.category_id === $(event.target).data('category-id');
         });
 
@@ -679,12 +679,12 @@
     });
 
     // dynamic binding
-    $(document).on('click', '.style', function(event) {
-        var found_colors = $.grep(colors, function(v) {
+    $(document).on('click', '.style', function (event) {
+        var found_colors = $.grep(colors, function (v) {
             return v.style_id === $(event.target).data('style-id');
         });
 
-        var current_style = $.grep(styles, function(v) {
+        var current_style = $.grep(styles, function (v) {
             return v.id === $(event.target).data('style-id');
         })[0];
 
@@ -704,8 +704,8 @@
         $('.color:first').click();
     });
 
-    $(document).on('click', '.color', function(event) {
-        var current_color = $.grep(colors, function(v) {
+    $(document).on('click', '.color', function (event) {
+        var current_color = $.grep(colors, function (v) {
             return v.id === $(event.target).data('color-id');
         })[0];
 
@@ -722,11 +722,15 @@
                 category_id: $('.category.active').data('category-id'),
                 style_id: $('.style.active').data('style-id'),
                 color_id: $('.color.active').data('color-id'),
-                front: front_side.toDataURL('png'),
-                back: back_side.toDataURL('png')
+                front: front_side.toDataURL({
+                    multiplier: 2 / window.devicePixelRatio
+                }),
+                back: back_side.toDataURL({
+                    multiplier: 2 / window.devicePixelRatio
+                })
             },
             success: function (res) {
-                window.location.href = '{{ route('items.index') }}/'  + res.data.id;
+                window.location.href = '{{ route('items.index') }}/' + res.data.id;
             }
         });
     });
