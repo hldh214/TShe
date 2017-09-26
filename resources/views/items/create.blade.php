@@ -350,38 +350,18 @@
                             <div id="collapse{{ $material_type->id }}" class="collapse" data-parent="#accordion">
                                 <div class="card-body">
                                     <div class="container-fluid">
-                                        @for($i=0; $i<count($material_type->materials); $i+=3)
+                                        @foreach($material_type->materials->chunk(3) as $materials)
                                             <div class="row">
-                                                <div class="col">
-                                                    <img class="img-fluid"
-                                                         data-src="/uploads/{{ $material_type->materials->get($i, function() {
-                                                            return new class {
-                                                                public $uri = null;
-                                                            };
-                                                         })
-                                                         ->uri
-                                                          }}">
-                                                </div>
-                                                <div class="col">
-                                                    <img class="img-fluid"
-                                                         data-src="/uploads/{{ $material_type->materials->get($i+1, function() {
-                                                            return new class {
-                                                                public $uri = null;
-                                                            };
-                                                         })->uri
-                                                          }}">
-                                                </div>
-                                                <div class="col">
-                                                    <img class="img-fluid"
-                                                         data-src="/uploads/{{ $material_type->materials->get($i+2, function() {
-                                                            return new class {
-                                                                public $uri = null;
-                                                            };
-                                                         })->uri
-                                                          }}">
-                                                </div>
+                                                @foreach($materials as $material)
+                                                    <div class="col">
+                                                        <img class="img-fluid"
+                                                             data-src="/uploads/{{ $material->uri }}"
+                                                             src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                                                        >
+                                                    </div>
+                                                @endforeach
                                             </div>
-                                        @endfor
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>
