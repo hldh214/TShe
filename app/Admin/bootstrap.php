@@ -20,8 +20,16 @@
 
 Encore\Admin\Form::forget(['map', 'editor']);
 
-\Encore\Admin\Grid\Column::extend('color', function ($color) {
-    return "<span style='color: $color'>$color</span>";
+\Encore\Admin\Grid\Column::extend('color', function ($color, $type='value') {
+    if ($type == 'value') {
+        $content = $color;
+    } elseif ($type == 'name') {
+        $content = \App\Models\Color::where('value', $color)->first()->name;
+    } else {
+        $content = $color;
+    }
+
+    return "<span style='color: {$color}'>{$content}</span>";
 });
 
 \Encore\Admin\Grid\Column::extend('parse_size', function ($size) {

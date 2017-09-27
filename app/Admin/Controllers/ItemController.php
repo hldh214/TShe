@@ -73,7 +73,7 @@ class ItemController extends Controller
             $grid->id('ID')->sortable();
             $grid->category()->name('品类');
             $grid->style()->name('款式');
-            $grid->color()->name('颜色');
+            $grid->color()->value('颜色')->color('name');
             $grid->front('正面')->image(null, 100, 100);
             $grid->back('反面')->image(null, 100, 100);
             $grid->disableCreation();
