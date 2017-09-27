@@ -16,3 +16,7 @@ Route::get('/', function () {
 });
 
 Route::resource('items', 'ItemsController');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
