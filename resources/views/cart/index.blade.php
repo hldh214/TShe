@@ -61,6 +61,26 @@
             color: #ff5859;
             font-weight: 700;
         }
+
+        .navbar {
+            height: 44px;
+        }
+
+        .c-c-box {
+            position: relative;
+        }
+
+        .inner-box {
+            margin: 0.5em;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .row {
+            margin: 0 -8px;
+        }
     </style>
     <title>Laravel</title>
 </head>
@@ -80,17 +100,19 @@
             <div class="card border-light">
                 <div class="card-body text-dark">
                     <div class="row">
-                        <div class="col-1">
-                            <label class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input">
+                        <div class="col-1 c-c-box">
+                            <label class="custom-control custom-checkbox inner-box">
+                                <input type="checkbox" class="custom-control-input" checked>
                                 <span class="custom-control-indicator"></span>
                             </label>
                         </div>
                         <div class="col-4">
-                            <img src="{{ $content->model->style->front_uri }}"
-                                 class="img-fluid" alt="thumbnail"
-                                 style="background-color: {{ $content->model->color->value }}"
-                            >
+                            <a href="{{ route('items.show', $content->id) }}">
+                                <img src="{{ $content->model->style->front_uri }}"
+                                     class="img-fluid" alt="thumbnail"
+                                     style="background-color: {{ $content->model->color->value }}"
+                                >
+                            </a>
                         </div>
                         <div class="col-6">
                             <p class="mb-0">{{ $content->model->user->name }}的{{ $content->name }}</p>
@@ -112,7 +134,7 @@
     <div class="margin-bottom"></div>
     <nav class="navbar fixed-bottom  buy-button">
         <label class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input">
+            <input type="checkbox" class="custom-control-input" checked>
             <span class="custom-control-indicator"></span>
             <span class="custom-control-description">全选</span>
         </label>
