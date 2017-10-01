@@ -11,7 +11,8 @@
         "gloudemans/shoppingcart": "^2.4",
         "laravel-admin-ext/helpers": "^1.0",
         "laravel/framework": "5.5.*",
-        "laravel/tinker": "~1.0"
+        "laravel/tinker": "~1.0",
+        "cweagans/composer-patches": "~1.0"
     },
     "require-dev": {
         "filp/whoops": "~2.0",
@@ -34,9 +35,15 @@
         }
     },
     "extra": {
+        "composer-exit-on-patch-failure": true,
         "laravel": {
             "dont-discover": [
             ]
+        },
+        "patches": {
+            "gloudemans/shoppingcart": {
+                "Revised fix for missing timestamp": "https://patch-diff.githubusercontent.com/raw/Crinsane/LaravelShoppingcart/pull/311.patch"
+            }
         }
     },
     "scripts": {
