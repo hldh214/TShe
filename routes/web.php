@@ -15,9 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('items', 'ItemController');
-Route::resource('cart', 'CartController');
+Route::middleware(['auth'])->group(function () {
+    Route::resource('items', 'ItemController');
+    Route::resource('cart', 'CartController');
+    Route::get('/home', 'HomeController@index')->name('home');
+});
 
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
