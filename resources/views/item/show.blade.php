@@ -170,10 +170,10 @@
     <div class="info">
         <div class="user-info">
             <img src="/img/picture.png" alt="avatar">
-            <small class="username">username</small>
+            <small class="username">{{ auth()->user()->name }}</small>
         </div>
         <div class="title">
-            <p class="title-content">username的{{ $item->style->name }}{{ $item->category->name }}{{ date('md') }}</p>
+            <p class="title-content">{{ auth()->user()->name }}的{{ $item->style->name }}{{ $item->category->name }}</p>
         </div>
         <div class="price">
             <div class="price-red">
@@ -251,7 +251,7 @@
     </div>
     <div class="margin-bottom"></div>
     <nav class="navbar fixed-bottom  buy-button">
-        <a href="" class="shopping-cart">
+        <a href="{{ route('cart.index') }}" class="shopping-cart">
             <div class="icon-wrapper">
                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                 <span class="badge badge-light">0</span>
@@ -335,7 +335,7 @@
 
     // events
     $('#plus').on('click', function () {
-        let res = parseInt($('#quantity').val()) + 1
+        let res = parseInt($('#quantity').val()) + 1;
         $('#quantity').val(res).trigger('input');
     });
 
@@ -360,13 +360,19 @@
     $('.buy-immediately').on('click', function () {
         $('#submit').html('确认购买').data('action', 'buy');
     });
-    
+
     $('#submit').on('click', function (event) {
-        var data = {
+        let data = {
             size: $('.size.active').data('size-id'),
             quantity: $('#quantity').val(),
             item_id: '{{ $item->id }}',
         };
+
+        if (data.size === undefined) {
+            alert('请先选择尺码');
+            return false;
+        }
+
         if ($(event.target).data('action') === 'cart') {
             $.ajax({
                 url: '{{ route('cart.store') }}',
@@ -379,7 +385,7 @@
         } else {
 
         }
-    })
+    });
 
     // initial
     $.ajaxSetup({

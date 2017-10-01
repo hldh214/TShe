@@ -3,33 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
-use App\Models\Material;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 
 class CartController extends Controller
 {
     /**
      * Create a new controller instance.
-     *
-     * @return void
      */
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(function ($request, $next) {
-            Cart::restore(Auth::id());
-
-            return $next($request);
-        });
-
-    }
-
-    public function __destruct()
-    {
-        Cart::store(Auth::id());
+        $this->middleware('ShoppingCart');
     }
 
     /**
