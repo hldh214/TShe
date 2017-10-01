@@ -138,7 +138,7 @@
         }
 
         #submit {
-            background-color: rgb(255, 88, 89);
+            background-color: #ff5859;
             color: white;
         }
     </style>
@@ -150,16 +150,16 @@
         <div class="swiper-wrapper">
             <div class="swiper-slide">
                 <div class="img-container">
-                    <img class="top" src="/uploads/{{ $item->front }}" alt="front">
+                    <img class="top" src="{{ $item->front_uri }}" alt="front">
                     <img style="background-color: {{ $item->color->value }};" class="bottom"
-                         src="/uploads/{{ $item->style->front }}" alt="style->front">
+                         src="{{ $item->style->front_uri }}" alt="style->front">
                 </div>
             </div>
             <div class="swiper-slide">
                 <div class="img-container">
-                    <img class="top" src="/uploads/{{ $item->back }}" alt="back">
+                    <img class="top" src="{{ $item->back_uri }}" alt="back">
                     <img style="background-color: {{ $item->color->value }};" class="bottom"
-                         src="/uploads/{{ $item->style->back }}" alt="style->back">
+                         src="{{ $item->style->back_uri }}" alt="style->back">
                 </div>
             </div>
         </div>
@@ -251,7 +251,7 @@
     </div>
     <div class="margin-bottom"></div>
     <nav class="navbar fixed-bottom  buy-button">
-        <a href="" class=" shopping-cart">
+        <a href="" class="shopping-cart">
             <div class="icon-wrapper">
                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                 <span class="badge badge-light">0</span>
@@ -271,7 +271,7 @@
                 <div class="modal-title">
                     <div class="img-container" style="zoom: 0.1; float: left">
                         <img style="background-color: {{ $item->color->value }};" class="bottom"
-                             src="/uploads/{{ $item->style->front }}" alt="style->front">
+                             src="{{ $item->style->front_uri }}" alt="style->front">
                     </div>
                     <div class="price" style="float: left">
                         <div class="price-red">
@@ -362,13 +362,20 @@
     });
     
     $('#submit').on('click', function (event) {
-        console.log({
+        var data = {
             size: $('.size.active').data('size-id'),
             quantity: $('#quantity').val(),
             item_id: '{{ $item->id }}',
-        });
+        };
         if ($(event.target).data('action') === 'cart') {
-
+            $.ajax({
+                url: '{{ route('cart.store') }}',
+                method: 'POST',
+                data: data,
+                success: function () {
+                    window.location.href = '{{ route('cart.index') }}';
+                }
+            });
         } else {
 
         }

@@ -2,10 +2,36 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Item;
+use App\Models\Material;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class CartController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            Cart::restore(Auth::id());
+
+            return $next($request);
+        });
+
+    }
+
+    public function __destruct()
+    {
+        Cart::store(Auth::id());
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +39,9 @@ class CartController extends Controller
      */
     public function index()
     {
-        //
+        $contents = Cart::content();
+
+        return view('cart.index', compact('contents'));
     }
 
     /**
@@ -29,18 +57,27 @@ class CartController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        Cart::add(
+            Item::find($request->input('item_id')),
+            $request->input('quantity'),
+            ['size' => $request->input('size')]
+        );
+
+        return response([
+            'code' => 0,
+            'data' => []
+        ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -51,7 +88,7 @@ class CartController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -62,8 +99,8 @@ class CartController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int                      $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -74,7 +111,7 @@ class CartController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

@@ -355,7 +355,7 @@
                                                 @foreach($materials as $material)
                                                     <div class="col">
                                                         <img class="img-fluid"
-                                                             data-src="/uploads/{{ $material->uri }}"
+                                                             data-src="{{ $material->full_uri }}"
                                                              src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
                                                         >
                                                     </div>
@@ -668,8 +668,8 @@
             return v.id === $(event.target).data('style-id');
         })[0];
 
-        $('#front-img').attr('src', '/uploads/' + current_style.front);
-        $('#back-img').attr('src', '/uploads/' + current_style.back);
+        $('#front-img').attr('src', current_style.front_uri);
+        $('#back-img').attr('src', current_style.back_uri);
 
         $('.color').remove();
 
@@ -696,7 +696,7 @@
         $('#submit-modal').modal();
 
         $.ajax({
-            url: '{{ route("items.store") }}',
+            url: '{{ route('items.store') }}',
             method: 'POST',
             data: {
                 category_id: $('.category.active').data('category-id'),

@@ -5,10 +5,13 @@ namespace App\Models;
 use Gloudemans\Shoppingcart\Contracts\Buyable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 class Item extends Model implements Buyable
 {
     use SoftDeletes;
+
+    protected $appends = ['front_uri', 'back_uri'];
 
     public function category()
     {
@@ -23,6 +26,16 @@ class Item extends Model implements Buyable
     public function color()
     {
         return $this->belongsTo(Color::class);
+    }
+
+    public function getFrontUriAttribute()
+    {
+        return Storage::disk('admin')->url($this->front);
+    }
+
+    public function getBackUriAttribute()
+    {
+        return Storage::disk('admin')->url($this->back);
     }
 
     public function getBuyableDescription($options = null)

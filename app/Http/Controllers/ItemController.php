@@ -11,8 +11,18 @@ use App\Models\Word;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class ItemsController extends Controller
+class ItemController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -36,7 +46,7 @@ class ItemsController extends Controller
         $styles         = Style::all();
         $colors         = Color::all();
 
-        return view('items.create', compact('material_types', 'words', 'categories', 'styles', 'colors'));
+        return view('item.create', compact('material_types', 'words', 'categories', 'styles', 'colors'));
     }
 
     /**
@@ -83,7 +93,7 @@ class ItemsController extends Controller
     public function show($id)
     {
         $item = Item::find($id);
-        return view('items.show', compact('item'));
+        return view('item.show', compact('item'));
     }
 
     /**

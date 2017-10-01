@@ -15,7 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('items', 'ItemsController');
+Route::resource('items', 'ItemController');
+Route::resource('cart', 'CartController');
 
 Auth::routes();
 
