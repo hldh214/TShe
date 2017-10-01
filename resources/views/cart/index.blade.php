@@ -52,6 +52,15 @@
         .margin-bottom {
             margin-bottom: 60px;
         }
+
+        .card-body {
+            padding: 0.5em;
+        }
+
+        .price {
+            color: #ff5859;
+            font-weight: 700;
+        }
     </style>
     <title>Laravel</title>
 </head>
@@ -68,7 +77,7 @@
     </div>
     @foreach($contents as $content)
         <div class="cards">
-            <div class="card bg-light">
+            <div class="card border-light">
                 <div class="card-body text-dark">
                     <div class="row">
                         <div class="col-1">
@@ -83,7 +92,18 @@
                                  style="background-color: {{ $content->model->color->value }}"
                             >
                         </div>
-                        <div class="col-6">{{ $content->model->user->name }}的{{ $content->name }}</div>
+                        <div class="col-6">
+                            <p class="mb-0">{{ $content->model->user->name }}的{{ $content->name }}</p>
+                            <small class="text-muted">
+                                {{ $content->model->user->name }}的{{ $content->name }}
+                            </small>
+                            <p class="mb-0">
+                                <span class="price">&yen;{{ $content->subtotal }}</span>
+                                <small class="text-muted pull-right">
+                                    x{{ $content->qty }}
+                                </small>
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -16,8 +16,10 @@ class ShoppingCart
      */
     public function handle($request, Closure $next)
     {
-        Cart::restore(auth()->id());
-        Cart::store(auth()->id());
+        if (Cart::count() == 0) {
+            Cart::restore(auth()->id());
+            Cart::store(auth()->id());
+        }
 
         return $next($request);
     }

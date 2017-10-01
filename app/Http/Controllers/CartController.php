@@ -46,11 +46,15 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
+        Cart::restore(auth()->id());
+
         Cart::add(
             Item::find($request->input('item_id')),
             $request->input('quantity'),
             ['size' => $request->input('size')]
         );
+
+        Cart::store(auth()->id());
 
         return response([
             'code' => 0,
@@ -100,6 +104,11 @@ class CartController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Cart::remove($id);
+
+        return response([
+            'code' => 0,
+            'data' => []
+        ]);
     }
 }
