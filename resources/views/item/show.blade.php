@@ -170,10 +170,10 @@
     <div class="info">
         <div class="user-info">
             <img src="/img/picture.png" alt="avatar">
-            <small class="username">{{ auth()->user()->name }}</small>
+            <small class="username">{{ $item->user->name }}</small>
         </div>
         <div class="title">
-            <p class="title-content">{{ auth()->user()->name }}的{{ $item->style->name }}{{ $item->category->name }}</p>
+            <p class="title-content">{{ $item->user->name }}的{{ $item->style->name }}{{ $item->category->name }}</p>
         </div>
         <div class="price">
             <div class="price-red">
@@ -254,7 +254,7 @@
         <a href="{{ route('cart.index') }}" class="shopping-cart">
             <div class="icon-wrapper">
                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                <span class="badge badge-light">0</span>
+                <span class="badge badge-light">{{ $cart_count }}</span>
             </div>
             <p>购物车</p>
         </a>

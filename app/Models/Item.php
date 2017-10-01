@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\User;
 use Gloudemans\Shoppingcart\Contracts\Buyable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -26,6 +27,11 @@ class Item extends Model implements Buyable
     public function color()
     {
         return $this->belongsTo(Color::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function getFrontUriAttribute()

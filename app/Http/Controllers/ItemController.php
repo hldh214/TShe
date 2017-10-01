@@ -10,6 +10,7 @@ use App\Models\Style;
 use App\Models\Word;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Gloudemans\Shoppingcart\Facades\Cart;
 
 class ItemController extends Controller
 {
@@ -70,6 +71,7 @@ class ItemController extends Controller
         $item->category_id = $request->input('category_id');
         $item->style_id    = $request->input('style_id');
         $item->color_id    = $request->input('color_id');
+        $item->user_id     = auth()->id();
         $item->front       = $front;
         $item->back        = $back;
         $item->save();
@@ -91,8 +93,10 @@ class ItemController extends Controller
      */
     public function show($id)
     {
-        $item = Item::find($id);
-        return view('item.show', compact('item'));
+        $item       = Item::find($id);
+        $cart_count = Cart::count();
+
+        return view('item.show', compact('item', 'cart_count'));
     }
 
     /**

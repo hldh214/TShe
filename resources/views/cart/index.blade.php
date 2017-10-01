@@ -78,9 +78,12 @@
                             </label>
                         </div>
                         <div class="col-4">
-                            <img src="{{ $content->model->style->front_uri }}" class="img-fluid" alt="thumbnail">
+                            <img src="{{ $content->model->style->front_uri }}"
+                                 class="img-fluid" alt="thumbnail"
+                                 style="background-color: {{ $content->model->color->value }}"
+                            >
                         </div>
-                        <div class="col-6">3</div>
+                        <div class="col-6">{{ $content->model->user->name }}的{{ $content->name }}</div>
                     </div>
                 </div>
             </div>

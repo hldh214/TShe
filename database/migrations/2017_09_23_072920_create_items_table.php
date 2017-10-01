@@ -18,6 +18,7 @@ class CreateItemsTable extends Migration
             $table->integer('category_id');
             $table->integer('style_id');
             $table->integer('color_id');
+            $table->integer('user_id');
             $table->string('front');
             $table->string('back');
             $table->timestamps();
