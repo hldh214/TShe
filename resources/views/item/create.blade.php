@@ -264,9 +264,34 @@
             opacity: 0
         }
     </style>
+    <style>
+        #loading {
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            position: fixed;
+            display: block;
+            opacity: 0.7;
+            background-color: #fff;
+            z-index: 1031;
+            text-align: center;
+        }
+
+        #loading-image {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            position: absolute;
+            z-index: 1032;
+        }
+    </style>
     <title>Laravel</title>
 </head>
 <body>
+<div id="loading">
+    <img id="loading-image" src="/img/loading.gif" />
+</div>
 <nav class="navbar navbar-light" style="background-color: white; height: 44px;">
     <a class="navbar-brand" href="javascript:history.back()">
         <i class="fa fa-chevron-left" aria-hidden="true" style="font-size: 16px; color: rgb(203,203,203);"></i>
@@ -729,6 +754,11 @@
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('#loading').hide();
     });
 </script>
 </body>
