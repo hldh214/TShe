@@ -289,8 +289,8 @@
                 <div class="sizes">
                     <p>尺码</p>
                     <div class="btn-group" data-toggle="buttons">
-                        @foreach($item->style->parse_size() as $size)
-                            <label class="btn btn-outline-dark btn-sm size" data-size-id="{{ $loop->index }}">
+                        @foreach($item->style->parse_size() as $size_id => $size)
+                            <label class="btn btn-outline-dark btn-sm size" data-size-id="{{ $size_id }}">
                                 <input type="radio">{{ $size }}
                             </label>
                         @endforeach

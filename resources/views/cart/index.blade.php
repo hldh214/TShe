@@ -45,7 +45,7 @@
             padding: 0;
         }
 
-        .cards {
+        .card {
             margin-top: 10px;
         }
 
@@ -66,41 +66,64 @@
             height: 44px;
         }
 
-        .c-c-box {
-            position: relative;
-        }
-
         .inner-box {
-            margin: 0.5em;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            margin-top: 35px;
         }
 
         .row {
-            margin: 0 -8px;
+            margin: 0 -9px;
+        }
+
+        .edit {
+            display: none;
+            flex: 0 0 55%;
+        }
+
+        .cards.editing .edit {
+            display: block;
+        }
+
+        .cards.editing .info {
+            display: none;
+        }
+
+        .col-7 {
+            padding-right: 0;
+            padding-left: 0;
+            flex: 0 0 55%;
+        }
+
+        .delete {
+            position: absolute;
+            top: 0;
+            right: 0;
+            border: 0;
+            color: #FFF;
+            background-color: #ff5859;
+            height: 100%;
+            width: 20%;
         }
     </style>
     <title>Laravel</title>
 </head>
+@inject('style', 'App\Models\Style')
 <body>
 <div class="my-container">
     <div class="sticky-top">
         <nav class="navbar navbar-light">
             <a class="navbar-brand" href="javascript:history.back()">
-                <i class="fa fa-chevron-left" aria-hidden="true" style="font-size: 16px; color: rgb(203,203,203);"></i>
+                <i class="fa fa-chevron-left" style="font-size: 12px; color: black;"></i>
             </a>
-            <span>我的购物车</span>
-            <a href=""></a>
+            <b><span>我的购物车</span></b>
+            <b><span id="toggle-edit">编辑</span></b>
         </nav>
     </div>
-    @foreach($contents as $content)
-        <div class="cards">
+    <div class="cards">
+        @foreach($contents as $content)
             <div class="card border-light">
                 <div class="card-body text-dark">
                     <div class="row">
-                        <div class="col-1 c-c-box">
+                        <div class="col-1">
                             <label class="custom-control custom-checkbox inner-box">
                                 <input type="checkbox" class="custom-control-input" checked>
                                 <span class="custom-control-indicator"></span>
@@ -114,23 +137,59 @@
                                 >
                             </a>
                         </div>
-                        <div class="col-6">
-                            <p class="mb-0">{{ $content->model->user->name }}的{{ $content->name }}</p>
-                            <small class="text-muted">
-                                {{ $content->model->user->name }}的{{ $content->name }}
-                            </small>
-                            <p class="mb-0">
-                                <span class="price">&yen;{{ $content->subtotal }}</span>
-                                <small class="text-muted pull-right">
-                                    x{{ $content->qty }}
+                        <div class="col-7">
+                            <div class="info">
+                                <p class="mb-0">{{ $content->model->user->name }}的{{ $content->name }}</p>
+                                <small class="text-muted">
+                                    {{ $content->name }}
+                                    {{ $style::sizes[$content->options->size] }}
                                 </small>
-                            </p>
+                                <p class="mb-0">
+                                    <span class="price">&yen;{{ $content->subtotal }}</span>
+                                    <small class="text-muted pull-right">
+                                        x{{ $content->qty }}
+                                    </small>
+                                </p>
+                            </div>
+                            <div class="edit">
+                                <div class="quantity" style="width: 75%;">
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-outline-secondary minus" type="button"
+                                                    data-target-row-id="{{ $content->rowId }}">-</button>
+                                        </span>
+                                        <input title="qty" type="number" min="1"
+                                               class="form-control qty-input" id="quantity-{{ $content->rowId }}"
+                                               value="{{ $content->qty }}">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-outline-secondary plus" type="button"
+                                                    data-target-row-id="{{ $content->rowId }}">+</button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <select class="custom-select form-control"
+                                        title="size" style="margin-top: 20px;width: 75%;">
+                                    @foreach($content->model->style->parse_size() as $key => $value)
+                                        @if($key == $content->options->size)
+                                            <option value="{{ $key }}" selected>{{ $value }}</option>
+                                        @else
+                                            <option value="{{ $key }}">{{ $value }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                                {{ Form::open([
+                                        'route' => ['cart.destroy', $content->rowId],
+                                        'method' => 'DELETE'
+                                    ]) }}
+                                <button type="submit" class="delete">删除</button>
+                                {{ Form::close() }}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    @endforeach
+        @endforeach
+    </div>
     <div class="margin-bottom"></div>
     <nav class="navbar fixed-bottom  buy-button">
         <label class="custom-control custom-checkbox">
@@ -138,7 +197,7 @@
             <span class="custom-control-indicator"></span>
             <span class="custom-control-description">全选</span>
         </label>
-        <span>合计: &yen;</span>
+        <span>合计: <span class="price">&yen; {{ $subtotal }}</span></span>
         <input class="submit red" type="button" value="结算">
     </nav>
 </div>
@@ -146,7 +205,38 @@
 <script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
 <script>
+    // event
+    $('#toggle-edit').on('click', function () {
+        let cards = $('.cards');
+        let toggle_edit = $('#toggle-edit');
+        if (cards.hasClass('editing')) {
+            cards.removeClass('editing');
+            $('#toggle-edit').html('编辑');
+            return true;
+        }
+        cards.addClass('editing');
+        toggle_edit.html('完成');
+    });
 
+    $('.plus').on('click', function (event) {
+        let quantity = $('#quantity-' + $(event.target).data('target-row-id'));
+        let res = parseInt(quantity.val()) + 1;
+        quantity.val(res).trigger('input');
+    });
+
+    $('.minus').on('click', function () {
+        let quantity = $('#quantity-' + $(event.target).data('target-row-id'));
+        let res = parseInt(quantity.val()) - 1;
+        res = res < 1 ? 1 : res;
+        quantity.val(res).trigger('input');
+    });
+
+    $('.qty-input').on('input', function (event) {
+        if (!event.target.value) {
+            $(event.target).val(1);
+        }
+//        $('#modal-price').text(price * parseInt($('#quantity').val()));
+    });
 </script>
 </body>
 </html>

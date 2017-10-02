@@ -6,13 +6,14 @@
     "type": "project",
     "require": {
         "php": ">=7.0.0",
+        "cweagans/composer-patches": "~1.0",
         "encore/laravel-admin": "^1.5",
         "fideloper/proxy": "~3.3",
         "gloudemans/shoppingcart": "^2.4",
         "laravel-admin-ext/helpers": "^1.0",
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
-        "cweagans/composer-patches": "~1.0"
+        "laravelcollective/html": "^5.5"
     },
     "require-dev": {
         "filp/whoops": "~2.0",

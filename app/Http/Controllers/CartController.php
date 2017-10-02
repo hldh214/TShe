@@ -23,9 +23,12 @@ class CartController extends Controller
      */
     public function index()
     {
-        $contents = Cart::content();
+//        Cart::destroy();Cart::restore(auth()->id());exit;
 
-        return view('cart.index', compact('contents'));
+        $contents = Cart::content();
+        $subtotal = Cart::subtotal();
+
+        return view('cart.index', compact('contents', 'subtotal'));
     }
 
     /**
@@ -104,11 +107,10 @@ class CartController extends Controller
      */
     public function destroy($id)
     {
+        Cart::restore(auth()->id());
         Cart::remove($id);
+        Cart::store(auth()->id());
 
-        return response([
-            'code' => 0,
-            'data' => []
-        ]);
+        return redirect()->route('cart.index');
     }
 }
