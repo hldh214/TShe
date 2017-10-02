@@ -9,6 +9,7 @@
     <link href="https://cdn.bootcss.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/Swiper/3.4.2/css/swiper.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/toastr.js/2.1.3/toastr.min.css" rel="stylesheet">
     <style>
         body {
             text-align: center;
@@ -322,6 +323,7 @@
 <script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
 <script src="https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/toastr.js/2.1.3/toastr.min.js"></script>
 <script>
     // data assign
     let price = parseInt('{{ $item->style->price }}');
@@ -369,7 +371,7 @@
         };
 
         if (data.size === undefined) {
-            alert('请先选择尺码');
+            toastr.warning('请先选择尺码');
             return false;
         }
 
@@ -379,7 +381,8 @@
                 method: 'POST',
                 data: data,
                 success: function () {
-                    window.location.href = '{{ route('cart.index') }}';
+                    $('#select-modal').modal('hide');
+                    toastr.success('加入购物车成功');
                 }
             });
         } else {
@@ -393,6 +396,7 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+    toastr.options.closeButton = true;
 </script>
 </body>
 </html>
