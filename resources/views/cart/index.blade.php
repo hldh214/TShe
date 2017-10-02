@@ -26,7 +26,6 @@
         }
 
         .custom-control-input:checked ~ .custom-control-indicator {
-            color: #fff;
             background-color: #ff5859;
         }
 
@@ -125,7 +124,8 @@
                     <div class="row">
                         <div class="col-1">
                             <label class="custom-control custom-checkbox inner-box">
-                                <input type="checkbox" class="custom-control-input" checked>
+                                <input type="checkbox" data-row-id="{{ $content->rowId }}"
+                                       class="custom-control-input each-checkbox" checked>
                                 <span class="custom-control-indicator"></span>
                             </label>
                         </div>
@@ -188,19 +188,34 @@
     </div>
     <div class="margin-bottom"></div>
     <nav class="navbar fixed-bottom  buy-button">
-        <label class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" checked>
+        <label class="custom-control custom-checkbox mb-0 ml-2">
+            <input type="checkbox" class="custom-control-input" id="choose-all" checked>
             <span class="custom-control-indicator"></span>
             <span class="custom-control-description">全选</span>
         </label>
         <span>合计: <span class="price">&yen; <span id="subtotal">{{ $subtotal }}</span></span></span>
-        <input class="submit red" type="button" value="结算">
+        <input class="submit red" id="submit-button" data-action="submit" type="button" value="结算">
     </nav>
 </div>
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
 <script>
+    // function
+    function delete_item(row_id) {
+        $.ajax({
+            url: '{{ route('cart.index') }}' + '/' + row_id.join(','),
+            method: 'DELETE',
+            success: function (res) {
+                $('#subtotal').text(res.data.subtotal);
+            }
+        });
+
+        row_id.forEach(function (each) {
+            $('#card-' + each).remove();
+        });
+    }
+
     // event
     $('#toggle-edit').on('click', function () {
         let cards = $('.cards');
@@ -213,19 +228,11 @@
         }
         cards.addClass('editing');
         toggle_edit.html('完成');
+        $('#submit-button').val('删除').data('action', 'delete');
     });
 
     $('.delete').on('click', function (event) {
-        let row_id = $(event.target).data('row-id');
-        $.ajax({
-            url: '{{ route('cart.index') }}' + '/' + row_id,
-            method: 'DELETE',
-            success: function (res) {
-                $('#subtotal').text(res.data.subtotal);
-            }
-        });
-
-        $('#card-' + row_id).remove();
+        delete_item([$(event.target).data('row-id')]);
     });
 
     $('.plus').on('click', function (event) {
@@ -275,6 +282,42 @@
         });
     });
 
+    $('.each-checkbox').on('change', function () {
+        let all_checkbox = $('.each-checkbox');
+        for (let key = 0; key < all_checkbox.length; key++) {
+            if ($(all_checkbox[key]).prop('checked') === false) {
+                $('#choose-all').prop('checked', false);
+                return true;
+            }
+        }
+
+        $('#choose-all').prop('checked', true);
+    });
+
+    $('#choose-all').on('change', function (event) {
+        if ($(event.target).prop('checked')) {
+            $('.each-checkbox').prop('checked', true);
+            return true;
+        }
+
+        $('.each-checkbox').prop('checked', false);
+    });
+
+    $('#submit-button').on('click', function (event) {
+        let target = $(event.target);
+        let action = target.data('action');
+        if (action === 'delete') {
+            let will_delete = [];
+            $('.each-checkbox:checked').each(function (key, value) {
+                will_delete.push($(value).data('row-id'));
+            });
+            delete_item(will_delete);
+        } else if (action === 'submit') {
+
+        } else {
+            return false;
+        }
+    });
 
     // initial
     $.ajaxSetup({

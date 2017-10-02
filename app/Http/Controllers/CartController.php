@@ -116,15 +116,18 @@ class CartController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove resource(s) from storage.
      *
-     * @param  int $id
+     * @param  int $ids
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($ids)
     {
         Cart::restore(auth()->id());
-        Cart::remove($id);
+        $ids = explode(',', $ids);
+        foreach ($ids as $id) {
+            Cart::remove($id);
+        }
         Cart::store(auth()->id());
 
         return response([
