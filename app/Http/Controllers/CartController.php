@@ -61,7 +61,9 @@ class CartController extends Controller
 
         return response([
             'code' => 0,
-            'data' => []
+            'data' => [
+                'count' => Cart::count()
+            ]
         ]);
     }
 
@@ -96,7 +98,21 @@ class CartController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Cart::restore(auth()->id());
+        $type = $request->post('type');
+        if ($type == 'qty') {
+            Cart::update($id, $request->post('qty'));
+        } elseif ($type == 'size') {
+            Cart::update($id, ['options' => ['size' => $request->post('size')]]);
+        }
+        Cart::store(auth()->id());
+
+        return response([
+            'code' => 0,
+            'data' => [
+                'subtotal' => Cart::subtotal()
+            ]
+        ]);
     }
 
     /**
@@ -111,6 +127,11 @@ class CartController extends Controller
         Cart::remove($id);
         Cart::store(auth()->id());
 
-        return redirect()->route('cart.index');
+        return response([
+            'code' => 0,
+            'data' => [
+                'subtotal' => Cart::subtotal()
+            ]
+        ]);
     }
 }

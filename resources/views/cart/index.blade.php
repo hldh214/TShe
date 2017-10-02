@@ -120,7 +120,7 @@
     </div>
     <div class="cards">
         @foreach($contents as $content)
-            <div class="card border-light">
+            <div class="card border-light" id="card-{{ $content->rowId }}">
                 <div class="card-body text-dark">
                     <div class="row">
                         <div class="col-1">
@@ -160,15 +160,16 @@
                                         </span>
                                         <input title="qty" type="number" min="1"
                                                class="form-control qty-input" id="quantity-{{ $content->rowId }}"
-                                               value="{{ $content->qty }}">
+                                               value="{{ $content->qty }}" data-row-id="{{ $content->rowId }}">
                                         <span class="input-group-btn">
                                             <button class="btn btn-outline-secondary plus" type="button"
                                                     data-target-row-id="{{ $content->rowId }}">+</button>
                                         </span>
                                     </div>
                                 </div>
-                                <select class="custom-select form-control"
-                                        title="size" style="margin-top: 20px;width: 75%;">
+                                <select class="custom-select form-control size-selection"
+                                        title="size" style="margin-top: 20px;width: 75%;"
+                                        data-row-id="{{ $content->rowId }}">
                                     @foreach($content->model->style->parse_size() as $key => $value)
                                         @if($key == $content->options->size)
                                             <option value="{{ $key }}" selected>{{ $value }}</option>
@@ -177,12 +178,7 @@
                                         @endif
                                     @endforeach
                                 </select>
-                                {{ Form::open([
-                                        'route' => ['cart.destroy', $content->rowId],
-                                        'method' => 'DELETE'
-                                    ]) }}
-                                <button type="submit" class="delete">删除</button>
-                                {{ Form::close() }}
+                                <button type="button" class="delete" data-row-id="{{ $content->rowId }}">删除</button>
                             </div>
                         </div>
                     </div>
@@ -197,7 +193,7 @@
             <span class="custom-control-indicator"></span>
             <span class="custom-control-description">全选</span>
         </label>
-        <span>合计: <span class="price">&yen; {{ $subtotal }}</span></span>
+        <span>合计: <span class="price">&yen; <span id="subtotal">{{ $subtotal }}</span></span></span>
         <input class="submit red" type="button" value="结算">
     </nav>
 </div>
@@ -210,12 +206,26 @@
         let cards = $('.cards');
         let toggle_edit = $('#toggle-edit');
         if (cards.hasClass('editing')) {
-            cards.removeClass('editing');
-            $('#toggle-edit').html('编辑');
-            return true;
+//            cards.removeClass('editing');
+//            $('#toggle-edit').html('编辑');
+//            return true;
+            location.reload();
         }
         cards.addClass('editing');
         toggle_edit.html('完成');
+    });
+
+    $('.delete').on('click', function (event) {
+        let row_id = $(event.target).data('row-id');
+        $.ajax({
+            url: '{{ route('cart.index') }}' + '/' + row_id,
+            method: 'DELETE',
+            success: function (res) {
+                $('#subtotal').text(res.data.subtotal);
+            }
+        });
+
+        $('#card-' + row_id).remove();
     });
 
     $('.plus').on('click', function (event) {
@@ -232,10 +242,45 @@
     });
 
     $('.qty-input').on('input', function (event) {
+        let target = $(event.target);
+
         if (!event.target.value) {
             $(event.target).val(1);
         }
-//        $('#modal-price').text(price * parseInt($('#quantity').val()));
+
+        $.ajax({
+            url: '{{ route('cart.index') }}' + '/' + target.data('row-id'),
+            method: 'PUT',
+            data: {
+                'type': 'qty',
+                'qty': target.val()
+            },
+            success: function (res) {
+                $('#subtotal').text(res.data.subtotal);
+            }
+        });
+    });
+
+    $('.size-selection').on('change', function (event) {
+        $.ajax({
+            url: '{{ route('cart.index') }}' + '/' + $(event.target).data('row-id'),
+            method: 'PUT',
+            data: {
+                'type': 'size',
+                'size': event.target.value
+            },
+//            success: function (res) {
+//                $('#subtotal').text(res.data.subtotal);
+//            }
+        });
+    });
+
+
+    // initial
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
     });
 </script>
 </body>

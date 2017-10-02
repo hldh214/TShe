@@ -255,7 +255,7 @@
         <a href="{{ route('cart.index') }}" class="shopping-cart">
             <div class="icon-wrapper">
                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                <span class="badge badge-light">{{ $cart_count }}</span>
+                <span class="badge badge-light" id="cart-count">{{ $cart_count }}</span>
             </div>
             <p>购物车</p>
         </a>
@@ -380,9 +380,10 @@
                 url: '{{ route('cart.store') }}',
                 method: 'POST',
                 data: data,
-                success: function () {
+                success: function (res) {
                     $('#select-modal').modal('hide');
                     toastr.success('加入购物车成功');
+                    $('#cart-count').text(res.data.count);
                 }
             });
         } else {
@@ -397,6 +398,7 @@
         }
     });
     toastr.options.closeButton = true;
+    toastr.options.progressBar = true;
 </script>
 </body>
 </html>
