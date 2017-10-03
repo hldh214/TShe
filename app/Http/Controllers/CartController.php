@@ -26,7 +26,7 @@ class CartController extends Controller
 //        Cart::destroy();Cart::restore(auth()->id());exit;
 
         $contents = Cart::content();
-        $subtotal = intval(Cart::subtotal());
+        $subtotal = Cart::subtotal(0);
 
         return view('cart.index', compact('contents', 'subtotal'));
     }
@@ -110,7 +110,7 @@ class CartController extends Controller
         return response([
             'code' => 0,
             'data' => [
-                'subtotal' => intval(Cart::subtotal())
+                'subtotal' => Cart::subtotal(0)
             ]
         ]);
     }
@@ -133,7 +133,7 @@ class CartController extends Controller
         return response([
             'code' => 0,
             'data' => [
-                'subtotal' => intval(Cart::subtotal())
+                'subtotal' => Cart::subtotal(0)
             ]
         ]);
     }

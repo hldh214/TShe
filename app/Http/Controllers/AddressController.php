@@ -48,7 +48,7 @@ class AddressController extends Controller
         $address->name     = $request->post('name');
         $address->save();
 
-        return redirect()->route('address.index');
+        return redirect()->route('addresses.index');
     }
 
     /**
@@ -93,7 +93,7 @@ class AddressController extends Controller
         $address->name     = $request->post('name');
         $address->save();
 
-        return redirect()->route('address.index');
+        return redirect()->route('addresses.index');
     }
 
     /**

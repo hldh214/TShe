@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <form method="POST" action="{{ route('address.store') }}">
+        <form method="POST" action="{{ route('addresses.store') }}">
             {!! csrf_field() !!}
             <div class="form-group">
                 <label for="name">收货人姓名:</label>

@@ -302,8 +302,10 @@
     });
 
     $('.each-checkbox').on('change', function (event) {
-        let all_checkbox = $('.each-checkbox');
+        let total_length = $('.each-checkbox').length;
+        let checked_length = $('.each-checkbox:checked').length;
         let subtotal = parseInt($('#subtotal').text());
+        let submit_button = $('#submit-button');
 
         if ($(event.target).prop('checked') === false) {
             subtotal -= $(event.target).data('subtotal');
@@ -313,14 +315,17 @@
 
         $('#subtotal').text(subtotal);
 
-        for (let key = 0; key < all_checkbox.length; key++) {
-            if ($(all_checkbox[key]).prop('checked') === false) {
-                $('#choose-all').prop('checked', false);
-                return true;
-            }
+        if (checked_length === 0) {
+            submit_button.addClass('disabled');
+        } else {
+            submit_button.removeClass('disabled');
         }
 
-        $('#choose-all').prop('checked', true);
+        if (checked_length < total_length) {
+            $('#choose-all').prop('checked', false);
+        } else {
+            $('#choose-all').prop('checked', true);
+        }
     });
 
     $('#choose-all').on('change', function (event) {
@@ -339,17 +344,21 @@
     $('#submit-button').on('click', function (event) {
         let target = $(event.target);
         let action = target.data('action');
+        let will_do = [];
+        $('.each-checkbox:checked').each(function (key, value) {
+            will_do.push($(value).data('row-id'));
+        });
+        if (will_do.length === 0) {
+            return false;
+        }
         if (action === 'delete') {
-            let will_delete = [];
-            $('.each-checkbox:checked').each(function (key, value) {
-                will_delete.push($(value).data('row-id'));
-            });
-            if (will_delete.length === 0) {
-                return false;
-            }
-            delete_item(will_delete);
+            delete_item(will_do);
         } else if (action === 'submit') {
-
+            let $form = $("<form method='POST' action='{{ route('orders.create') }}'></form>");
+            $form.append($('<input type="hidden" name="row_ids" value="">').val(JSON.stringify(will_do)));
+            $form.append('{{ csrf_field() }}');
+            $(document.body).append($form);
+            $form.submit();
         } else {
             return false;
         }

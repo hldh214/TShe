@@ -44,7 +44,7 @@ class Style extends Model
 
     public function getPriceAttribute($value)
     {
-        return number_format($value / 100, 2);
+        return number_format($value / 100, 0);
     }
 
     public function setPriceAttribute($value)

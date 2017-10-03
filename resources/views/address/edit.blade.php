@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <form method="POST" action="{{ route('address.update', $address->id) }}">
+        <form method="POST" action="{{ route('addresses.update', $address->id) }}">
             {{ csrf_field() }}
             {{ method_field('PUT') }}
             <div class="form-group">

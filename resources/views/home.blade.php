@@ -14,7 +14,7 @@
                     <p>会员</p>
                 </div>
                 <div class="col-xs-4">
-                    <a class="btn btn-default btn-sm" href="{{ route('address.index') }}">管理收货地址</a>
+                    <a class="btn btn-default btn-sm" href="{{ route('addresses.index') }}">管理收货地址</a>
                 </div>
             </div>
             <div class="panel panel-default">

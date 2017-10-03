@@ -5,7 +5,7 @@
         <h3>
             我的地址
             <small class="pull-right">
-                <a href="{{ route('address.create') }}">
+                <a href="{{ route('addresses.create') }}">
                     <span class="glyphicon glyphicon-plus"></span>
                     新增地址
                 </a>
@@ -25,7 +25,7 @@
                             <span class="district" data-no="{{ $address->district }}"></span>
                         </p>
                         <p>{{ $address->address }}</p>
-                        <a class="btn btn-default" href="{{ route('address.edit', $address->id) }}"
+                        <a class="btn btn-default" href="{{ route('addresses.edit', $address->id) }}"
                            role="button">修改</a>
                         <a class="btn btn-danger destroy" data-id="{{ $address->id }}"
                            role="button">删除</a>
@@ -59,7 +59,7 @@
         $('.destroy').on('click', function (event) {
             let id = $(event.target).data('id');
             $.ajax({
-                url: '{{ route('address.index') }}' + '/' + id,
+                url: '{{ route('addresses.index') }}' + '/' + id,
                 method: 'DELETE'
             });
             $('#address-' + id).remove();
