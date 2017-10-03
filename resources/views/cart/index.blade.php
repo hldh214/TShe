@@ -53,10 +53,6 @@
             margin-top: 10px;
         }
 
-        .margin-bottom {
-            margin-bottom: 60px;
-        }
-
         .card-body {
             padding: 0.5em;
         }
@@ -209,7 +205,7 @@
             </div>
         @endforeach
     </div>
-    <div class="margin-bottom"></div>
+    <div class="mb-5"></div>
     <nav class="navbar fixed-bottom  buy-button">
         <label class="custom-control custom-checkbox mb-0 ml-2">
             <input type="checkbox" class="custom-control-input" id="choose-all" checked>
