@@ -14,7 +14,7 @@ class AddressController extends Controller
      */
     public function index()
     {
-        $addresses = Address::where('user_id', auth()->id())->all();
+        $addresses = Address::where('user_id', auth()->id())->get();
 
         return view('address.index', compact('addresses'));
     }
@@ -37,7 +37,17 @@ class AddressController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $address           = new Address();
+        $address->user_id  = auth()->id();
+        $address->province = $request->post('province');
+        $address->city     = $request->post('city');
+        $address->district = $request->post('district');
+        $address->address  = $request->post('address');
+        $address->phone    = $request->post('phone');
+        $address->name     = $request->post('name');
+        $address->save();
+
+        return redirect()->route('address.index');
     }
 
     /**
@@ -82,6 +92,11 @@ class AddressController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Address::find($id)->delete();
+
+        return response([
+            'code' => 0,
+            'data' => []
+        ]);
     }
 }
