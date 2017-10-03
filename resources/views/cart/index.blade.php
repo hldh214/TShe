@@ -37,6 +37,11 @@
             color: #FFF;
         }
 
+        .submit.disabled {
+            background-color: #e0e0e0;
+            color: #9b9b9b;
+        }
+
         .buy-button {
             height: 50px;
             width: 100%;
@@ -141,6 +146,7 @@
                         <div class="col-1">
                             <label class="custom-control custom-checkbox inner-box">
                                 <input type="checkbox" data-row-id="{{ $content->rowId }}"
+                                       data-subtotal="{{ $content->subtotal }}"
                                        class="custom-control-input each-checkbox" checked>
                                 <span class="custom-control-indicator"></span>
                             </label>
@@ -301,10 +307,18 @@
 
     $('.each-checkbox').on('change', function () {
         let all_checkbox = $('.each-checkbox');
+        let subtotal = parseInt($('#subtotal').text());
+
         for (let key = 0; key < all_checkbox.length; key++) {
             if ($(all_checkbox[key]).prop('checked') === false) {
                 $('#choose-all').prop('checked', false);
                 return true;
+            }
+        }
+
+        for (let key = 0; key < all_checkbox.length; key++) {
+            if ($(all_checkbox[key]).prop('checked') === false) {
+//                subtotal -=
             }
         }
 
@@ -314,10 +328,14 @@
     $('#choose-all').on('change', function (event) {
         if ($(event.target).prop('checked')) {
             $('.each-checkbox').prop('checked', true);
+            $('#subtotal').text('{{ $subtotal }}');
+            $('#submit-button').removeClass('disabled');
             return true;
         }
 
         $('.each-checkbox').prop('checked', false);
+        $('#subtotal').text(0);
+        $('#submit-button').addClass('disabled');
     });
 
     $('#submit-button').on('click', function (event) {
