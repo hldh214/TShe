@@ -305,20 +305,22 @@
         });
     });
 
-    $('.each-checkbox').on('change', function () {
+    $('.each-checkbox').on('change', function (event) {
         let all_checkbox = $('.each-checkbox');
         let subtotal = parseInt($('#subtotal').text());
+
+        if ($(event.target).prop('checked') === false) {
+            subtotal -= $(event.target).data('subtotal');
+        } else {
+            subtotal += $(event.target).data('subtotal');
+        }
+
+        $('#subtotal').text(subtotal);
 
         for (let key = 0; key < all_checkbox.length; key++) {
             if ($(all_checkbox[key]).prop('checked') === false) {
                 $('#choose-all').prop('checked', false);
                 return true;
-            }
-        }
-
-        for (let key = 0; key < all_checkbox.length; key++) {
-            if ($(all_checkbox[key]).prop('checked') === false) {
-//                subtotal -=
             }
         }
 
@@ -328,7 +330,7 @@
     $('#choose-all').on('change', function (event) {
         if ($(event.target).prop('checked')) {
             $('.each-checkbox').prop('checked', true);
-            $('#subtotal').text('{{ $subtotal }}');
+            $('#subtotal').text({{ $subtotal }});
             $('#submit-button').removeClass('disabled');
             return true;
         }
@@ -346,6 +348,9 @@
             $('.each-checkbox:checked').each(function (key, value) {
                 will_delete.push($(value).data('row-id'));
             });
+            if (will_delete.length === 0) {
+                return false;
+            }
             delete_item(will_delete);
         } else if (action === 'submit') {
 
