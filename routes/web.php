@@ -18,6 +18,7 @@ Route::get('/', function () {
 Route::middleware(['auth'])->group(function () {
     Route::resource('items', 'ItemController');
     Route::resource('cart', 'CartController');
+    Route::resource('address', 'AddressController');
     Route::get('/home', 'HomeController@index')->name('home');
 });
 
