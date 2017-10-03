@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Address;
 use Illuminate\Http\Request;
+use function Sodium\add;
 
 class AddressController extends Controller
 {
@@ -69,7 +70,9 @@ class AddressController extends Controller
      */
     public function edit($id)
     {
-        //
+        $address = Address::find($id);
+
+        return view('address.edit', compact('address'));
     }
 
     /**
@@ -81,7 +84,16 @@ class AddressController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $address           = Address::find($id);
+        $address->province = $request->post('province');
+        $address->city     = $request->post('city');
+        $address->district = $request->post('district');
+        $address->address  = $request->post('address');
+        $address->phone    = $request->post('phone');
+        $address->name     = $request->post('name');
+        $address->save();
+
+        return redirect()->route('address.index');
     }
 
     /**
