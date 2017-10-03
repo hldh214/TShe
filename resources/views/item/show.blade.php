@@ -170,7 +170,7 @@
 <div class="container-fluid">
     <div class="info">
         <div class="user-info">
-            <img src="/img/picture.png" alt="avatar">
+            <img src="{{ $item->user->avatar_uri }}" alt="avatar">
             <small class="username">{{ $item->user->name }}</small>
         </div>
         <div class="title">
