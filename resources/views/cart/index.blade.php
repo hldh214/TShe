@@ -102,6 +102,22 @@
             height: 100%;
             width: 20%;
         }
+
+        .img-container {
+            position: relative;
+        }
+
+        .img-container .bottom {
+            width: 70%;
+        }
+
+        .img-container .top {
+            position: absolute;
+            z-index: 1;
+            top: 58%;
+            left: 34%;
+            transform: translate(-50%, -50%) scale(0.05);
+        }
     </style>
     <title>Laravel</title>
 </head>
@@ -131,10 +147,11 @@
                         </div>
                         <div class="col-4">
                             <a href="{{ route('items.show', $content->id) }}">
-                                <img src="{{ $content->model->style->front_uri }}"
-                                     class="img-fluid" alt="thumbnail"
-                                     style="background-color: {{ $content->model->color->value }}"
-                                >
+                                <div class="img-container">
+                                    <img class="top" src="{{ $content->model->front_uri }}" alt="front">
+                                    <img style="background-color: {{ $content->model->color->value }};" class="bottom"
+                                         src="{{ $content->model->style->front_uri }}" alt="style->front">
+                                </div>
                             </a>
                         </div>
                         <div class="col-7">
