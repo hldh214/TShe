@@ -16,11 +16,11 @@ class Order extends Model
 
     public function getAmountAttribute($value)
     {
-        return number_format($value / 100, 2);
+        return number_format($value / 100);
     }
 
     public function setAmountAttribute($value)
     {
-        $this->attributes['price'] = $value * 100;
+        $this->attributes['amount'] = $value * 100;
     }
 }

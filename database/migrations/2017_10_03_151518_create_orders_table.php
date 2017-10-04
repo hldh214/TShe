@@ -17,10 +17,11 @@ class CreateOrdersTable extends Migration
             $table->increments('id');
             $table->unsignedBigInteger('out_trade_no');
             $table->integer('amount');
-            $table->string('comment');
-            $table->string('coupon');
+            $table->string('comment')->nullable();
+            $table->string('coupon')->nullable();
             $table->string('item');
             $table->integer('address_id');
+            $table->integer('user_id');
             $table->timestamps();
             $table->softDeletes();
         });

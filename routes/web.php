@@ -20,7 +20,9 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('cart', 'CartController');
     Route::resource('addresses', 'AddressController');
     Route::get('/home', 'HomeController@index')->name('home');
-    Route::any('/orders/create', 'OrderController@create')->name('orders.create');
+    Route::post('/orders/create', 'OrderController@create')->name('orders.create');
+    Route::post('/orders', 'OrderController@store')->name('orders.store');
+    Route::get('/orders/{id}', 'OrderController@show')->name('orders.show');
 });
 
 Auth::routes();

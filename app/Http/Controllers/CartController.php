@@ -118,7 +118,7 @@ class CartController extends Controller
     /**
      * Remove resource(s) from storage.
      *
-     * @param  int $ids
+     * @param  string $ids (csv)
      * @return \Illuminate\Http\Response
      */
     public function destroy($ids)

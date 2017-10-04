@@ -168,7 +168,7 @@
     <nav class="navbar fixed-bottom  buy-button">
         <label class="custom-control custom-checkbox mb-0 ml-2"></label>
         <span>合计: <span class="price">&yen; <span id="subtotal"></span></span></span>
-        <input class="submit red" id="submit-button" data-action="submit" type="button" value="结算">
+        <input class="submit red" id="submit-button" type="button" value="结算">
     </nav>
 </div>
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
@@ -195,15 +195,32 @@
 
     $('.each-price')
         .each(function (_, value) {
-        let price = $(value).data('price');
-        let qty = $(value).data('qty');
-        subtotal += price * qty;
-        console.log(subtotal);
-    })
+            let price = $(value).data('price');
+            let qty = $(value).data('qty');
+            subtotal += price * qty;
+        })
         .promise()
         .done(function () {
             $('#subtotal').text(subtotal);
         });
+
+    $('#submit-button').on('click', function () {
+        let address_id = $('input[name=address]:checked').val();
+        let row_ids = '{!! $raw_row_ids !!}';
+        let comment = $('#comment').val();
+        $.ajax({
+            url: '{{ route('orders.store') }}',
+            method: 'POST',
+            data: {
+                'address_id': address_id,
+                'row_ids': row_ids,
+                'comment': comment
+            },
+            success: function (res) {
+                location.href = '{{ route('orders.store') }}' + '/' + res.data.id;
+            }
+        });
+    });
 
     // initial
     $.ajaxSetup({
