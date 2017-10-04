@@ -17,4 +17,5 @@ Route::group([
     $router->resource('categories', CategoryController::class);
     $router->resource('styles', StyleController::class);
     $router->resource('colors', ColorController::class);
+    $router->resource('orders', OrderController::class);
 });

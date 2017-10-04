@@ -18,7 +18,7 @@
  *
  */
 
-Encore\Admin\Form::forget(['map', 'editor']);
+\Encore\Admin\Form::forget(['map', 'editor']);
 
 \Encore\Admin\Grid\Column::extend('color', function ($color, $type='value') {
     if ($type == 'value') {
@@ -39,3 +39,6 @@ Encore\Admin\Form::forget(['map', 'editor']);
     }
     return implode(',', $res);
 });
+
+\Encore\Admin\Admin::js('https://cdn.bootcss.com/distpicker/2.0.1/distpicker.min.js');
+\Encore\Admin\Admin::js(asset('js/init_distpicker.js'));

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -32,6 +33,16 @@ class Order extends Model
     public function address()
     {
         return $this->belongsTo(Address::class)->withTrashed();
+    }
+
+    public function t()
+    {
+        return 122;
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function get_order_status()
