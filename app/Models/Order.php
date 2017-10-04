@@ -23,4 +23,9 @@ class Order extends Model
     {
         $this->attributes['amount'] = $value * 100;
     }
+
+    public function address()
+    {
+        return $this->belongsTo(Address::class);
+    }
 }
