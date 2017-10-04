@@ -28,7 +28,6 @@
     </style>
     <title>Laravel</title>
 </head>
-@inject('style', 'App\Models\Style')
 <body>
 <div class="my-container">
     <div class="sticky-top" style="background-color: white">
@@ -70,8 +69,8 @@
         <div class="card-body text-dark">
             <p class="gray">请选择支付方式</p>
             <hr>
-            <a class="btn btn-block btn-primary" href="">支付宝支付</a>
-            <a class="btn btn-block btn-success" href="">微信支付</a>
+            <a class="btn btn-block btn-outline-primary" href="">支付宝支付</a>
+            <a class="btn btn-block btn-outline-success" href="">微信支付</a>
         </div>
     </div>
 </div>

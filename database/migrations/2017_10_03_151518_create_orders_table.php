@@ -22,6 +22,7 @@ class CreateOrdersTable extends Migration
             $table->string('item');
             $table->integer('address_id');
             $table->integer('user_id');
+            $table->unsignedTinyInteger('status')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

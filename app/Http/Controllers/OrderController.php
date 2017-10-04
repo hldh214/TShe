@@ -37,7 +37,8 @@ class OrderController extends Controller
         $item         = $data->map(function ($item) {
             return [
                 'item_id' => $item->id,
-                'size'    => $item->options->size
+                'size'    => $item->options->size,
+                'qty'     => $item->qty
             ];
         })->values();
         $amount       = $data->reduce(function ($carry, $item) {
@@ -73,5 +74,12 @@ class OrderController extends Controller
         $order = Order::find($id);
 
         return view('order.show', compact('order'));
+    }
+
+    public function index()
+    {
+        $orders = Order::where('user_id', auth()->id())->get();
+
+        return view('order.index', compact('orders'));
     }
 }

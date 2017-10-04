@@ -13,6 +13,11 @@ class Order extends Model
         'coupon' => 'array',
         'item'   => 'array'
     ];
+    const status = [
+        0 => '待付款',
+        1 => '已付款',
+        2 => '已发货'
+    ];
 
     public function getAmountAttribute($value)
     {
@@ -27,5 +32,21 @@ class Order extends Model
     public function address()
     {
         return $this->belongsTo(Address::class);
+    }
+
+    public function get_order_status()
+    {
+        return self::status[$this->status];
+    }
+
+    public function get_order_items()
+    {
+        return array_map(function ($each) {
+            return [
+                'item' => Item::find($each['item_id']),
+                'size' => Style::sizes[$each['size']],
+                'qty'  => $each['qty']
+            ];
+        }, $this->item);
     }
 }
