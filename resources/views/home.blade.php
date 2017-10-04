@@ -19,7 +19,7 @@
             </div>
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <a href="">我的订单</a>
+                    <a href="{{ route('orders.index') }}">我的订单</a>
                 </div>
             </div>
 

@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('index');
 
 Route::middleware(['auth'])->group(function () {
     Route::resource('items', 'ItemController');
