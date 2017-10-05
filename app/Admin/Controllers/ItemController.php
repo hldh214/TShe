@@ -74,6 +74,12 @@ class ItemController extends Controller
             $grid->category()->name('品类');
             $grid->style()->name('款式');
             $grid->color()->value('颜色')->color('name');
+            $grid->column('下载')->display(function () {
+                return "
+<a href='{$this->front_uri}' download='front-{$this->id}.png' target='_blank' class='btn btn-default'>正面</a>
+<a href='{$this->back_uri}' download='back-{$this->id}.png' target='_blank' class='btn btn-default'>反面</a>
+";
+            });
             $grid->front('正面')->image(null, 100, 100);
             $grid->back('反面')->image(null, 100, 100);
             $grid->disableCreation();
