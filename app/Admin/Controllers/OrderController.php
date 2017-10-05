@@ -76,7 +76,8 @@ class OrderController extends Controller
             $grid->id('ID')->sortable();
             $grid->user()->name('用户');
             $grid->item('商品列表')->reduce(function ($carry, $item) use ($style) {
-                return $carry . "<p>尺寸:{$style::sizes[$item['size']]} 数量:{$item['qty']}<a href='/admin/items?&id={$item['item_id']}'>查看商品</a></p>";
+                return $carry . "<p>尺寸:{$style::sizes[$item['size']]} 数量:{$item['qty']}<a target='_blank' href='/admin/items?&id={$item['item_id']}'>查看商品
+</a></p>";
             }, '');
             $grid->address('收货地址')->display(function () {
                 return "<p>
@@ -87,8 +88,8 @@ class OrderController extends Controller
                             <span class=\"province\" data-no=\"{$this->address['province']}\"></span>
                             <span class=\"city\" data-no=\"{$this->address['city']}\"></span>
                             <span class=\"district\" data-no=\"{$this->address['district']}\"></span>
-                        </p>
-                        <p>{$this->address['address']}</p>";
+                            <span>{$this->address['address']}</span>
+                        </p>";
             });
             $grid->comment('买家留言');
             $grid->amount('总金额');
