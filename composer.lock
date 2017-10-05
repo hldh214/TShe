@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "47e01d8f0390c2a162d4145c53e307e7",
+    "content-hash": "f5711f146af21d01398b193b39f82767",
     "packages": [
         {
             "name": "cweagans/composer-patches",
@@ -468,7 +468,7 @@
                     }
                 },
                 "patches_applied": {
-                    "Revised fix for missing timestamp": "https://patch-diff.githubusercontent.com/raw/Crinsane/LaravelShoppingcart/pull/311.patch"
+                    "Revised fix for missing timestamp": "https://patch-diff.githubusercontent.com/raw/Crinsane/LaravelShoppingcart/pull/311.diff"
                 }
             },
             "autoload": {
@@ -636,16 +636,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.5.13",
+            "version": "v5.5.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "bfbe20d32ee9f98c89df852847827407a5127be4"
+                "reference": "26c700eb79e5bb55b59df2c495c9c71f16f43302"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/laravel/framework/bfbe20d32ee9f98c89df852847827407a5127be4.zip",
-                "reference": "bfbe20d32ee9f98c89df852847827407a5127be4",
+                "url": "https://files.phpcomposer.com/files/laravel/framework/26c700eb79e5bb55b59df2c495c9c71f16f43302.zip",
+                "reference": "26c700eb79e5bb55b59df2c495c9c71f16f43302",
                 "shasum": ""
             },
             "require": {
@@ -764,7 +764,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2017-09-24T19:09:38+00:00"
+            "time": "2017-10-03T17:41:03+00:00"
         },
         {
             "name": "laravel/tinker",

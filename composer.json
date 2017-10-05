@@ -42,7 +42,7 @@
         },
         "patches": {
             "gloudemans/shoppingcart": {
-                "Revised fix for missing timestamp": "https://patch-diff.githubusercontent.com/raw/Crinsane/LaravelShoppingcart/pull/311.patch"
+                "Revised fix for missing timestamp": "https://patch-diff.githubusercontent.com/raw/Crinsane/LaravelShoppingcart/pull/311.diff"
             }
         }
     },
