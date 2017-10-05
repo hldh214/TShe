@@ -71,11 +71,10 @@ class MaterialController extends Controller
     {
         return Admin::grid(Material::class, function (Grid $grid) {
             $grid->filter(function ($filter) {
-                $filter->where(function ($query) {
-                    $query->whereHas('material_type', function ($query) {
-                        $query->where('name', '=', $this->input);
-                    });
-                }, '分类名称');
+                $material_types = MaterialType::all();
+                $filter->equal('material_type_id', '分类名称')->select($material_types->mapWithKeys(function ($item) {
+                    return [$item['id'] => $item['name']];
+                }));
             });
 
             $grid->id('素材ID')->sortable();
