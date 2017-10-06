@@ -12,20 +12,24 @@ class OrderController extends Controller
 {
     private static function parse_cart($raw_row_ids)
     {
-        $cart    = Cart::content();
         $row_ids = json_decode($raw_row_ids);
 
-        return $cart->filter(function ($_, $rowId) use ($row_ids) {
+        $cart_things     = Cart::content()->filter(function ($_, $rowId) use ($row_ids) {
             return in_array($rowId, $row_ids);
         });
+        $buy_flag_things = Cart::instance('buy_flag')->content()->filter(function ($_, $rowId) use ($row_ids) {
+            return in_array($rowId, $row_ids);
+        });
+
+        return $cart_things->isEmpty() ? $buy_flag_things : $cart_things;
     }
 
     public function create(Request $request)
     {
         if ($request->has('buy_flag')) {
             Cart::instance('buy_flag')->destroy();
-            $item = Item::find($request->post('item_id'));
-            $data = [Cart::instance('buy_flag')->add($item, $request->post('quantity'), [
+            $item        = Item::find($request->post('item_id'));
+            $data        = [Cart::instance('buy_flag')->add($item, $request->post('quantity'), [
                 'size' => $request->post('size')
             ])];
             $raw_row_ids = json_encode([$data[0]->rowId]);
