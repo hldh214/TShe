@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Address;
+use App\Models\Item;
 use App\Models\Order;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
@@ -21,8 +22,17 @@ class OrderController extends Controller
 
     public function create(Request $request)
     {
-        $raw_row_ids = $request->post('row_ids');
-        $data        = self::parse_cart($raw_row_ids);
+        if ($request->has('buy_flag')) {
+            Cart::instance('buy_flag')->destroy();
+            $item = Item::find($request->post('item_id'));
+            $data = [Cart::instance('buy_flag')->add($item, $request->post('quantity'), [
+                'size' => $request->post('size')
+            ])];
+            $raw_row_ids = json_encode([$data[0]->rowId]);
+        } else {
+            $raw_row_ids = $request->post('row_ids');
+            $data        = self::parse_cart($raw_row_ids);
+        }
 
         $addresses = Address::where('user_id', auth()->id())->get();
 

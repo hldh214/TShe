@@ -387,7 +387,14 @@
                 }
             });
         } else {
-
+            let $form = $("<form method='POST' action='{{ route('orders.create') }}'></form>");
+            $form.append($('<input type="hidden" name="size" value="">').val(data.size));
+            $form.append($('<input type="hidden" name="quantity" value="">').val(data.quantity));
+            $form.append($('<input type="hidden" name="item_id" value="">').val(data.item_id));
+            $form.append($('<input type="hidden" name="buy_flag" value="">').val(true));
+            $form.append('{{ csrf_field() }}');
+            $(document.body).append($form);
+            $form.submit();
         }
     });
 
