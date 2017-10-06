@@ -12,7 +12,9 @@
         "gloudemans/shoppingcart": "^2.4",
         "laravel-admin-ext/helpers": "^1.0",
         "laravel/framework": "5.5.*",
-        "laravel/tinker": "~1.0"
+        "laravel/tinker": "~1.0",
+        "yansongda/laravel-pay": "^1.0",
+        "yansongda/pay": "^1.2"
     },
     "require-dev": {
         "filp/whoops": "~2.0",
