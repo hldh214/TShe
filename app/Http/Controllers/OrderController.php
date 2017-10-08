@@ -14,7 +14,7 @@ class OrderController extends Controller
     {
         $row_ids = json_decode($raw_row_ids);
 
-        $cart_things     = Cart::content()->filter(function ($_, $rowId) use ($row_ids) {
+        $cart_things     = Cart::instance('default')->content()->filter(function ($_, $rowId) use ($row_ids) {
             return in_array($rowId, $row_ids);
         });
         $buy_flag_things = Cart::instance('buy_flag')->content()->filter(function ($_, $rowId) use ($row_ids) {

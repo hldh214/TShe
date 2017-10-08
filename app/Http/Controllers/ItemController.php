@@ -96,7 +96,7 @@ class ItemController extends Controller
     public function show($id)
     {
         $item       = Item::find($id);
-        $cart_count = Cart::count();
+        $cart_count = Cart::instance('default')->count();
 
         return view('item.show', compact('item', 'cart_count'));
     }

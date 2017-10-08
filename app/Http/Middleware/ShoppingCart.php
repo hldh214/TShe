@@ -17,9 +17,9 @@ class ShoppingCart
     public function handle($request, Closure $next)
     {
         if ($request->isMethod('GET')) {
-            Cart::destroy();
-            Cart::restore(auth()->id());
-            Cart::store(auth()->id());
+            Cart::instance('default')->destroy();
+            Cart::instance('default')->restore(auth()->id());
+            Cart::instance('default')->store(auth()->id());
         }
 
         return $next($request);

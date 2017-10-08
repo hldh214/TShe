@@ -23,10 +23,8 @@ class CartController extends Controller
      */
     public function index()
     {
-//        Cart::destroy();Cart::restore(auth()->id());exit;
-
-        $contents = Cart::content();
-        $subtotal = Cart::subtotal(0);
+        $contents = Cart::instance('default')->content();
+        $subtotal = Cart::instance('default')->subtotal(0);
 
         return view('cart.index', compact('contents', 'subtotal'));
     }
@@ -49,20 +47,20 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        Cart::restore(auth()->id());
+        Cart::instance('default')->restore(auth()->id());
 
-        Cart::add(
+        Cart::instance('default')->add(
             Item::find($request->input('item_id')),
             $request->input('quantity'),
             ['size' => $request->input('size')]
         );
 
-        Cart::store(auth()->id());
+        Cart::instance('default')->store(auth()->id());
 
         return response([
             'code' => 0,
             'data' => [
-                'count' => Cart::count()
+                'count' => Cart::instance('default')->count()
             ]
         ]);
     }
@@ -98,19 +96,19 @@ class CartController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Cart::restore(auth()->id());
+        Cart::instance('default')->restore(auth()->id());
         $type = $request->post('type');
         if ($type == 'qty') {
-            Cart::update($id, $request->post('qty'));
+            Cart::instance('default')->update($id, $request->post('qty'));
         } elseif ($type == 'size') {
-            Cart::update($id, ['options' => ['size' => $request->post('size')]]);
+            Cart::instance('default')->update($id, ['options' => ['size' => $request->post('size')]]);
         }
-        Cart::store(auth()->id());
+        Cart::instance('default')->store(auth()->id());
 
         return response([
             'code' => 0,
             'data' => [
-                'subtotal' => Cart::subtotal(0)
+                'subtotal' => Cart::instance('default')->subtotal(0)
             ]
         ]);
     }
@@ -123,17 +121,17 @@ class CartController extends Controller
      */
     public function destroy($ids)
     {
-        Cart::restore(auth()->id());
+        Cart::instance('default')->restore(auth()->id());
         $ids = explode(',', $ids);
         foreach ($ids as $id) {
-            Cart::remove($id);
+            Cart::instance('default')->remove($id);
         }
-        Cart::store(auth()->id());
+        Cart::instance('default')->store(auth()->id());
 
         return response([
             'code' => 0,
             'data' => [
-                'subtotal' => Cart::subtotal(0)
+                'subtotal' => Cart::instance('default')->subtotal(0)
             ]
         ]);
     }
