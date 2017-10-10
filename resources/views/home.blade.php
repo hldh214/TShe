@@ -6,7 +6,11 @@
             <div class="row">
                 <div class="col-xs-4">
                     <div class="thumbnail">
-                        <img src="{{ $user->avatar_uri }}" alt="avatar">
+                        <img
+                            src="@if(Storage::disk('admin')->exists($user->avatar)){{ $user->avatar_uri }}@else@verbatim/img/picture.png@endverbatim@endif"
+                            alt="avatar" id="avatar">
+                        <input style="display: none" type="file" id="file-upload" name="avatar" data-url="{{ route
+                        ('store_avatar') }}">
                     </div>
                 </div>
                 <div class="col-xs-4">
@@ -30,11 +34,27 @@
             </div>
 
             {{--<div class="panel panel-default">--}}
-                {{--<div class="panel-body">--}}
-                    {{--<a href="">我的礼券</a>--}}
-                {{--</div>--}}
+            {{--<div class="panel-body">--}}
+            {{--<a href="">我的礼券</a>--}}
+            {{--</div>--}}
             {{--</div>--}}
 
         </div>
     </div>
+@endsection
+
+@section('script')
+    <script src="https://cdn.bootcss.com/blueimp-file-upload/9.19.1/js/vendor/jquery.ui.widget.min.js"></script>
+    <script src="https://cdn.bootcss.com/blueimp-file-upload/9.19.1/js/jquery.fileupload.min.js"></script>
+    <script>
+        $('#avatar').on('click', function () {
+            $('#file-upload').click();
+        });
+
+        $('#file-upload').fileupload({
+            done: function () {
+                location.reload();
+            }
+        });
+    </script>
 @endsection

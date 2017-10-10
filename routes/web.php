@@ -22,6 +22,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/orders', 'OrderController@store')->name('orders.store');
     Route::get('/orders/{id}', 'OrderController@show')->name('orders.show');
     Route::get('/orders', 'OrderController@index')->name('orders.index');
+    Route::post('/store_avatar', 'HomeController@store_avatar')->name('store_avatar');
 });
 
 Auth::routes();
