@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
+    const BUY_FLAG         = 'buy_flag';
+    const ADD_TO_CART_FLAG = 'default';
+
     /**
      * Create a new controller instance.
      */
@@ -117,21 +120,22 @@ class CartController extends Controller
      * Remove resource(s) from storage.
      *
      * @param  string $ids (csv)
+     * @param string  $flag
      * @return \Illuminate\Http\Response
      */
-    public function destroy($ids)
+    public function destroy($ids, $flag = self::ADD_TO_CART_FLAG)
     {
-        Cart::instance('default')->restore(auth()->id());
+        Cart::instance($flag)->restore(auth()->id());
         $ids = explode(',', $ids);
         foreach ($ids as $id) {
-            Cart::instance('default')->remove($id);
+            Cart::instance($flag)->remove($id);
         }
-        Cart::instance('default')->store(auth()->id());
+        Cart::instance($flag)->store(auth()->id());
 
         return response([
             'code' => 0,
             'data' => [
-                'subtotal' => Cart::instance('default')->subtotal(0)
+                'subtotal' => Cart::instance($flag)->subtotal(0)
             ]
         ]);
     }

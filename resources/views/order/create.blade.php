@@ -212,6 +212,9 @@
             url: '{{ route('orders.store') }}',
             method: 'POST',
             data: {
+                @if($buy_flag)
+                'buy_flag': true,
+                @endif
                 'address_id': address_id,
                 'row_ids': row_ids,
                 'comment': comment

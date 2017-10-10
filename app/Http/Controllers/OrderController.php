@@ -26,7 +26,8 @@ class OrderController extends Controller
 
     public function create(Request $request)
     {
-        if ($request->has('buy_flag')) {
+        $buy_flag = $request->has('buy_flag');
+        if ($buy_flag) {
             Cart::instance('buy_flag')->destroy();
             $item        = Item::find($request->post('item_id'));
             $data        = [Cart::instance('buy_flag')->add($item, $request->post('quantity'), [
@@ -40,7 +41,7 @@ class OrderController extends Controller
 
         $addresses = Address::where('user_id', auth()->id())->get();
 
-        return view('order.create', compact('data', 'addresses', 'raw_row_ids'));
+        return view('order.create', compact('data', 'addresses', 'raw_row_ids', 'buy_flag'));
     }
 
     public function store(Request $request)
@@ -71,9 +72,16 @@ class OrderController extends Controller
         $order->user_id      = auth()->id();
         $order->save();
 
-        app(CartController::class)->destroy(
-            implode(',', json_decode($request->post('row_ids')))
-        );
+        if ($request->has('buy_flag')) {
+            app(CartController::class)->destroy(
+                implode(',', json_decode($request->post('row_ids'))),
+                CartController::BUY_FLAG
+            );
+        } else {
+            app(CartController::class)->destroy(
+                implode(',', json_decode($request->post('row_ids')))
+            );
+        }
 
         return response([
             'code' => 0,
