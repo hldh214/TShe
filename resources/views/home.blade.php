@@ -54,6 +54,9 @@
         $('#file-upload').fileupload({
             done: function () {
                 location.reload();
+            },
+            error: function () {
+                location.reload();
             }
         });
     </script>

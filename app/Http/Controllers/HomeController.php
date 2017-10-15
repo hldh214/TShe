@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class HomeController extends Controller
 {
@@ -31,6 +32,10 @@ class HomeController extends Controller
     {
         $param_name = 'avatar';
         if ($request->file($param_name)->isValid()) {
+            $this->validate($request, [
+                $param_name => 'required|image',
+            ]);
+
             $path = $request->$param_name->store($param_name, 'admin');
 
             $user         = User::find(auth()->id());
