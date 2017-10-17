@@ -23,9 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $user = User::find(auth()->id());
-
-        return view('home', compact('user'));
+        return view('home');
     }
 
     public function store_avatar(Request $request)

@@ -21,6 +21,14 @@
                     <a class="btn btn-default btn-sm" href="{{ route('addresses.index') }}">管理收货地址</a>
                 </div>
             </div>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <span>我的积分: {{ $user->point }}</span>
+                    <a class="pull-right" href="{{ route('gifts.index') }}">兑换</a>
+                </div>
+            </div>
+
             <div class="panel panel-default">
                 <div class="panel-body">
                     <a href="{{ route('orders.index') }}">我的订单</a>
