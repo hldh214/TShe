@@ -170,7 +170,7 @@
 <div class="container-fluid">
     <div class="info">
         <div class="user-info">
-            <img src="{{ $item->user->avatar_uri }}" alt="avatar">
+            <img src="@if(Storage::disk('admin')->exists($item->user->avatar)){{ $item->user->avatar_uri }}@else@verbatim/img/picture.png@endverbatim@endif" alt="avatar">
             <small class="username">{{ $item->user->name }}</small>
         </div>
         <div class="title">
