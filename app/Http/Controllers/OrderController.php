@@ -60,16 +60,13 @@ class OrderController extends Controller
             return $carry + $item->qty * $item->price;
         }, 0);
         $coupon       = null;
-        $out_trade_no = microtime(true) * 10000 . rand(100000, 999999);
 
         $order               = new Order();
-        $order->out_trade_no = $out_trade_no;
         $order->amount       = $amount;
         $order->comment      = $comment;
         $order->coupon       = $coupon;
         $order->item         = $item;
         $order->address_id   = $address_id;
-        $order->user_id      = auth()->id();
         $order->save();
 
         if ($request->has('buy_flag')) {

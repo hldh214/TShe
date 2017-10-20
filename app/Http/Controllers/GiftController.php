@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Address;
 use App\Models\Gift;
+use App\Models\Order;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class GiftController extends Controller
 {
@@ -14,74 +18,44 @@ class GiftController extends Controller
      */
     public function index()
     {
-        $gifts = Gift::all();
+        $gifts     = Gift::all();
+        $addresses = Address::where('user_id', auth()->id())->get();
 
-        return view('gift.index', compact('gifts'));
+        return view('gift.index', compact('gifts', 'addresses'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function receive_gift(Request $request)
     {
-        //
-    }
+        $gift_id = $request->post('gift_id');
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        $user = User::find(auth()->id());
+        $gift = Gift::find($gift_id);
+        if ($gift->price > $user->point) {
+            return response([
+                'code' => 1,
+                'data' => [
+                    'msg' => '积分不足'
+                ]
+            ]);
+        }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+        $order             = new Order();
+        $order->amount     = $gift->price;
+        $order->item       = [
+            'gift_id' => $gift_id
+        ];
+        $order->address_id = $request->post('address_id');
+        $order->status     = 1;
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+        $user->point -= $gift->price;
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+        DB::transaction(function () use ($order, $user) {
+            $order->save();
+            $user->save();
+        }, 3);
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return response([
+            'code' => 0
+        ]);
     }
 }

@@ -60,4 +60,25 @@ class Order extends Model
             ];
         }, $this->item);
     }
+
+    public function get_gift_or_fail()
+    {
+        if (array_key_exists('gift_id', $this->item)) {
+            return [
+                'gift' => Gift::find($this->item['gift_id'])
+            ];
+        }
+
+        return false;
+    }
+
+    public function save(array $options = [])
+    {
+        if (empty($this->out_trade_no)) {
+            $this->out_trade_no = microtime(true) * 10000 . rand(100000, 999999);
+            $this->user_id = auth()->id();
+        }
+
+        return parent::save($options);
+    }
 }

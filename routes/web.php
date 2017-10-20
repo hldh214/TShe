@@ -24,6 +24,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/orders/{id}', 'OrderController@show')->name('orders.show');
     Route::get('/orders', 'OrderController@index')->name('orders.index');
     Route::post('/store_avatar', 'HomeController@store_avatar')->name('store_avatar');
+    Route::post('/receive_gift', 'GiftController@receive_gift')->name('receive_gift');
 });
 
 Auth::routes();

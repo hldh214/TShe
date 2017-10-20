@@ -74,8 +74,12 @@ class OrderController extends Controller
         return Admin::grid(Order::class, function (Grid $grid) {
             $style = new Style();
             $grid->id('ID')->sortable();
+            $grid->out_trade_no('订单号');
             $grid->user()->name('用户');
             $grid->item('商品列表')->reduce(function ($carry, $item) use ($style) {
+                if (is_numeric($item)) {
+                    return "<a target='_blank' href='/admin/gifts?id={$item}'>查看礼品</a>";
+                }
                 return $carry . "<p>尺寸:{$style::sizes[$item['size']]} 数量:{$item['qty']}<a target='_blank' href='/admin/items?&id={$item['item_id']}'>查看商品
 </a></p>";
             }, '');
