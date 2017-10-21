@@ -18,6 +18,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('cart', 'CartController');
     Route::resource('addresses', 'AddressController');
     Route::resource('gifts', 'GiftController');
+    Route::resource('coupons', 'CouponController');
     Route::get('/home', 'HomeController@index')->name('home');
     Route::post('/orders/create', 'OrderController@create')->name('orders.create');
     Route::post('/orders', 'OrderController@store')->name('orders.store');

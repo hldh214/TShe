@@ -41,11 +41,11 @@
                 </div>
             </div>
 
-            {{--<div class="panel panel-default">--}}
-            {{--<div class="panel-body">--}}
-            {{--<a href="">我的礼券</a>--}}
-            {{--</div>--}}
-            {{--</div>--}}
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <a href="{{ route('coupons.index') }}">我的礼券</a>
+                </div>
+            </div>
 
         </div>
     </div>

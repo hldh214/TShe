@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Coupon;
+use App\User;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -27,6 +29,8 @@ class EventServiceProvider extends ServiceProvider
     {
         parent::boot();
 
-        //
+        User::created(function ($user) {
+            $user->coupons()->save(Coupon::find(1));
+        });
     }
 }
