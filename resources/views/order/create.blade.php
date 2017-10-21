@@ -151,7 +151,7 @@
         <div class="card border-light">
             <div class="card-body text-dark">
                 <label for="coupon">使用礼券</label>
-                <select class="pull-right" name="coupon" id="coupon">
+                <select class="pull-right custom-select" name="coupon" id="coupon">
                     @foreach($user->coupons as $coupon)
                         <option value="{{ $coupon->id }}" data-amount="{{ $coupon->amount }}">
                             {{ $coupon->name }}
