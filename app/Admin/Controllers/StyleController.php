@@ -96,7 +96,7 @@ class StyleController extends Controller
             $form->text('name', '款式名称');
             $form->select('category_id', '品类')->options($category);
             $form->multipleSelect('size', '尺寸')->options(Style::sizes);
-            $form->currency('price', '售价')->symbol('￥');
+            $form->currency('price', '售价')->symbol('&yen;');
             $form->image('front', '正面款式上传')->uniqueName();
             $form->image('back', '反面款式上传')->uniqueName();
             $form->display('created_at', 'Created At');

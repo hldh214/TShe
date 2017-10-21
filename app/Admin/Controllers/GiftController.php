@@ -54,9 +54,7 @@ class GiftController extends Controller
     public function create()
     {
         return Admin::content(function (Content $content) {
-
-            $content->header('header');
-            $content->description('description');
+            $content->header('创建礼品');
 
             $content->body($this->form());
         });
