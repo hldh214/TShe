@@ -61,6 +61,14 @@
         .mb-15 {
             margin-bottom: 15px;
         }
+
+        .tooltip-inner {
+            background-color: #ff6f6f;
+        }
+
+        .tooltip.bs-tooltip-auto[x-placement^=bottom] .arrow::before, .tooltip.bs-tooltip-bottom .arrow::before {
+            border-bottom-color: #ff6f6f;
+        }
     </style>
     <style>
         /*https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/*/
@@ -301,7 +309,11 @@
         <i class="fa fa-chevron-down" aria-hidden="true" style="font-size: 12px; color: rgb(203,203,203);"></i>
     </span>
     {{--btn-secondary 4 disabled, btn-warning 4 enabled--}}
-    <button id="submit-button" type="button" class="btn btn-secondary btn-sm" disabled>完成定制</button>
+    <button id="submit-button" type="button" class="btn btn-secondary btn-sm" disabled
+    @if($user->coupons->where('id', 1)->isNotEmpty())
+    data-toggle="tooltip" data-placement="bottom" title="{{ $user->coupons->where('id', 1)->first()->name }}"
+    @endif
+    >完成定制</button>
 </nav>
 <div class="container">
     <div class="canvas-wrap">
@@ -759,6 +771,7 @@
 <script>
     $(document).ready(function () {
         $('#loading').hide();
+        $('[data-toggle="tooltip"]').tooltip('show');
     });
 </script>
 </body>

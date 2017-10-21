@@ -150,6 +150,19 @@
         </div>
         <div class="card border-light">
             <div class="card-body text-dark">
+                <label for="coupon">使用礼券</label>
+                <select class="pull-right" name="coupon" id="coupon">
+                    @foreach($user->coupons as $coupon)
+                        <option value="{{ $coupon->id }}" data-amount="{{ $coupon->amount }}">
+                            {{ $coupon->name }}
+                        </option>
+                    @endforeach
+                        <option value="" data-amount="0">无</option>
+                </select>
+            </div>
+        </div>
+        <div class="card border-light">
+            <div class="card-body text-dark">
                 <div class="form-group">
                     <div class="row">
                         <div class="col-4">
@@ -175,23 +188,10 @@
 <script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
 <script src="https://cdn.bootcss.com/distpicker/2.0.1/distpicker.min.js"></script>
+<script src="/js/init_distpicker.js"></script>
 <script>
     // logic
     let subtotal = 0;
-    $('.province').each(function (_, value) {
-        let province_no = $(value).data('no');
-        $(value).text($(document).distpicker('getDistricts')[province_no]);
-    });
-
-    $('.city').each(function (_, value) {
-        let city_no = $(value).data('no');
-        $(value).text($(document).distpicker('getDistricts', $(value).prev().data('no'))[city_no]);
-    });
-
-    $('.district').each(function (_, value) {
-        let district_no = $(value).data('no');
-        $(value).text($(document).distpicker('getDistricts', $(value).prev().data('no'))[district_no]);
-    });
 
     $('.each-price')
         .each(function (_, value) {
@@ -201,13 +201,20 @@
         })
         .promise()
         .done(function () {
-            $('#subtotal').text(subtotal);
+            $('#subtotal').text(subtotal - $('#coupon option:selected').data('amount'));
         });
+
+    $('#coupon').on('change', function () {
+        let amount = $('#coupon option:selected').data('amount');
+        $('#subtotal').text(subtotal - amount);
+    });
 
     $('#submit-button').on('click', function () {
         let address_id = $('input[name=address]:checked').val();
         let row_ids = '{!! $raw_row_ids !!}';
         let comment = $('#comment').val();
+        let coupon = $('#coupon').val();
+
         $.ajax({
             url: '{{ route('orders.store') }}',
             method: 'POST',
@@ -217,7 +224,8 @@
                 @endif
                 'address_id': address_id,
                 'row_ids': row_ids,
-                'comment': comment
+                'comment': comment,
+                'coupon': coupon
             },
             success: function (res) {
                 location.href = '{{ route('orders.store') }}' + '/' + res.data.id;

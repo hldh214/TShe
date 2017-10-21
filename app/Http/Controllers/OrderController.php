@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Address;
+use App\Models\Coupon;
 use App\Models\Item;
 use App\Models\Order;
 use Gloudemans\Shoppingcart\Facades\Cart;
@@ -46,27 +47,31 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
-        $data         = self::parse_cart($request->post('row_ids'));
-        $address_id   = $request->post('address_id');
-        $comment      = $request->post('comment');
-        $item         = $data->map(function ($item) {
+        $data       = self::parse_cart($request->post('row_ids'));
+        $address_id = $request->post('address_id');
+        $comment    = $request->post('comment');
+        $item       = $data->map(function ($item) {
             return [
                 'item_id' => $item->id,
                 'size'    => $item->options->size,
                 'qty'     => $item->qty
             ];
         })->values();
-        $amount       = $data->reduce(function ($carry, $item) {
+        $amount     = $data->reduce(function ($carry, $item) {
             return $carry + $item->qty * $item->price;
         }, 0);
-        $coupon       = null;
+        $coupon_id  = $request->post('coupon');
 
-        $order               = new Order();
-        $order->amount       = $amount;
-        $order->comment      = $comment;
-        $order->coupon       = $coupon;
-        $order->item         = $item;
-        $order->address_id   = $address_id;
+        $order = new Order();
+        if (!empty($coupon_id)) {
+//            $amount           -= Coupon::find($coupon_id)->amount;
+            $order->coupon_id = $coupon_id;
+        }
+
+        $order->amount     = $amount;
+        $order->comment    = $comment;
+        $order->item       = $item;
+        $order->address_id = $address_id;
         $order->save();
 
         if ($request->has('buy_flag')) {

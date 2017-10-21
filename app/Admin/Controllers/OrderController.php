@@ -73,6 +73,9 @@ class OrderController extends Controller
     {
         return Admin::grid(Order::class, function (Grid $grid) {
             $style = new Style();
+
+            $grid->model()->orderBy('created_at', 'desc');
+
             $grid->id('ID')->sortable();
             $grid->out_trade_no('订单号');
             $grid->user()->name('用户');

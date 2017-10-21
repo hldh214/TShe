@@ -35,9 +35,9 @@ class Order extends Model
         return $this->belongsTo(Address::class)->withTrashed();
     }
 
-    public function t()
+    public function coupon()
     {
-        return 122;
+        return $this->belongsTo(Coupon::class);
     }
 
     public function user()

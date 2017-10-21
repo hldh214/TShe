@@ -18,7 +18,7 @@ class CreateOrdersTable extends Migration
             $table->unsignedBigInteger('out_trade_no');
             $table->unsignedInteger('amount');
             $table->string('comment')->nullable();
-            $table->string('coupon')->nullable();
+            $table->unsignedInteger('coupon_id')->nullable();
             $table->string('item');
             $table->integer('address_id');
             $table->integer('user_id');

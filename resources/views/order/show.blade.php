@@ -62,7 +62,13 @@
     <div class="card border-light">
         <div class="card-body text-dark">
             <span>订单金额</span>
-            <span class="pull-right price">&yen;{{ $order->amount }}</span>
+            <span class="pull-right price">
+                @php ($amount = $order->amount)
+                @if($user->coupons->where('id', $order->coupon_id)->isNotEmpty())
+                @php ($amount -= $user->coupons->where('id', $order->coupon_id)->first()->amount)
+                @endif
+                &yen;{{ $amount }}
+            </span>
         </div>
     </div>
     <div class="card border-light">
@@ -78,24 +84,8 @@
 <script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
 <script src="https://cdn.bootcss.com/distpicker/2.0.1/distpicker.min.js"></script>
+<script src="/js/init_distpicker.js"></script>
 <script>
-    // logic
-    $('.province').each(function (_, value) {
-        let province_no = $(value).data('no');
-        $(value).text($(document).distpicker('getDistricts')[province_no]);
-    });
-
-    $('.city').each(function (_, value) {
-        let city_no = $(value).data('no');
-        $(value).text($(document).distpicker('getDistricts', $(value).prev().data('no'))[city_no]);
-    });
-
-    $('.district').each(function (_, value) {
-        let district_no = $(value).data('no');
-        $(value).text($(document).distpicker('getDistricts', $(value).prev().data('no'))[district_no]);
-    });
-
-
     // initial
     $.ajaxSetup({
         headers: {

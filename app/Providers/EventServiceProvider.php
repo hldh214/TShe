@@ -39,6 +39,10 @@ class EventServiceProvider extends ServiceProvider
                 $user        = User::find(auth()->id());
                 $user->point += $order->amount * env('POINT_RATIO');
                 $user->save();
+
+                if (isset($order->coupon_id)) {
+                    $user->coupons()->detach($order->coupon_id);
+                }
             }
         });
     }
