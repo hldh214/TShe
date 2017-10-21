@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Coupon;
+use App\Models\Order;
 use App\User;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -31,6 +32,14 @@ class EventServiceProvider extends ServiceProvider
 
         User::created(function ($user) {
             $user->coupons()->save(Coupon::find(1));
+        });
+
+        Order::updated(function ($order) {
+            if ($order->status == 1) {
+                $user        = User::find(auth()->id());
+                $user->point += $order->amount * env('POINT_RATIO');
+                $user->save();
+            }
         });
     }
 }
