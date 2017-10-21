@@ -12,6 +12,7 @@
                         <p>名称: {{ $coupon->name }}</p>
                         <p>描述: {{ $coupon->description }}</p>
                         <p>&yen;{{ $coupon->amount }}</p>
+                        <p>获得时间: {{ $coupon->pivot->created_at }}</p>
                     </div>
                 </div>
             @endforeach
