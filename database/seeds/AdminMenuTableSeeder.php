@@ -424,6 +424,39 @@ class AdminMenuTableSeeder extends Seeder
                 'created_at' => '2017-10-20 10:46:17',
                 'updated_at' => '2017-10-20 10:46:17',
             ),
+            37 => 
+            array (
+                'id' => 38,
+                'parent_id' => 0,
+                'order' => 0,
+                'title' => '优惠券',
+                'icon' => 'fa-ticket',
+                'uri' => NULL,
+                'created_at' => '2017-10-21 14:45:48',
+                'updated_at' => '2017-10-21 14:45:48',
+            ),
+            38 => 
+            array (
+                'id' => 39,
+                'parent_id' => 38,
+                'order' => 0,
+                'title' => '列表',
+                'icon' => 'fa-list',
+                'uri' => 'coupons',
+                'created_at' => '2017-10-21 14:46:15',
+                'updated_at' => '2017-10-21 14:46:15',
+            ),
+            39 => 
+            array (
+                'id' => 40,
+                'parent_id' => 38,
+                'order' => 0,
+                'title' => '创建',
+                'icon' => 'fa-plus',
+                'uri' => 'coupons/create',
+                'created_at' => '2017-10-21 14:46:36',
+                'updated_at' => '2017-10-21 14:46:36',
+            ),
         ));
         
         

@@ -16,7 +16,7 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedBigInteger('out_trade_no');
-            $table->integer('amount');
+            $table->unsignedInteger('amount');
             $table->string('comment')->nullable();
             $table->string('coupon')->nullable();
             $table->string('item');

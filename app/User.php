@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Models\Address;
+use App\Models\Coupon;
 use App\Notifications\ResetPassword;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -36,7 +37,7 @@ class User extends Authenticatable
     {
         $this->notify(new ResetPassword($token));
     }
-    
+
     public function addresses()
     {
         return $this->hasMany(Address::class);
@@ -45,5 +46,10 @@ class User extends Authenticatable
     public function getAvatarUriAttribute()
     {
         return Storage::disk('admin')->url($this->avatar);
+    }
+
+    public function coupons()
+    {
+        return $this->belongsToMany(Coupon::class)->withTimestamps();
     }
 }

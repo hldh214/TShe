@@ -19,4 +19,5 @@ Route::group([
     $router->resource('colors', ColorController::class);
     $router->resource('orders', OrderController::class);
     $router->resource('gifts', GiftController::class);
+    $router->resource('coupons', CouponController::class);
 });
