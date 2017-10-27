@@ -20,4 +20,5 @@ Route::group([
     $router->resource('orders', OrderController::class);
     $router->resource('gifts', GiftController::class);
     $router->resource('coupons', CouponController::class);
+    $router->resource('carousels', CarouselController::class);
 });

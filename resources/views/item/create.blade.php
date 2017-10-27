@@ -772,6 +772,10 @@
     $(document).ready(function () {
         $('#loading').hide();
         $('[data-toggle="tooltip"]').tooltip('show');
+        @if(request()->has('type'))
+            $('#collapse{{ request()->get('type') }}').addClass('show');
+            $('#materials-modal').modal();
+        @endif
     });
 </script>
 </body>
