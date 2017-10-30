@@ -72,6 +72,9 @@
                 <div class="row">
                     <div class="col-xs-6">
                         <img src="https://o86bsrpha.qnssl.com/assets/cam_case__big02-51d392fac7dde27475659080c0c6928f.png" alt="" class="img-responsive">
+                        <button class="btn btn-block btn-sm yellow">立即定制
+                            <span class="glyphicon glyphicon-play"></span>
+                        </button>
                     </div>
                     <div class="col-xs-6">
                         <img src="https://o86bsrpha.qnssl.com/assets/cam_case__small02-7410433d73462087d1a5b43bead7416a.png" alt="" class="img-responsive">
@@ -91,6 +94,9 @@
                     </div>
                     <div class="col-xs-6">
                         <img src="https://o86bsrpha.qnssl.com/assets/cam_case__big03-5666d63db83ed7e0cba4271db6bb81ff.png" alt="" class="img-responsive">
+                        <button class="btn btn-block btn-sm yellow">立即定制
+                            <span class="glyphicon glyphicon-play"></span>
+                        </button>
                     </div>
                 </div>
             </div>

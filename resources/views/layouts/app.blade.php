@@ -81,6 +81,33 @@
         </nav>
 
         @yield('content')
+
+        <div class="container">
+            <div class="list-group">
+                <a href="{{ route('index') }}" class="list-group-item">
+                    首页
+                    <span class="pull-right glyphicon glyphicon-chevron-right"></span>
+                </a>
+                <a class="list-group-item" href="{{ route('guide') }}">
+                    轻松上手
+                    <span class="pull-right glyphicon glyphicon-chevron-right"></span>
+                </a>
+                <a class="list-group-item" href="{{ route('stories') }}">
+                    T-show
+                    <span class="pull-right glyphicon glyphicon-chevron-right"></span>
+                </a>
+                <a class="list-group-item" href="{{ route('topics') }}">
+                    更多专题
+                    <span class="pull-right glyphicon glyphicon-chevron-right"></span>
+                </a>
+            </div>
+
+            <div class="copyright">
+                <p>Copyright &copy; 2017 xxx有限公司</p>
+                <p>沪公网安备00000000000001号</p>
+            </div>
+        </div>
+
     </div>
 
     <!-- Scripts -->
