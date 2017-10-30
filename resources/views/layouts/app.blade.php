@@ -42,15 +42,15 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
+                        <li><a href="{{ route('index') }}">首页</a></li>
+                        <li><a href="{{ route('guide') }}">轻松上手</a></li>
+                        <li><a href="{{ route('stories') }}">T-show</a></li>
+                        <li><a href="{{ route('topics') }}">更多专题</a></li>
                         <!-- Authentication Links -->
                         @guest
                             <li><a href="{{ route('login') }}">登录</a></li>
                             <li><a href="{{ route('register') }}">注册</a></li>
                         @else
-                            <li><a href="{{ route('index') }}">首页</a></li>
-                            <li><a href="{{ route('guide') }}">轻松上手</a></li>
-                            <li><a href="{{ route('stories') }}">T-show</a></li>
-                            <li><a href="{{ route('topics') }}">更多专题</a></li>
                             <li><a href="{{ route('items.create') }}">一件起定</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
