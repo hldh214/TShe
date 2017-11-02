@@ -20,6 +20,7 @@ class CreateOrdersTable extends Migration
             $table->string('comment')->nullable();
             $table->unsignedInteger('coupon_id')->nullable();
             $table->string('item');
+            $table->string('tracking_number')->nullable();
             $table->integer('address_id');
             $table->integer('user_id');
             $table->unsignedTinyInteger('status')->default(0);

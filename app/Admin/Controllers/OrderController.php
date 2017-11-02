@@ -98,6 +98,7 @@ class OrderController extends Controller
                             <span>{$this->address['address']}</span>
                         </p>";
             });
+            $grid->tracking_number('快递单号')->editable();
             $grid->comment('买家留言');
             $grid->amount('总金额');
             $grid->status('状态')->editable('select', Order::status);
@@ -117,7 +118,8 @@ class OrderController extends Controller
     {
         return Admin::form(Order::class, function (Form $form) {
             $form->display('id', 'ID');
-            $form->display('status', '状态');
+            $form->display('status');
+            $form->display('tracking_number');
             $form->display('created_at', 'Created At');
             $form->display('updated_at', 'Updated At');
         });

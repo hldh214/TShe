@@ -31,9 +31,14 @@
                     <div class="panel-body">
                         <p>
                             <span>{{ $order->created_at }}</span>
-                            <span class="pull-right" @if($order->status == 0)style="color: #ff5a41;"@endif>{{
-                            $order->get_order_status()
-                            }}</span>
+                            <span class="pull-right" @if($order->status == 0)style="color: #ff5a41;"@endif>
+                                {{ $order->get_order_status() }}
+                            </span>
+                        </p>
+                        <p class="pull-right">
+                            @empty($order->tracking_number)@else
+                                申通快递: ({{ $order->tracking_number }})
+                            @endempty
                         </p>
                         @if($order->get_gift_or_fail())
                             <div class="row">
