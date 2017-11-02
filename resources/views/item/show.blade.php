@@ -142,6 +142,10 @@
             background-color: #ff5859;
             color: white;
         }
+
+        .content-intro {
+            padding-top: 15px;
+        }
     </style>
     <title>Laravel</title>
 </head>
@@ -203,10 +207,7 @@
         <div class="detail-content">
             <a name="intro"></a>
             <div class="content-intro">
-                <h5>产品详情</h5>
-                <img src="/img/detail1.jpg" alt="d1" class="img-fluid">
-                <img src="/img/detail2.jpg" alt="d2" class="img-fluid">
-                <img src="/img/detail3.jpg" alt="d3" class="img-fluid">
+                {!! $item->style->item_detail !!}
             </div>
             <a name="notice"></a>
             <div class="content-notice">

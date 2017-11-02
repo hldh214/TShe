@@ -18,7 +18,9 @@
  *
  */
 
-\Encore\Admin\Form::forget(['map', 'editor']);
+\Encore\Admin\Form::forget(['map']);
+
+\Encore\Admin\Form::extend('ckeditor', \App\Admin\Extensions\Form\CKEditor::class);
 
 \Encore\Admin\Grid\Column::extend('color', function ($color, $type='value') {
     if ($type == 'value') {

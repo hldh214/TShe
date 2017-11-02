@@ -11,10 +11,32 @@ use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Content;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
+use Illuminate\Support\Facades\Storage;
 
 class StyleController extends Controller
 {
     use ModelForm;
+
+    public function upload()
+    {
+        $param_name = 'upload';
+        $request = request();
+        if ($request->file($param_name)->isValid()) {
+            $this->validate($request, [
+                $param_name => 'required|image',
+            ]);
+
+            $funcNum = $request->get('CKEditorFuncNum');
+            $path = $request->$param_name->store($param_name, 'admin');
+            $url = Storage::disk('admin')->url($path);
+
+            return "<script>window.parent.CKEDITOR.tools.callFunction($funcNum, '$url', '上传成功');</script>";
+        }
+
+        return response([
+            'code' => 1
+        ]);
+    }
 
     /**
      * Index interface.
@@ -99,6 +121,7 @@ class StyleController extends Controller
             $form->currency('price', '售价')->symbol('&yen;');
             $form->image('front', '正面款式上传')->uniqueName();
             $form->image('back', '反面款式上传')->uniqueName();
+            $form->ckeditor('item_detail', '产品详情');
             $form->display('created_at', 'Created At');
             $form->display('updated_at', 'Updated At');
         });
