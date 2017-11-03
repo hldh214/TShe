@@ -44,6 +44,7 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="{{ route('index') }}">首页</a></li>
                         <li><a href="{{ route('guide') }}">轻松上手</a></li>
+                        <li><a href="{{ route('items.create') }}">一件起定</a></li>
                         <li><a href="{{ route('stories') }}">T-show</a></li>
                         <li><a href="{{ route('topics') }}">更多专题</a></li>
                         <!-- Authentication Links -->
@@ -51,7 +52,6 @@
                             <li><a href="{{ route('login') }}">登录</a></li>
                             <li><a href="{{ route('register') }}">注册</a></li>
                         @else
-                            <li><a href="{{ route('items.create') }}">一件起定</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -90,6 +90,10 @@
                 </a>
                 <a class="list-group-item" href="{{ route('guide') }}">
                     轻松上手
+                    <span class="pull-right glyphicon glyphicon-chevron-right"></span>
+                </a>
+                <a class="list-group-item" href="{{ route('items.create') }}">
+                    一件起定
                     <span class="pull-right glyphicon glyphicon-chevron-right"></span>
                 </a>
                 <a class="list-group-item" href="{{ route('stories') }}">
