@@ -14,26 +14,10 @@ class HomeController extends Controller
     public function index()
     {
         return Admin::content(function (Content $content) {
-
-            $content->header('Dashboard');
-            $content->description('Description...');
-
-            $content->row(Dashboard::title());
-
-            $content->row(function (Row $row) {
-
-                $row->column(4, function (Column $column) {
-                    $column->append(Dashboard::environment());
-                });
-
-                $row->column(4, function (Column $column) {
-                    $column->append(Dashboard::extensions());
-                });
-
-                $row->column(4, function (Column $column) {
-                    $column->append(Dashboard::dependencies());
-                });
-            });
+            $content->body('<h1>
+            汇道
+            <small>专注于全网营销策划、网站建设、SEO优化、社会化营销</small>
+        </h1>');
         });
     }
 }

@@ -1,0 +1,15 @@
+diff --git a/src/Cart.php b/src/Cart.php
+index 09853db..7793c57 100644
+--- a/src/Cart.php
++++ b/src/Cart.php
+@@ -357,7 +357,9 @@ public function store($identifier)
+         $this->getConnection()->table($this->getTableName())->insert([
+             'identifier' => $identifier,
+             'instance' => $this->currentInstance(),
+-            'content' => serialize($content)
++            'content' => serialize($content),
++            'created_at' => date('Y-m-d H:i:s'),
++            'updated_at' => date('Y-m-d H:i:s')
+         ]);
+ 
+         $this->events->fire('cart.stored');

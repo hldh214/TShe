@@ -1,0 +1,12 @@
+diff --git a/resources/views/partials/footer.blade.php b/resources/views/partials/footer.blade.php
+index ecc79b1..14b7190 100644
+--- a/resources/views/partials/footer.blade.php
++++ b/resources/views/partials/footer.blade.php
+@@ -5,5 +5,5 @@
+         <strong>Version</strong>&nbsp;&nbsp; {!! config('admin.version') !!}
+     </div>
+     <!-- Default to the left -->
+-    <strong>Powered by <a href="https://github.com/z-song/laravel-admin" target="_blank">laravel-admin</a></strong>
++    <strong>Powered by <a href="https://www.sthdzx.com" target="_blank">汇道</a>、<a href="https://www.lijinlong.cc" target="_blank">李金龙</a></strong>
+ </footer>
+\ No newline at end of file

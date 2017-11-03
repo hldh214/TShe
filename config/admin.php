@@ -5,17 +5,17 @@ return [
     /*
      * Laravel-admin name.
      */
-    'name'      => 'Laravel-admin',
+    'name'      => '汇道后台管理面板',
 
     /*
      * Logo in admin panel header.
      */
-    'logo'      => 'TShe',
+    'logo'      => '汇道后台管理面板',
 
     /*
      * Mini-logo in admin panel header.
      */
-    'logo-mini' => 'T',
+    'logo-mini' => '汇道',
 
     /*
      * Route configration.
@@ -37,7 +37,7 @@ return [
     /*
      * Laravel-admin html title.
      */
-    'title'  => 'Admin',
+    'title'  => '汇道后台管理面板',
 
     /*
      * Use `https`.
