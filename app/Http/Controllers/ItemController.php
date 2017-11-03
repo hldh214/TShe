@@ -45,7 +45,7 @@ class ItemController extends Controller
         $material_types = MaterialType::all();
         $words          = Word::all();
         $categories     = Category::all();
-        $styles         = Style::all();
+        $styles         = Style::all()->makeHidden('item_detail');
         $colors         = Color::all();
 
         return view('item.create', compact('material_types', 'words', 'categories', 'styles', 'colors'));
