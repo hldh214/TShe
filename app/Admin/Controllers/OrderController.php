@@ -74,6 +74,10 @@ class OrderController extends Controller
         return Admin::grid(Order::class, function (Grid $grid) {
             $style = new Style();
 
+            $grid->filter(function($filter){
+                $filter->equal('user_id', 'user_id');
+            });
+
             $grid->model()->orderBy('created_at', 'desc');
 
             $grid->id('ID')->sortable();

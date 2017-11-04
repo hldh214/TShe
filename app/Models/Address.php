@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -9,8 +10,8 @@ class Address extends Model
 {
     use SoftDeletes;
 
-    public function t()
+    public function user()
     {
-        return 123;
+        return $this->belongsTo(User::class);
     }
 }

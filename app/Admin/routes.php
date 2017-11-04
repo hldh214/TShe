@@ -23,5 +23,7 @@ Route::group([
     $router->resource('carousels', CarouselController::class);
     $router->resource('stories', StoryController::class);
     $router->resource('topics', TopicController::class);
+    $router->resource('users', UserController::class);
+    $router->resource('addresses', AddressController::class);
     $router->post('upload', 'StyleController@upload')->name('upload');
 });

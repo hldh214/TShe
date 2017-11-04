@@ -2,7 +2,7 @@
 
 namespace App\Admin\Controllers;
 
-use App\Models\Address;
+use App\User;
 
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -10,8 +10,9 @@ use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Content;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
+use Illuminate\Routing\Route;
 
-class AddressController extends Controller
+class UserController extends Controller
 {
     use ModelForm;
 
@@ -23,7 +24,7 @@ class AddressController extends Controller
     public function index()
     {
         return Admin::content(function (Content $content) {
-            $content->header('收货地址列表');
+            $content->header('会员列表');
 
             $content->body($this->grid());
         });
@@ -69,27 +70,26 @@ class AddressController extends Controller
      */
     protected function grid()
     {
-        return Admin::grid(Address::class, function (Grid $grid) {
+        return Admin::grid(User::class, function (Grid $grid) {
             $grid->filter(function($filter){
-                $filter->equal('user_id', 'user_id');
+                $filter->equal('name', '昵称');
+                $filter->equal('email', '邮箱');
             });
 
             $grid->id('ID')->sortable();
-            $grid->user()->name('用户');
-            $grid->address('收货地址')->display(function () {
-                return "<p>
-                            <span>{$this->name}</span>
-                            <span>{$this->phone}</span>
-                        </p>
-                        <p>
-                            <span class=\"province\" data-no=\"{$this->province}\"></span>
-                            <span class=\"city\" data-no=\"{$this->city}\"></span>
-                            <span class=\"district\" data-no=\"{$this->district}\"></span>
-                            <span>{$this->address}</span>
-                        </p>";
-            });
+            $grid->name('昵称');
+            $grid->email('邮箱');
+            $grid->avatar('头像')->image(null, 100, 100);
+            $grid->point('积分');
             $grid->created_at();
             $grid->updated_at();
+
+            $grid->disableCreation();
+
+            $grid->actions(function ($actions) {
+                $actions->prepend('<a href="' . url('/admin/orders') . '?user_id=' . $actions->getKey() . '">查看订单</a>|');
+                $actions->prepend('<a href="' . url('/admin/addresses') . '?user_id=' . $actions->getKey() . '">查看收货地址</a>|');
+            });
         });
     }
 
@@ -100,10 +100,12 @@ class AddressController extends Controller
      */
     protected function form()
     {
-        return Admin::form(Address::class, function (Form $form) {
-
+        return Admin::form(User::class, function (Form $form) {
             $form->display('id', 'ID');
-
+            $form->text('name', '昵称');
+            $form->text('email', '邮箱');
+            $form->image('avatar', '头像');
+            $form->number('point', '积分');
             $form->display('created_at', 'Created At');
             $form->display('updated_at', 'Updated At');
         });
