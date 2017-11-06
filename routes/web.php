@@ -35,5 +35,5 @@ Route::middleware(['auth'])->group(function () {
 
 Auth::routes();
 
-Route::get('auth/{service}', 'Auth\OAuthController@redirectToProvider');
+Route::get('auth/{service}', 'Auth\OAuthController@redirectToProvider')->name('oauth');
 Route::get('auth/{service}/callback', 'Auth\OAuthController@handleProviderCallback');
