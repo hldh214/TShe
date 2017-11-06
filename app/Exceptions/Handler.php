@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -48,11 +49,10 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-//        if (env('APP_ENV') == 'local') {
-//            return parent::render($request, $exception);
-//        }
-//
-//        return redirect()->route('index');
-        return parent::render($request, $exception);
+        if ($exception instanceof AuthenticationException) {
+            return parent::render($request, $exception);
+        }
+
+        return redirect()->route('index');
     }
 }
