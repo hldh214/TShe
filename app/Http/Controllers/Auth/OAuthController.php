@@ -20,7 +20,7 @@ class OAuthController extends Controller
         $email     = $oauth_res->getId();
 
         $user = User::where('email', $email)->first();
-        if ($user->isEmpty()) {
+        if (is_null($user)) {
             $user           = new User();
             $user->name     = $oauth_res->getNickname();
             $user->avatar   = $oauth_res->getAvatar();
