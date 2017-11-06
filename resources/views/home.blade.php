@@ -7,7 +7,7 @@
                 <div class="col-xs-4">
                     <div class="thumbnail">
                         <img
-                            src="@if(Storage::disk('admin')->exists($user->avatar)){{ $user->avatar_uri }}@else@verbatim/img/picture.png@endverbatim@endif"
+                            src="{{ $user->avatar_uri }}"
                             alt="avatar" id="avatar">
                         <input style="display: none" type="file" id="file-upload" name="avatar" data-url="{{ route
                         ('store_avatar') }}" accept="image/*">

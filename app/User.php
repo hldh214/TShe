@@ -38,6 +38,8 @@ class User extends Authenticatable
         1 => 'qq',
     ];
 
+    const default_avatar = '/img/picture.png';
+
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPassword($token));
@@ -51,7 +53,9 @@ class User extends Authenticatable
     public function getAvatarUriAttribute()
     {
         if ($this->type === 0) {
-            return Storage::disk('admin')->url($this->avatar);
+            return Storage::disk('admin')->exists($this->avatar) ?
+                Storage::disk('admin')->url($this->avatar) :
+                self::default_avatar;
         }
 
         return $this->avatar;
