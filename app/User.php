@@ -33,6 +33,11 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    const type = [
+        0 => '注册',
+        1 => 'qq',
+    ];
+
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPassword($token));
