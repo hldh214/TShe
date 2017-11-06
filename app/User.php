@@ -50,7 +50,11 @@ class User extends Authenticatable
 
     public function getAvatarUriAttribute()
     {
-        return Storage::disk('admin')->url($this->avatar);
+        if ($this->type === 0) {
+            return Storage::disk('admin')->url($this->avatar);
+        }
+
+        return $this->avatar;
     }
 
     public function coupons()
