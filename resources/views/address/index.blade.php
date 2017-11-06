@@ -4,14 +4,26 @@
     <div class="container">
         <h3>
             我的地址
-            <small class="pull-right">
-                <a href="{{ route('addresses.create') }}">
-                    <span class="glyphicon glyphicon-plus"></span>
-                    新增地址
-                </a>
-            </small>
+            @if($addresses->isNotEmpty())
+                <small class="pull-right">
+                    <a href="{{ route('addresses.create') }}">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        新增地址
+                    </a>
+                </small>
+            @endif
         </h3>
         <div class="cards">
+            @if($addresses->isEmpty())
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <a href="{{ route('addresses.create') }}">
+                            <span class="glyphicon glyphicon-plus"></span>
+                            新增地址
+                        </a>
+                    </div>
+                </div>
+            @endif
             @foreach($addresses as $address)
                 <div class="panel panel-default" id="address-{{ $address->id }}">
                     <div class="panel-body">
