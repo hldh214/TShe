@@ -217,6 +217,12 @@
     });
 
     $('#submit-button').on('click', function () {
+        @if($addresses->isEmpty())
+            alert('请添加收货地址');
+            location.href = '{{ route('addresses.index') }}';
+            return false;
+        @endif
+
         let address_id = $('input[name=address]:checked').val();
         let row_ids = '{!! $raw_row_ids !!}';
         let comment = $('#comment').val();
