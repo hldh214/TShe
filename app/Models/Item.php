@@ -26,7 +26,7 @@ class Item extends Model implements Buyable
 
     public function color()
     {
-        return $this->belongsTo(Color::class);
+        return $this->belongsTo(Color::class)->withTrashed();
     }
 
     public function user()
