@@ -85,6 +85,13 @@
         </nav>
     </div>
     <div class="addresses">
+        @if($addresses->isEmpty())
+            <div class="card">
+                <div class="card-body">
+                    <a href="{{ route('addresses.create') }}">新增地址</a>
+                </div>
+            </div>
+        @endif
         @foreach($addresses as $address)
             <label class="custom-control custom-radio">
                 <input name="address" value="{{ $address->id }}"
@@ -157,7 +164,7 @@
                             {{ $coupon->name }}
                         </option>
                     @endforeach
-                        <option value="" data-amount="0">无</option>
+                    <option value="" data-amount="0">无</option>
                 </select>
             </div>
         </div>
