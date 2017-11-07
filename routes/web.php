@@ -33,10 +33,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/receive_gift', 'GiftController@receive_gift')->name('receive_gift');
     Route::get('/alipay/{out_trade_no}/{total_amount}/{subject}', 'PayController@alipay')->name('alipay');
     Route::get('/alipay/return', 'PayController@alipay_return')->name('alipay_return');
-    Route::post('/alipay/notify', 'PayController@alipay_notify')->name('alipay_notify');
 });
 
 Auth::routes();
 
 Route::get('auth/{service}', 'Auth\OAuthController@redirectToProvider')->name('oauth');
 Route::get('auth/{service}/callback', 'Auth\OAuthController@handleProviderCallback');
+
+Route::post('/alipay/notify', 'PayController@alipay_notify')->name('alipay_notify');
