@@ -294,7 +294,12 @@
             z-index: 1032;
         }
     </style>
-    <title>Laravel</title>
+    <style>
+        .tooltip {
+            z-index: 1049;
+        }
+    </style>
+    <title>{{ env('APP_NAME') }}</title>
 </head>
 <body>
 <div id="loading">
@@ -362,7 +367,7 @@
             </label>
         </p>
     </div>
-    <div class="options"><div class="options_select"><div class="options_select_box" style="width: 276px;"><div class="options_select_item options_item_relative"><i class="me_icon icon_image"></i><div class="options_item_txt">相册</div><input type="file" class="options_input_file editor-active" id="materials-upload"></div><div class="options_select_item" id="show-materials-modal"><div class="options_select_item options_item_relative"><i class="me_icon"></i><div class="options_item_txt">素材库</div></div><div class="options_icon_picture"><i class="icon_picture"></i></div></div><div class="options_select_item" id="show-words-modal"><i class="me_icon icon_txt"></i><div class="options_item_txt">文字</div></div></div></div></div>
+    <div class="options"><div class="options_select"><div class="options_select_box" style="width: 276px;"><div class="options_select_item options_item_relative invisible"><i class="me_icon icon_image"></i><div class="options_item_txt">相册</div><input type="file" class="options_input_file editor-active" id="materials-upload"></div><div class="options_select_item" id="show-materials-modal"><div class="options_select_item options_item_relative"><i class="me_icon"></i><div class="options_item_txt">素材库</div></div><div class="options_icon_picture"><i class="icon_picture"></i></div></div><div class="options_select_item invisible" id="show-words-modal"><i class="me_icon icon_txt"></i><div class="options_item_txt">文字</div></div></div></div></div>
 </div>
 <div class="modal fade" id="materials-modal">
     <div class="modal-dialog" role="document">
@@ -492,45 +497,45 @@
 <script src="https://cdn.bootcss.com/jquery.lazyloadxt/1.1.0/jquery.lazyloadxt.bootstrap.min.js"></script>
 <script>
     // settings
-    fabric.Canvas.prototype.customiseControls({
-        tl: {
-            action: 'move',
-            cursor: 'pointer'
-        },
-        tr: {
-            action: 'rotate',
-            cursor: 'pointer'
-        },
-        bl: {
-            action: 'remove',
-            cursor: 'pointer'
-        },
-        br: {
-            action: 'scale',
-            cursor: 'pointer'
-        }
-    });
-    fabric.Object.prototype.customiseCornerIcons({
-        settings: {
-            borderColor: '#0094dd',
-            cornerSize: 50,
-            cornerShape: 'circle',
-//            cornerShape: 'rect',
-            cornerBackgroundColor: 'gray',
-        },
-        tl: {
-            icon: '/img/move.png',
-        },
-        tr: {
-            icon: '/img/rotate.png',
-        },
-        bl: {
-            icon: '/img/remove.png',
-        },
-        br: {
-            icon: '/img/resize.png',
-        },
-    });
+//    fabric.Canvas.prototype.customiseControls({
+//        tl: {
+//            action: 'move',
+//            cursor: 'pointer'
+//        },
+//        tr: {
+//            action: 'rotate',
+//            cursor: 'pointer'
+//        },
+//        bl: {
+//            action: 'remove',
+//            cursor: 'pointer'
+//        },
+//        br: {
+//            action: 'scale',
+//            cursor: 'pointer'
+//        }
+//    });
+//    fabric.Object.prototype.customiseCornerIcons({
+//        settings: {
+//            borderColor: '#0094dd',
+//            cornerSize: 50,
+//            cornerShape: 'circle',
+////            cornerShape: 'rect',
+//            cornerBackgroundColor: 'gray',
+//        },
+//        tl: {
+//            icon: '/img/move.png',
+//        },
+//        tr: {
+//            icon: '/img/rotate.png',
+//        },
+//        bl: {
+//            icon: '/img/remove.png',
+//        },
+//        br: {
+//            icon: '/img/resize.png',
+//        },
+//    });
 
     fabric.Object.prototype.setControlsVisibility({
         mt: false, // middle top disable
@@ -547,6 +552,14 @@
     fabric.Canvas.prototype.selection = false;
     fabric.Canvas.prototype.height = '360';
     fabric.Canvas.prototype.width = '280';
+
+    // dumb
+    fabric.Object.prototype.lockMovementX = true;
+    fabric.Object.prototype.lockMovementY = true;
+    fabric.Object.prototype.lockScalingX = true;
+    fabric.Object.prototype.lockScalingY = true;
+    fabric.Object.prototype.lockUniScaling = true;
+    fabric.Object.prototype.lockRotation = true;
 
     var selected_object = null;
     var canvas = null;
@@ -591,32 +604,33 @@
     })
 
     var fabric_event = {
-        'object:scaling': updateControls,
-        'object:resizing': updateControls,
-        'object:rotating': updateControls,
-        'object:selected': function (obj) {
-            if (deleting === true) {
-                // mobile platform problem
-                canvas.deactivateAllWithDispatch().renderAll();
-                deleting = false;
-                return;
-            }
-            selected_object = obj.target;
-            updateControls();
-            $('.canvas-container').css('border', '1px solid');
-            $('.controls').show();
-            $('.options').hide();
-        },
-        'selection:cleared': onSelectionCleared,
+//        'object:scaling': updateControls,
+//        'object:resizing': updateControls,
+//        'object:rotating': updateControls,
+//        'object:selected': function (obj) {
+//            if (deleting === true) {
+//                // mobile platform problem
+//                canvas.deactivateAllWithDispatch().renderAll();
+//                deleting = false;
+//                return;
+//            }
+//            selected_object = obj.target;
+//            updateControls();
+//            $('.canvas-container').css('border', '1px solid');
+//            $('.controls').show();
+//            $('.options').hide();
+//        },
+//        'selection:cleared': onSelectionCleared,
         'object:added': function (obj) {
             object_count++;
+            console.log(obj.target);
             obj.target.center().setCoords();
         },
-        'object:removed': function () {
-            object_count--;
-            deleting = true;
-            onSelectionCleared();
-        },
+//        'object:removed': function () {
+//            object_count--;
+//            deleting = true;
+//            onSelectionCleared();
+//        },
         'after:render': function () {
             if (object_count === 0) {
                 $('#submit-button').prop('disabled', true).addClass('btn-secondary').removeClass('btn-warning');
