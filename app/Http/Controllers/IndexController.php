@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Carousel;
+use App\Models\IndexImage;
 use App\Models\Story;
 use App\Models\Topic;
 
@@ -11,8 +12,9 @@ class IndexController extends Controller
     public function index()
     {
         $carousels = Carousel::all();
+        $indexImages = IndexImage::all();
 
-        return view('index.index', compact('carousels'));
+        return view('index.index', compact('carousels', 'indexImages'));
     }
 
     public function guide()

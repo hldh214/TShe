@@ -25,5 +25,6 @@ Route::group([
     $router->resource('topics', TopicController::class);
     $router->resource('users', UserController::class);
     $router->resource('addresses', AddressController::class);
+    $router->resource('indexImages', IndexImageController::class);
     $router->post('upload', 'StyleController@upload')->name('upload');
 });
