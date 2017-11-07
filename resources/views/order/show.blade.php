@@ -75,7 +75,11 @@
         <div class="card-body text-dark">
             <p class="gray">请选择支付方式</p>
             <hr>
-            <a class="btn btn-block btn-outline-primary" href="">支付宝支付</a>
+            <a class="btn btn-block btn-outline-primary" href="{{ route('alipay', [
+            'out_trade_no' => $order->out_trade_no,
+            'total_amount' => $amount,
+            'subject' => '服装定制'
+            ]) }}">支付宝支付</a>
             <a class="btn btn-block btn-outline-success" href="">微信支付</a>
         </div>
     </div>

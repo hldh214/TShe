@@ -26,6 +26,8 @@ class CreateOrdersTable extends Migration
             $table->unsignedTinyInteger('status')->default(0);
             $table->timestamps();
             $table->softDeletes();
+
+            $table->index('out_trade_no');
         });
     }
 
