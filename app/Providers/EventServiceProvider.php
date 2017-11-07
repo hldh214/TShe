@@ -16,7 +16,7 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'App\Events\Event' => [
+        'App\Events\Event'                              => [
             'App\Listeners\EventListener',
         ],
         'SocialiteProviders\Manager\SocialiteWasCalled' => [
@@ -39,7 +39,7 @@ class EventServiceProvider extends ServiceProvider
 
         Order::updated(function ($order) {
             if ($order->status == 1) {
-                $user        = User::find(auth()->id());
+                $user        = $order->user;
                 $user->point += $order->amount * env('POINT_RATIO');
                 $user->save();
 
