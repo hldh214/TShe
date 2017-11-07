@@ -70,6 +70,7 @@ class CarouselController extends Controller
         return Admin::grid(Carousel::class, function (Grid $grid) {
             $grid->id('ID')->sortable();
             $grid->uri('图片')->image(null, 100, 100);
+            $grid->link('跳转链接');
             $grid->created_at();
             $grid->updated_at();
         });
@@ -85,6 +86,7 @@ class CarouselController extends Controller
         return Admin::form(Carousel::class, function (Form $form) {
             $form->display('id', 'ID');
             $form->image('uri', '图片上传')->uniqueName();
+            $form->text('link', '跳转链接');
             $form->display('created_at', 'Created At');
             $form->display('updated_at', 'Updated At');
         });

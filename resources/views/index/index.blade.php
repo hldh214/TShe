@@ -28,7 +28,9 @@
         <div class="swiper-wrapper">
             @foreach($carousels as $carousel)
                 <div class="swiper-slide">
-                    <img class="img-responsive" src="{{ $carousel->full_uri }}" alt="slide">
+                    <a href="{{ $carousel->link }}">
+                        <img class="img-responsive" src="{{ $carousel->full_uri }}" lt="slide">
+                    </a>
                 </div>
             @endforeach
         </div>
