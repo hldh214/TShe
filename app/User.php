@@ -36,7 +36,7 @@ class User extends Authenticatable
     const type = [
         0 => '注册',
         1 => 'qq',
-        2 => '微信Web'
+        2 => 'weixinweb'
     ];
 
     const default_avatar = '/img/picture.png';
