@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "ee158dd205a43582769fb50d86ad931c",
+    "content-hash": "d4a6b71fbfbc3840127760c9c25f736e",
     "packages": [
         {
             "name": "caouecs/laravel-lang",
@@ -2021,6 +2021,47 @@
             ],
             "description": "Qq.com OAuth2 Provider for Laravel Socialite",
             "time": "2017-01-25T09:48:29+00:00"
+        },
+        {
+            "name": "socialiteproviders/weixin",
+            "version": "v4.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SocialiteProviders/Weixin.git",
+                "reference": "ca91fcc01f36dd790257bb27b54cd26cc919776e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/SocialiteProviders/Weixin/ca91fcc01f36dd790257bb27b54cd26cc919776e.zip",
+                "reference": "ca91fcc01f36dd790257bb27b54cd26cc919776e",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.6 || ^7.0",
+                "socialiteproviders/manager": "~2.0 || ~3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SocialiteProviders\\Weixin\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "xyxu",
+                    "email": "techxu@gmail.com"
+                },
+                {
+                    "name": "xiami",
+                    "email": "jhdxr@php.net"
+                }
+            ],
+            "description": "Weixin OAuth2 Provider for Laravel Socialite",
+            "time": "2017-07-26T08:10:52+00:00"
         },
         {
             "name": "socialiteproviders/weixin-web",
