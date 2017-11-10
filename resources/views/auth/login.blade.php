@@ -82,9 +82,9 @@
                                 </a>
                             </div>
                             <div class="col-xs-6">
-                                <a href="{{ route('oauth', ['service' => 'weibo']) }}">
-                                    <i class="fa fa-weibo" aria-hidden="true"></i>
-                                    <p>微博</p>
+                                <a href="{{ route('oauth', ['service' => 'weixin']) }}">
+                                    <i class="fa fa-weixin" aria-hidden="true"></i>
+                                    <p>微信</p>
                                 </a>
                             </div>
                         </div>

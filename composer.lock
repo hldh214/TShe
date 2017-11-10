@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "6746b601166467381bd91014dd913e4f",
+    "content-hash": "ee158dd205a43582769fb50d86ad931c",
     "packages": [
         {
             "name": "caouecs/laravel-lang",
@@ -2020,6 +2020,43 @@
                 }
             ],
             "description": "Qq.com OAuth2 Provider for Laravel Socialite",
+            "time": "2017-01-25T09:48:29+00:00"
+        },
+        {
+            "name": "socialiteproviders/weixin-web",
+            "version": "v3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SocialiteProviders/Weixin-Web.git",
+                "reference": "64d58360c2208208b2bfb11db00066dd02afbcc4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/SocialiteProviders/Weixin-Web/64d58360c2208208b2bfb11db00066dd02afbcc4.zip",
+                "reference": "64d58360c2208208b2bfb11db00066dd02afbcc4",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.6 || ^7.0",
+                "socialiteproviders/manager": "~3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SocialiteProviders\\WeixinWeb\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "xyxu",
+                    "email": "techxu@gmail.com"
+                }
+            ],
+            "description": "Weixin-Web OAuth2 Provider for Laravel Socialite",
             "time": "2017-01-25T09:48:29+00:00"
         },
         {
