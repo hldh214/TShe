@@ -299,7 +299,7 @@
             z-index: 1049;
         }
     </style>
-    <title>{{ env('APP_NAME') }}</title>
+    <title>定制 - {{ env('APP_NAME') }}</title>
 </head>
 <body>
 <div id="loading">

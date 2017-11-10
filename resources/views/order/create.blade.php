@@ -70,7 +70,7 @@
             background: repeating-linear-gradient(-45deg, #ff5859, #ff5859 20%, transparent 0, transparent 25%, #ffd423 0, #ffd423 45%, transparent 0, transparent 50%) 24px/108px 108px;
         }
     </style>
-    <title>Laravel</title>
+    <title>我的订单 - {{ env('APP_NAME') }}</title>
 </head>
 @inject('style', 'App\Models\Style')
 <body>

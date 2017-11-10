@@ -13,14 +13,13 @@
                     </div>
                     <div class="video_intro">
                         <span class="video_intro__left">把喜欢穿在身上</span>
-                        <span class="video_intro__right">T社宣传视频</span>
                     </div>
                 </div>
 
                 <div class="user_guide__body">
                     <div class="body_item body_custom">
                         <div class="body_item__title">
-                            <h2 class="body_item__title">T社定制</h2>
+                            <h2 class="body_item__title">定制</h2>
                             <p class="custom_title__sub">就是很简单</p>
                             <p class="body_item__divider"></p>
                             <div class="custom_tab">
@@ -30,7 +29,7 @@
                             </div>
                         </div>
                         <div class="custom_content__item custom_design">
-                            <h3 class="custom_title">在T社，你只需要</h3>
+                            <h3 class="custom_title">只需要</h3>
                             <div class="design_content">
                                 <div class="design_content__item">
                                     <p class="design_content__img img1"></p>
@@ -51,7 +50,7 @@
                             </div>
 
                         </div>
-                        <div class="custom_content__item custom_spread">
+<!--                         <div class="custom_content__item custom_spread">
                             <h3 class="custom_title">T社尽心为您打造舒适的推广环境</h3>
                             <div class="spread_content">
                                 <div class="spread_content__item border_bottom--gradient">
@@ -70,11 +69,11 @@
                                     <p class="spread_item__intro">无须费心&nbsp;&nbsp;&nbsp;安心分享</p>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
-                    <div class="body_item body_belief">
+<!--                     <div class="body_item body_belief">
                         <div class="body_item__title">
-                            <h2 class="body_item__title">T社理念</h2>
+                            <h2 class="body_item__title">经典先生理念</h2>
                             <p class="body_item__divider"></p>
                         </div>
                         <div class="belief_content">
@@ -87,10 +86,10 @@
                             <p class="belief_paragraph">你将在T社有尊严地表达自己</p>
                             <p class="belief_paragraph paragraph--strong">总之，我们所坚持的价值，就是展现你的价值</p>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="body_item body_brand">
                         <div class="body_item__title">
-                            <h2 class="body_item__title">T社品牌</h2>
+                            <h2 class="body_item__title">经典先生</h2>
                             <p class="body_item__divider"></p>
                         </div>
                         <div class="brand_content">
@@ -119,7 +118,6 @@
                                     </div>
                                     <div class="video_intro">
                                         <span class="video_intro__left">能流传的叫匠心</span>
-                                        <span class="video_intro__right">T社创艺工厂</span>
                                     </div>
                                 </div>
                                 <div class="print_intro">
@@ -179,10 +177,10 @@
                         <div class="topc_content">
                             <div class="topc_one_piece">
                                 <h3>创意无禁区，定制你所想</h3>
-                                <p>来T社定制就是这么简单</p>
+                                <p>来经典先生定制就是这么简单</p>
                                 <a href="{{ route('items.create') }}">一件起订</a>
                             </div>
-                            <div class="topc_img"></div>
+<!--                             <div class="topc_img"></div> -->
                         </div>
                     </div>
                 </div>

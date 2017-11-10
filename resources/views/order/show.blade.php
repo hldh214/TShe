@@ -26,7 +26,7 @@
             color: #909090;
         }
     </style>
-    <title>Laravel</title>
+    <title>订单支付 - {{ env('APP_NAME') }}</title>
 </head>
 <body>
 <div class="my-container">

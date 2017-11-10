@@ -1,10 +1,11 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="{{ env('THEME_COLOR') }}">
+    <link href="{{ asset('img/ico.ico') }}" rel="Shortcut Icon">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -30,7 +31,8 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
+                        <img src="{{ asset('img/logo.png') }}">
+                        <!-- {{ config('app.name', 'Laravel') }} -->
                     </a>
                 </div>
 
@@ -107,8 +109,8 @@
             </div>
 
             <div class="copyright">
-                <p>Copyright &copy; 2017 xxx有限公司</p>
-                <p>沪公网安备00000000000001号</p>
+                <p>Copyright &copy; 2017 中山市经典先生商贸有限公司</p>
+                <p>粤ICP备17137906号-1</p>
             </div>
         </div>
 

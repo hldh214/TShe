@@ -10,6 +10,7 @@
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/Swiper/3.4.2/css/swiper.min.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/toastr.js/2.1.3/toastr.min.css" rel="stylesheet">
+    <title>{{ env('APP_NAME') }}</title>
     <style>
         body {
             text-align: center;
@@ -147,7 +148,7 @@
             padding-top: 15px;
         }
     </style>
-    <title>Laravel</title>
+    
 </head>
 <body>
 <div class="slider">

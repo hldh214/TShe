@@ -81,12 +81,12 @@
                                     <p>QQ</p>
                                 </a>
                             </div>
-                            <div class="col-xs-6">
+<!--                             <div class="col-xs-6">
                                 <a href="{{ route('oauth', ['service' => 'weibo']) }}">
                                     <i class="fa fa-weibo" aria-hidden="true"></i>
                                     <p>微博</p>
                                 </a>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>

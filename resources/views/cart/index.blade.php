@@ -8,6 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="https://cdn.bootcss.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <title>我的购物车 - {{ env('APP_NAME') }}</title>
     <style>
         body {
             background-color: #f4f7fa;
@@ -120,7 +121,7 @@
             transform: translate(-50%, -50%) scale(0.05);
         }
     </style>
-    <title>Laravel</title>
+    
 </head>
 @inject('style', 'App\Models\Style')
 <body>
