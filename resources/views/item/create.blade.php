@@ -497,47 +497,50 @@
 <script src="https://cdn.bootcss.com/jquery.lazyloadxt/1.1.0/jquery.lazyloadxt.bootstrap.min.js"></script>
 <script>
     // settings
-//    fabric.Canvas.prototype.customiseControls({
-//        tl: {
-//            action: 'move',
-//            cursor: 'pointer'
-//        },
-//        tr: {
-//            action: 'rotate',
-//            cursor: 'pointer'
-//        },
-//        bl: {
-//            action: 'remove',
-//            cursor: 'pointer'
-//        },
-//        br: {
-//            action: 'scale',
-//            cursor: 'pointer'
-//        }
-//    });
-//    fabric.Object.prototype.customiseCornerIcons({
-//        settings: {
-//            borderColor: '#0094dd',
-//            cornerSize: 50,
-//            cornerShape: 'circle',
-////            cornerShape: 'rect',
-//            cornerBackgroundColor: 'gray',
-//        },
-//        tl: {
-//            icon: '/img/move.png',
-//        },
-//        tr: {
-//            icon: '/img/rotate.png',
-//        },
-//        bl: {
-//            icon: '/img/remove.png',
-//        },
-//        br: {
-//            icon: '/img/resize.png',
-//        },
-//    });
+    fabric.Canvas.prototype.customiseControls({
+        tl: {
+            action: 'move',
+            cursor: 'pointer'
+        },
+        tr: {
+            action: 'rotate',
+            cursor: 'pointer'
+        },
+        bl: {
+            action: 'remove',
+            cursor: 'pointer'
+        },
+        br: {
+            action: 'scale',
+            cursor: 'pointer'
+        }
+    });
+    fabric.Object.prototype.customiseCornerIcons({
+        settings: {
+            borderColor: '#0094dd',
+            cornerSize: 50,
+            cornerShape: 'circle',
+//            cornerShape: 'rect',
+            cornerBackgroundColor: 'gray',
+        },
+        tl: {
+            icon: '/img/move.png',
+        },
+        tr: {
+            icon: '/img/rotate.png',
+        },
+        bl: {
+            icon: '/img/remove.png',
+        },
+        br: {
+            icon: '/img/resize.png',
+        },
+    });
 
     fabric.Object.prototype.setControlsVisibility({
+        tl: false,
+        tr: false,
+        br: false,
         mt: false, // middle top disable
         mb: false, // midle bottom
         ml: false, // middle left
@@ -626,11 +629,11 @@
             console.log(obj.target);
             obj.target.center().setCoords();
         },
-//        'object:removed': function () {
-//            object_count--;
-//            deleting = true;
-//            onSelectionCleared();
-//        },
+        'object:removed': function () {
+            object_count--;
+            deleting = true;
+            onSelectionCleared();
+        },
         'after:render': function () {
             if (object_count === 0) {
                 $('#submit-button').prop('disabled', true).addClass('btn-secondary').removeClass('btn-warning');
