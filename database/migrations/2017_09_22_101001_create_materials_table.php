@@ -17,6 +17,7 @@ class CreateMaterialsTable extends Migration
             $table->increments('id');
             $table->integer('material_type_id');
             $table->string('uri');
+            $table->string('thumb');
             $table->timestamps();
             $table->softDeletes();
         });

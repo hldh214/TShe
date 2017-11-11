@@ -21,4 +21,9 @@ class Material extends Model
     {
         return Storage::disk('admin')->url($this->uri);
     }
+
+    public function getFullThumbAttribute()
+    {
+        return Storage::disk('admin')->url($this->thumb);
+    }
 }

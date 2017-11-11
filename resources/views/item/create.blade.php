@@ -397,7 +397,8 @@
                                                 @foreach($materials as $material)
                                                     <div class="col">
                                                         <img class="img-fluid"
-                                                             data-src="{{ $material->full_uri }}"
+                                                             data-src="{{ $material->full_thumb }}"
+                                                             data-raw="{{ $material->full_uri }}"
                                                              src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
                                                         >
                                                     </div>
@@ -626,7 +627,6 @@
 //        'selection:cleared': onSelectionCleared,
         'object:added': function (obj) {
             object_count++;
-            console.log(obj.target);
             obj.target.center().setCoords();
         },
         'object:removed': function () {
@@ -668,7 +668,9 @@
     });
 
     $('.img-fluid').on('click', function (event) {
-        canvas.add(new fabric.Image(event.target));
+        fabric.Image.fromURL($(event.target).data('raw'), function(myImg) {
+            canvas.add(myImg);
+        });
         $('#materials-modal').modal('hide');
     });
 
