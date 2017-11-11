@@ -32,6 +32,6 @@ class OAuthController extends Controller
 
         // I guess you don’t REMEMBER ME, Sherlock, but we grew up together.
         auth()->login($user, true);
-        return redirect()->route('home');
+        return redirect()->route('items.create');
     }
 }
