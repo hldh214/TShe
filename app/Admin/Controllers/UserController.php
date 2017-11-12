@@ -81,6 +81,9 @@ class UserController extends Controller
             $grid->email('邮箱');
             $grid->avatar('头像')->image(null, 100, 100);
             $grid->point('积分');
+//            $grid->type('类型')->display(function ($type) {
+//                return User::type[$type];
+//            });
             $grid->created_at();
             $grid->updated_at();
 
