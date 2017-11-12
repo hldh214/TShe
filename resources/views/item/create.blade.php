@@ -298,6 +298,66 @@
         .tooltip {
             z-index: 1049;
         }
+
+
+        /*新增素材库内容*/
+
+        .collapse.show {
+            display: block;
+        }
+
+        .card {
+            position: static;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-direction: column;
+            flex-direction: inherit;
+            min-width: 0;
+            word-wrap: break-word;
+            background-color: #fff;
+            background-clip: border-box;
+            border: 0;
+            border-radius: .25rem;
+        }
+
+        .card h5 a {
+            font-size: 1rem !important;
+            color: #d3d3d3 !important;
+        }
+
+        .card-header {
+            background-color: rgba(0, 0, 0, .03);
+            border-bottom: 1px solid rgba(0, 0, 0, .125);
+            width: 20%;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .modal-body {
+            padding: 0;
+        }
+
+        .collapse {
+            width: 80%;
+        }
+
+        .card-body {
+            padding: 0;
+            padding: 0;
+            position: absolute;
+            top: 0;
+            left: 20%;
+        }
+
+        .container-fluid {
+            padding-top: 15px;
+        }
+
+        .container-fluid .col {
+            text-align: left;
+            width: 30%;
+            flex-basis:auto;
+        }
     </style>
     <title>定制 - {{ env('APP_NAME') }}</title>
 </head>
@@ -380,6 +440,30 @@
             </div>
             <div class="modal-body">
                 <div id="accordion">
+                    <div class="card">
+                        <div class="card-header" role="tab">
+                            <h5 class="mb-0">
+                                <a data-toggle="collapse" href="#collapse">
+                                    全部
+                                </a>
+                            </h5>
+                        </div>
+                        <div id="collapse" class="collapse show" data-parent="#accordion">
+                            <div class="card-body">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        @foreach($materials as $material)
+                                            <div class="col">
+                                                <img class="img-fluid" data-src="{{ $material->full_thumb }}"
+                                                     data-raw="{{ $material->full_uri }}"
+                                                     src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     @foreach($material_types as $material_type)
                         <div class="card">
                             <div class="card-header" role="tab">
@@ -392,19 +476,15 @@
                             <div id="collapse{{ $material_type->id }}" class="collapse" data-parent="#accordion">
                                 <div class="card-body">
                                     <div class="container-fluid">
-                                        @foreach($material_type->materials->chunk(3) as $materials)
-                                            <div class="row">
-                                                @foreach($materials as $material)
-                                                    <div class="col">
-                                                        <img class="img-fluid"
-                                                             data-src="{{ $material->full_thumb }}"
-                                                             data-raw="{{ $material->full_uri }}"
-                                                             src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                                        >
-                                                    </div>
-                                                @endforeach
-                                            </div>
-                                        @endforeach
+                                        <div class="row">
+                                            @foreach($material_type->materials as $material)
+                                                <div class="col">
+                                                    <img class="img-fluid" data-src="{{ $material->full_thumb }}"
+                                                         data-raw="{{ $material->full_uri }}"
+                                                         src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                                </div>
+                                            @endforeach
+                                        </div>
                                     </div>
                                 </div>
                             </div>

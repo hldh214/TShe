@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Color;
 use App\Models\Item;
+use App\Models\Material;
 use App\Models\MaterialType;
 use App\Models\Style;
 use App\Models\Word;
@@ -47,8 +48,9 @@ class ItemController extends Controller
         $categories     = Category::all();
         $styles         = Style::all()->makeHidden('item_detail');
         $colors         = Color::all();
+        $materials = Material::all();
 
-        return view('item.create', compact('material_types', 'words', 'categories', 'styles', 'colors'));
+        return view('item.create', compact('material_types', 'words', 'categories', 'styles', 'colors', 'materials'));
     }
 
     /**
