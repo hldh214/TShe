@@ -337,9 +337,9 @@
             padding: 0;
         }
 
-        .collapse {
-            width: 80%;
-        }
+        /*.collapse {*/
+            /*width: 80%;*/
+        /*}*/
 
         .card-body {
             padding: 0;
