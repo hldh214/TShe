@@ -414,18 +414,21 @@
 </div>
 <div class="fixed-bottom">
     <div class="controls collapse">
-        <p>
-            <label>
-                <span>旋转</span>
-                <input type="range" id="angle-control" value="0" min="0" max="360">
-            </label>
+        <p class="mt-3">
+            <button class="btn btn-danger" id="delete-canvas-item">删除</button>
         </p>
-        <p>
-            <label>
-                <span>大小</span>
-                <input type="range" id="scale-control" value="1" min="0.1" max="3" step="0.1">
-            </label>
-        </p>
+        {{--<p>--}}
+            {{--<label>--}}
+                {{--<span>旋转</span>--}}
+                {{--<input type="range" id="angle-control" value="0" min="0" max="360">--}}
+            {{--</label>--}}
+        {{--</p>--}}
+        {{--<p>--}}
+            {{--<label>--}}
+                {{--<span>大小</span>--}}
+                {{--<input type="range" id="scale-control" value="1" min="0.1" max="3" step="0.1">--}}
+            {{--</label>--}}
+        {{--</p>--}}
     </div>
     <div class="options"><div class="options_select"><div class="options_select_box" style="width: 276px;"><div class="options_select_item options_item_relative invisible"><i class="me_icon icon_image"></i><div class="options_item_txt">相册</div><input type="file" class="options_input_file editor-active" id="materials-upload"></div><div class="options_select_item" id="show-materials-modal"><div class="options_select_item options_item_relative"><i class="me_icon"></i><div class="options_item_txt">素材库</div></div><div class="options_icon_picture"><i class="icon_picture"></i></div></div><div class="options_select_item invisible" id="show-words-modal"><i class="me_icon icon_txt"></i><div class="options_item_txt">文字</div></div></div></div></div>
 </div>
@@ -622,6 +625,7 @@
         tl: false,
         tr: false,
         br: false,
+        bl: false,
         mt: false, // middle top disable
         mb: false, // midle bottom
         ml: false, // middle left
@@ -671,6 +675,10 @@
 
 
     // events
+    $('#delete-canvas-item').on('click', function() {
+        canvas.remove(selected_object);
+    });
+
     var angleControl = $('#angle-control');
     angleControl.on('input', function () {
         selected_object.set('angle', parseInt(this.value, 10)).setCoords();
@@ -691,27 +699,27 @@
 //        'object:scaling': updateControls,
 //        'object:resizing': updateControls,
 //        'object:rotating': updateControls,
-//        'object:selected': function (obj) {
-//            if (deleting === true) {
-//                // mobile platform problem
-//                canvas.deactivateAllWithDispatch().renderAll();
-//                deleting = false;
-//                return;
-//            }
-//            selected_object = obj.target;
-//            updateControls();
-//            $('.canvas-container').css('border', '1px solid');
-//            $('.controls').show();
-//            $('.options').hide();
-//        },
-//        'selection:cleared': onSelectionCleared,
+        'object:selected': function (obj) {
+            if (deleting === true) {
+                // mobile platform problem
+                canvas.deactivateAllWithDispatch().renderAll();
+                deleting = false;
+                return;
+            }
+            selected_object = obj.target;
+            updateControls();
+            $('.canvas-container').css('border', '1px solid');
+            $('.controls').show();
+            $('.options').hide();
+        },
+        'selection:cleared': onSelectionCleared,
         'object:added': function (obj) {
             object_count++;
             obj.target.center().setCoords();
         },
         'object:removed': function () {
             object_count--;
-            deleting = true;
+//            deleting = true;
             onSelectionCleared();
         },
         'after:render': function () {
