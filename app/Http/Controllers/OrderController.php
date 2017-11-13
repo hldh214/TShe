@@ -48,6 +48,11 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $data       = self::parse_cart($request->post('row_ids'));
+        if ($data->isEmpty()) {
+            return response([
+                'code' => 1
+            ]);
+        }
         $address_id = $request->post('address_id');
         $comment    = $request->post('comment');
         $item       = $data->map(function ($item) {

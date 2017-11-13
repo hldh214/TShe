@@ -241,7 +241,10 @@
                 'coupon': coupon
             },
             success: function (res) {
-                location.href = '{{ route('orders.store') }}' + '/' + res.data.id;
+                if (res.code === 0) {
+                    location.href = '{{ route('orders.store') }}' + '/' + res.data.id;
+                }
+                location.href = '{{ route('home') }}';
             }
         });
     });
