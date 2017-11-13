@@ -21,7 +21,7 @@ class Item extends Model implements Buyable
 
     public function style()
     {
-        return $this->belongsTo(Style::class);
+        return $this->belongsTo(Style::class)->withTrashed();
     }
 
     public function color()
