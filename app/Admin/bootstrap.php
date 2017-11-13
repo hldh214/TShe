@@ -26,7 +26,7 @@
     if ($type == 'value') {
         $content = $color;
     } elseif ($type == 'name') {
-        $content = \App\Models\Color::where('value', $color)->first()->name;
+        $content = \App\Models\Color::where('value', $color)->withTrashed()->first()->name;
     } else {
         $content = $color;
     }
