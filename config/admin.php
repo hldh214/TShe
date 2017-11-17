@@ -42,7 +42,7 @@ return [
     /*
      * Use `https`.
      */
-    'secure' => true,
+    'secure' => env('APP_ENV') == 'local' ? false : true,
 
     /*
      * Laravel-admin auth setting.
