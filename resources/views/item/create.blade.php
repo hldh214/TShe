@@ -642,8 +642,8 @@
     fabric.Canvas.prototype.width = '280';
 
     // dumb
-    fabric.Object.prototype.lockMovementX = true;
-    fabric.Object.prototype.lockMovementY = true;
+//    fabric.Object.prototype.lockMovementX = true;
+//    fabric.Object.prototype.lockMovementY = true;
     fabric.Object.prototype.lockScalingX = true;
     fabric.Object.prototype.lockScalingY = true;
     fabric.Object.prototype.lockUniScaling = true;
