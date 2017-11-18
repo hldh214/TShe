@@ -77,8 +77,8 @@ class ItemController extends Controller
             $grid->style()->name('款式');
             $grid->color()->value('颜色')->color('name');
             $grid->column('下载')->display(function () {
-                $front_uri = 'item' . DIRECTORY_SEPARATOR . $this->id . '-front.png';
-                $back_uri  = 'item' . DIRECTORY_SEPARATOR . $this->id . '-back.png';
+                $front_uri = 'item/' . $this->id . '-front.png';
+                $back_uri  = 'item/' . $this->id . '-back.png';
                 if (!Storage::disk('admin')->exists($front_uri)) {
                     $front       = Image::make(public_path(DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . $this->front))->resize(400, null, function ($constraint) {
                         $constraint->aspectRatio();
@@ -105,14 +105,14 @@ class ItemController extends Controller
 ";
             });
             $grid->column('正面')->display(function () {
-                $front_uri = 'item' . DIRECTORY_SEPARATOR . $this->id . '-front.png';
+                $front_uri = 'item/' . $this->id . '-front.png';
 
                 return "
 <img src='/uploads/{$front_uri}' class='img img-thumbnail' style='max-width:100px;max-height:100px'/>
 ";
             });
             $grid->column('反面')->display(function () {
-                $back_uri = 'item' . DIRECTORY_SEPARATOR . $this->id . '-back.png';
+                $back_uri = 'item/' . $this->id . '-back.png';
 
                 return "
 <img src='/uploads/{$back_uri}' class='img img-thumbnail' style='max-width:100px;max-height:100px'/>
