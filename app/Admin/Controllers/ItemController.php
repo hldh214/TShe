@@ -72,6 +72,7 @@ class ItemController extends Controller
     protected function grid()
     {
         return Admin::grid(Item::class, function (Grid $grid) {
+            $grid->model()->orderBy('id', 'desc');
             $grid->disableActions();
             $grid->id('ID')->sortable();
             $grid->category()->name('品类');

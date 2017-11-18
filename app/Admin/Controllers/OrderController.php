@@ -78,7 +78,7 @@ class OrderController extends Controller
                 $filter->equal('user_id', 'user_id');
             });
 
-            $grid->model()->orderBy('created_at', 'desc');
+            $grid->model()->orderBy('id', 'desc');
 
             $grid->id('ID')->sortable();
             $grid->out_trade_no('订单号');
