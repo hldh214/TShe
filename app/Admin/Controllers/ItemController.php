@@ -10,6 +10,7 @@ use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Content;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
+use Intervention\Image\Exception\NotReadableException;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\Storage;
 
@@ -80,23 +81,37 @@ class ItemController extends Controller
                 $front_uri = 'merged/' . $this->id . '-front.png';
                 $back_uri  = 'merged/' . $this->id . '-back.png';
                 if (!Storage::disk('admin')->exists($front_uri)) {
-                    $front       = Image::make(public_path(DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . $this->front))->resize(400, null, function ($constraint) {
-                        $constraint->aspectRatio();
-                    });
-                    $style_front = Image::make(public_path(DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . $this->style['front']));
-                    $style_front = Image::canvas($style_front->width(), $style_front->height(), $this->color['value'])->insert($style_front);
-                    $style_front->insert($front, 'top', null, 330);
-                    Storage::disk('admin')->put($front_uri, (string)$style_front->encode());
+                    try {
+                        $front       = Image::make(public_path(DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . $this->front))->resize(400, null, function ($constraint) {
+                            $constraint->aspectRatio();
+                        });
+                        $style_front = Image::make(public_path(DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . $this->style['front']));
+                    } catch (NotReadableException $exception) {
+                        $front_uri = 'Deleted_photo.png';
+                    }
+
+                    if ($front_uri != 'Deleted_photo.png') {
+                        $style_front = Image::canvas($style_front->width(), $style_front->height(), $this->color['value'])->insert($style_front);
+                        $style_front->insert($front, 'top', null, 330);
+                        Storage::disk('admin')->put($front_uri, (string)$style_front->encode());
+                    }
                 }
 
                 if (!Storage::disk('admin')->exists($back_uri)) {
-                    $back       = Image::make(public_path(DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . $this->back))->resize(400, null, function ($constraint) {
-                        $constraint->aspectRatio();
-                    });
-                    $style_back = Image::make(public_path(DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . $this->style['back']));
-                    $style_back = Image::canvas($style_back->width(), $style_back->height(), $this->color['value'])->insert($style_back);
-                    $style_back->insert($back, 'top', null, 330);
-                    Storage::disk('admin')->put($back_uri, (string)$style_back->encode());
+                    try {
+                        $back       = Image::make(public_path(DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . $this->back))->resize(400, null, function ($constraint) {
+                            $constraint->aspectRatio();
+                        });
+                        $style_back = Image::make(public_path(DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . $this->style['back']));
+                    } catch (NotReadableException $exception) {
+                        $back_uri = 'Deleted_photo.png';
+                    }
+
+                    if ($back_uri != 'Deleted_photo.png') {
+                        $style_back = Image::canvas($style_back->width(), $style_back->height(), $this->color['value'])->insert($style_back);
+                        $style_back->insert($back, 'top', null, 330);
+                        Storage::disk('admin')->put($back_uri, (string)$style_back->encode());
+                    }
                 }
 
                 return "
@@ -105,17 +120,27 @@ class ItemController extends Controller
 ";
             });
             $grid->column('正面')->display(function () {
-                $front_uri = 'merged/' . $this->id . '-front.png';
+                if (file_exists(public_path(DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'merged/' . $this->id . '-front.png'))) {
+                    $front_uri = '/uploads/merged/' . $this->id . '-front.png';
+                } else {
+                    $front_uri = '/uploads/Deleted_photo.png';
+                }
 
                 return "
-<img src='/uploads/{$front_uri}' class='img img-thumbnail' style='max-width:100px;max-height:100px'/>
+<img src='{$front_uri}' class='img img-thumbnail' style='max-width:100px;max-height:100px'/>
 ";
             });
             $grid->column('反面')->display(function () {
-                $back_uri = 'merged/' . $this->id . '-back.png';
+                if (file_exists(public_path(DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'merged/' .
+                                            $this->id . '-back.png'))) {
+                    $back_uri = '/uploads/merged/' . $this->id . '-back.png';
+                } else {
+                    $back_uri = '/uploads/Deleted_photo.png';
+                }
+
 
                 return "
-<img src='/uploads/{$back_uri}' class='img img-thumbnail' style='max-width:100px;max-height:100px'/>
+<img src='{$back_uri}' class='img img-thumbnail' style='max-width:100px;max-height:100px'/>
 ";
             });
             $grid->disableCreation();
