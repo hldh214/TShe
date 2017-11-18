@@ -10,6 +10,8 @@ use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Content;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
+use Intervention\Image\ImageManagerStatic as Image;
+use Illuminate\Support\Facades\Storage;
 
 class ItemController extends Controller
 {
@@ -75,14 +77,49 @@ class ItemController extends Controller
             $grid->style()->name('款式');
             $grid->color()->value('颜色')->color('name');
             $grid->column('下载')->display(function () {
+                $front_uri = 'item' . DIRECTORY_SEPARATOR . $this->id . '-front.png';
+                $back_uri  = 'item' . DIRECTORY_SEPARATOR . $this->id . '-back.png';
+                if (!Storage::disk('admin')->exists($front_uri)) {
+                    $front       = Image::make(public_path(DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . $this->front))->resize(400, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    });
+                    $style_front = Image::make(public_path(DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . $this->style['front']));
+                    $style_front = Image::canvas($style_front->width(), $style_front->height(), $this->color['value'])->insert($style_front);
+                    $style_front->insert($front, 'top', null, 330);
+                    Storage::disk('admin')->put($front_uri, (string)$style_front->encode());
+                }
+
+                if (!Storage::disk('admin')->exists($back_uri)) {
+                    $back       = Image::make(public_path(DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . $this->back))->resize(400, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    });
+                    $style_back = Image::make(public_path(DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . $this->style['back']));
+                    $style_back = Image::canvas($style_back->width(), $style_back->height(), $this->color['value'])->insert($style_back);
+                    $style_back->insert($back, 'top', null, 330);
+                    Storage::disk('admin')->put($back_uri, (string)$style_back->encode());
+                }
+
                 return "
-<a href='{$this->front_uri}' download='front-{$this->id}.png' target='_blank' class='btn btn-default'>正面</a>
-<a href='{$this->back_uri}' download='back-{$this->id}.png' target='_blank' class='btn btn-default'>反面</a>
+<a href='/uploads/{$front_uri}' download='front-{$this->id}.png' target='_blank' class='btn btn-default'>正面</a>
+<a href='/uploads/{$back_uri}' download='back-{$this->id}.png' target='_blank' class='btn btn-default'>反面</a>
 ";
             });
-            $grid->front('正面')->image(null, 100, 100);
-            $grid->back('反面')->image(null, 100, 100);
+            $grid->column('正面')->display(function () {
+                $front_uri = 'item' . DIRECTORY_SEPARATOR . $this->id . '-front.png';
+
+                return "
+<img src='/uploads/{$front_uri}' class='img img-thumbnail' style='max-width:100px;max-height:100px'/>
+";
+            });
+            $grid->column('反面')->display(function () {
+                $back_uri = 'item' . DIRECTORY_SEPARATOR . $this->id . '-back.png';
+
+                return "
+<img src='/uploads/{$back_uri}' class='img img-thumbnail' style='max-width:100px;max-height:100px'/>
+";
+            });
             $grid->disableCreation();
+            $grid->paginate(5);
             $grid->created_at();
             $grid->updated_at();
         });
