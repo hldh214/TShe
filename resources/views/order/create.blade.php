@@ -243,6 +243,7 @@
             success: function (res) {
                 if (res.code === 0) {
                     location.href = '{{ route('orders.store') }}' + '/' + res.data.id;
+                    return;
                 }
                 location.href = '{{ route('home') }}';
             }
