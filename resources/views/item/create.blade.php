@@ -430,7 +430,7 @@
             </label>
         </p>
     </div>
-    <div class="options"><div class="options_select"><div class="options_select_box" style="width: 276px;"><div class="options_select_item options_item_relative invisible"><i class="me_icon icon_image"></i><div class="options_item_txt">相册</div><input type="file" class="options_input_file editor-active" id="materials-upload"></div><div class="options_select_item" id="show-materials-modal"><div class="options_select_item options_item_relative"><i class="me_icon"></i><div class="options_item_txt">素材库</div></div><div class="options_icon_picture"><i class="icon_picture"></i></div></div><div class="options_select_item invisible" id="show-words-modal"><i class="me_icon icon_txt"></i><div class="options_item_txt">文字</div></div></div></div></div>
+    <div class="options"><div class="options_select"><div class="options_select_box" style="width: 276px;"><div class="options_select_item options_item_relative"><i class="me_icon icon_image"></i><div class="options_item_txt">相册</div><input type="file" class="options_input_file editor-active" id="materials-upload"></div><div class="options_select_item" id="show-materials-modal"><div class="options_select_item options_item_relative"><i class="me_icon"></i><div class="options_item_txt">素材库</div></div><div class="options_icon_picture"><i class="icon_picture"></i></div></div><div class="options_select_item invisible" id="show-words-modal"><i class="me_icon icon_txt"></i><div class="options_item_txt">文字</div></div></div></div></div>
 </div>
 <div class="modal fade" id="materials-modal">
     <div class="modal-dialog" role="document">
