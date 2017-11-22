@@ -78,6 +78,12 @@ class ItemController extends Controller
             $grid->category()->name('品类');
             $grid->style()->name('款式');
             $grid->color()->value('颜色')->color('name');
+            $grid->column('素材图下载')->display(function () {
+                return "
+<a href='{$this->front_uri}' download='front-{$this->id}.png' target='_blank' class='btn btn-default'>正面</a>
+<a href='{$this->back_uri}' download='back-{$this->id}.png' target='_blank' class='btn btn-default'>反面</a>
+";
+            });
             $grid->column('下载')->display(function () {
                 $front_uri = 'merged/' . $this->id . '-front.png';
                 $back_uri  = 'merged/' . $this->id . '-back.png';
@@ -116,8 +122,8 @@ class ItemController extends Controller
                 }
 
                 return "
-<a href='/uploads/{$front_uri}' download='front-{$this->id}.png' target='_blank' class='btn btn-default'>正面</a>
-<a href='/uploads/{$back_uri}' download='back-{$this->id}.png' target='_blank' class='btn btn-default'>反面</a>
+<a href='/uploads/{$front_uri}' download='merged-front-{$this->id}.png' target='_blank' class='btn btn-default'>正面</a>
+<a href='/uploads/{$back_uri}' download='merged-back-{$this->id}.png' target='_blank' class='btn btn-default'>反面</a>
 ";
             });
             $grid->column('正面')->display(function () {
