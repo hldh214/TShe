@@ -653,7 +653,7 @@
     var canvas = null;
     // object:removed && object:selected will called together
     var deleting = false;
-    var object_count = 0;
+    var object_count = [0, 0];
 
     var front_side = new fabric.Canvas('front-side-container');
     var back_side = new fabric.Canvas('back-side-container');
@@ -714,16 +714,25 @@
         },
         'selection:cleared': onSelectionCleared,
         'object:added': function (obj) {
-            object_count++;
+            if ($(obj.target.canvas.lowerCanvasEl).attr('id') === 'front-side-container') {
+                object_count[0]++;
+            } else {
+                object_count[1]++;
+            }
+
             obj.target.center().setCoords();
         },
-        'object:removed': function () {
-            object_count--;
+        'object:removed': function (obj) {
+            if ($(obj.target.canvas.lowerCanvasEl).attr('id') === 'front-side-container') {
+                object_count[0]--;
+            } else {
+                object_count[1]--;
+            }
 //            deleting = true;
             onSelectionCleared();
         },
         'after:render': function () {
-            if (object_count === 0) {
+            if ((object_count === [0, 0]) || (object_count[0] > 1) || (object_count[1] > 1)) {
                 $('#submit-button').prop('disabled', true).addClass('btn-secondary').removeClass('btn-warning');
                 return;
             }
