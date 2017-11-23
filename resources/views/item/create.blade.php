@@ -299,6 +299,14 @@
             z-index: 1049;
         }
 
+        .tip {
+            z-index: 1049;
+            color: #ff6f6f;
+            font-size: 12px;
+            margin: auto;
+            border: 1px solid grey;
+        }
+
 
         /*新增素材库内容*/
 
@@ -343,7 +351,6 @@
 
         .card-body {
             padding: 0;
-            padding: 0;
             position: absolute;
             top: 0;
             left: 20%;
@@ -379,6 +386,9 @@
     data-toggle="tooltip" data-placement="bottom" title="{{ $user->coupons->where('id', 1)->first()->name }}"
     @endif
     >完成定制</button>
+    <div class="tip">
+        <span>单面仅支持使用一张素材</span>
+    </div>
 </nav>
 <div class="container">
     <div class="canvas-wrap">
@@ -732,11 +742,11 @@
             onSelectionCleared();
         },
         'after:render': function () {
-            if ((object_count === [0, 0]) || (object_count[0] > 1) || (object_count[1] > 1)) {
-                $('#submit-button').prop('disabled', true).addClass('btn-secondary').removeClass('btn-warning');
+            if (['[1,0]', '[0,1]', '[1,1]'].indexOf(JSON.stringify(object_count)) !== -1) {
+                $('#submit-button').prop('disabled', false).addClass('btn-warning').removeClass('btn-secondary');
                 return;
             }
-            $('#submit-button').prop('disabled', false).addClass('btn-warning').removeClass('btn-secondary');
+            $('#submit-button').prop('disabled', true).addClass('btn-secondary').removeClass('btn-warning');
         }
     };
 
