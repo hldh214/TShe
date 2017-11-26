@@ -27,4 +27,6 @@ Route::group([
     $router->resource('addresses', AddressController::class);
     $router->resource('indexImages', IndexImageController::class);
     $router->post('upload', 'StyleController@upload')->name('upload');
+    $router->get('material/bulk_insert', 'MaterialController@bulk_insert_create')->name('bulk_insert.create');
+    $router->post('material/bulk_insert', 'MaterialController@bulk_insert_store')->name('bulk_insert.store');
 });
