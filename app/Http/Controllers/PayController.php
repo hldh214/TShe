@@ -37,10 +37,13 @@ class PayController extends Controller
     public function wxpay(Request $request, $out_trade_no, $total_fee, $body)
     {
         $total_fee *= 100;
-        $user = Socialite::driver('weixin')->user();
-        dd($user);
+        $openid = session('openid');
+        if (is_null($openid)) {
+            redirect()->route('oauth', ['service' => 'weixin']);
+        }
 
-        return Pay::driver('wechat')->gateway('mp')->pay(compact('out_trade_no', 'total_fee', 'body'));
+
+        return Pay::driver('wechat')->gateway('mp')->pay(compact('out_trade_no', 'total_fee', 'body', 'openid'));
     }
     
     public function wxpay_notify(Request $request)

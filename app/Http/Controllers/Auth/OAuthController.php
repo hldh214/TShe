@@ -19,6 +19,10 @@ class OAuthController extends Controller
         $oauth_res = Socialite::driver($service)->user();
         $email     = $oauth_res->getId();
 
+        if ($service == 'weixin') {
+            session(['openid' => $email]);
+        }
+
         $user = User::where('email', $email)->first();
         if (is_null($user)) {
             $user           = new User();
