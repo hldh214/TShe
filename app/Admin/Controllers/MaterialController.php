@@ -80,9 +80,9 @@ class MaterialController extends Controller
                 }));
             });
 
-            $grid->tools(function ($tools) {
-                $tools->append(new BulkInsert());
-            });
+//            $grid->tools(function ($tools) {
+//                $tools->append(new BulkInsert());
+//            });
 
             $grid->id('素材ID')->sortable();
             $grid->material_type()->name('分类');
