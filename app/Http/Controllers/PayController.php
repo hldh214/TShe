@@ -49,7 +49,7 @@ class PayController extends Controller
 
     public function wxpay_notify(Request $request)
     {
-        if (Pay::driver('wechat')->gateway('mp')->verify($request->all())) {
+        if (Pay::driver('wechat')->gateway('mp')->verify($request->getContent())) {
             $order         = Order::where('out_trade_no', $request->out_trade_no)->first();
             $order->status = 1;
             $order->save();
