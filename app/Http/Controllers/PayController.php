@@ -33,10 +33,10 @@ class PayController extends Controller
 
     public function wxpay(Request $request)
     {
-        $openid    = session('openid');
+        $openid       = session('openid');
         $out_trade_no = $request->get('out_trade_no');
-        $total_fee = $request->get('total_fee') * 100;
-        $body = $request->get('body');
+        $total_fee    = $request->get('total_fee') * 100;
+        $body         = $request->get('body');
         if (is_null($openid)) {
             return redirect()->route('oauth', ['service' => 'weixin']);
         }
@@ -49,8 +49,9 @@ class PayController extends Controller
 
     public function wxpay_notify(Request $request)
     {
-        if (Pay::driver('wechat')->gateway('mp')->verify($request->getContent())) {
-            $order         = Order::where('out_trade_no', $request->out_trade_no)->first();
+        $verify = Pay::driver('wechat')->gateway('mp')->verify($request->getContent());
+        if ($verify) {
+            $order         = Order::where('out_trade_no', $verify['out_trade_no'])->first();
             $order->status = 1;
             $order->save();
         }
