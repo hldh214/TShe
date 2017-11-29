@@ -17,14 +17,12 @@ class PayController extends Controller
 
     public function alipay_return(Request $request)
     {
-//        return Pay::driver('alipay')->gateway()->verify($request->all());
         return redirect()->route('orders.index');
     }
 
     public function alipay_notify(Request $request)
     {
-        // todo: gateway == wap?
-        if (Pay::driver('alipay')->gateway()->verify($request->all())) {
+        if (Pay::driver('alipay')->gateway('wap')->verify($request->all())) {
             $order         = Order::where('out_trade_no', $request->out_trade_no)->first();
             $order->status = 1;
             $order->save();

@@ -21,6 +21,9 @@ class OAuthController extends Controller
 
         if ($service == 'weixin') {
             session(['openid' => $email]);
+            if (auth()->check()) {
+                return redirect()->route('order.index');
+            }
         }
 
         $user = User::where('email', $email)->first();
@@ -36,6 +39,7 @@ class OAuthController extends Controller
 
         // I guess you don’t REMEMBER ME, Sherlock, but we grew up together.
         auth()->login($user, true);
+
         return redirect()->route('items.create');
     }
 }
