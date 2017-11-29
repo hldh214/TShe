@@ -80,7 +80,7 @@
             'total_amount' => $amount,
             'subject' => '服装定制'
             ]) }}">支付宝支付</a>
-            <a class="btn btn-block btn-outline-success" href="{{ route('wxpay', [
+            <a class="btn btn-block btn-outline-success" href="{{ route('wxpay') . '?' . http_build_query([
             'out_trade_no' => $order->out_trade_no,
             'total_fee' => $amount,
             'body' => '服装定制'

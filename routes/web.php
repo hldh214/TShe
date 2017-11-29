@@ -32,7 +32,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/store_avatar', 'HomeController@store_avatar')->name('store_avatar');
     Route::post('/receive_gift', 'GiftController@receive_gift')->name('receive_gift');
     Route::get('/alipay/{out_trade_no}/{total_amount}/{subject}', 'PayController@alipay')->name('alipay');
-    Route::get('/wxpay/{out_trade_no}/{total_fee}/{body}', 'PayController@wxpay')->name('wxpay');
+    Route::get('/wxpay', 'PayController@wxpay')->name('wxpay');
     Route::get('/alipay/return', 'PayController@alipay_return')->name('alipay_return');
 });
 
