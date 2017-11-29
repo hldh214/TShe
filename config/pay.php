@@ -20,7 +20,7 @@ return [
 
     'wechat' => [
         // 公众号APPID
-        'app_id' => '',
+        'app_id' => env('WXPAY_APP_ID'),
 
         // 小程序APPID
         'miniapp_id' => '',
@@ -29,13 +29,13 @@ return [
         'appid' => '',
 
         // 微信支付分配的微信商户号
-        'mch_id' => '',
+        'mch_id' => env('WXPAY_MCH_ID'),
 
         // 微信支付异步通知地址
-        'notify_url' => '',
+        'notify_url' => env('WXPAY_NOTIFY_URL'),
 
         // 微信支付签名秘钥
-        'key' => '',
+        'key' => env('WXPAY_KEY'),
 
         // 客户端证书路径，退款时需要用到。请填写绝对路径，linux 请确保权限问题。pem 格式。
         'cert_client' => '',
