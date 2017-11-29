@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use Illuminate\Http\Request;
-use Laravel\Socialite\Facades\Socialite;
 use Yansongda\LaravelPay\Facades\Pay;
 
 class PayController extends Controller
@@ -26,7 +25,7 @@ class PayController extends Controller
     {
         // todo: gateway == wap?
         if (Pay::driver('alipay')->gateway()->verify($request->all())) {
-            $order = Order::where('out_trade_no', $request->out_trade_no)->first();
+            $order         = Order::where('out_trade_no', $request->out_trade_no)->first();
             $order->status = 1;
             $order->save();
         }
@@ -37,19 +36,21 @@ class PayController extends Controller
     public function wxpay(Request $request, $out_trade_no, $total_fee, $body)
     {
         $total_fee *= 100;
-        $openid = session('openid');
+        $openid    = session('openid');
         if (is_null($openid)) {
-            redirect()->route('oauth', ['service' => 'weixin']);
+            return redirect()->route('oauth', ['service' => 'weixin']);
         }
 
-
-        return Pay::driver('wechat')->gateway('mp')->pay(compact('out_trade_no', 'total_fee', 'body', 'openid'));
+        return view(
+            'pay.wxpay',
+            ['pay' => Pay::driver('wechat')->gateway('mp')->pay(compact('out_trade_no', 'total_fee', 'body', 'openid'))]
+        );
     }
-    
+
     public function wxpay_notify(Request $request)
     {
         if (Pay::driver('wechat')->gateway('mp')->verify($request->all())) {
-            $order = Order::where('out_trade_no', $request->out_trade_no)->first();
+            $order         = Order::where('out_trade_no', $request->out_trade_no)->first();
             $order->status = 1;
             $order->save();
         }
