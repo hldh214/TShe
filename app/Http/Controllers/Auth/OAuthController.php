@@ -22,7 +22,7 @@ class OAuthController extends Controller
         if ($service == 'weixin') {
             session(['openid' => $email]);
             if (auth()->check()) {
-                return redirect()->route('order.index');
+                return redirect()->route('orders.index');
             }
         }
 
