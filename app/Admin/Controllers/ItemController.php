@@ -78,6 +78,22 @@ class ItemController extends Controller
             $grid->category()->name('品类');
             $grid->style()->name('款式');
             $grid->color()->value('颜色')->color('name');
+//            $grid->column('上 - 右 - 下 - 左')->display(function () {
+//                // TODO: https://stackoverflow.com/a/45610601/6266737
+//                $front       = imagecreatefrompng(public_path(DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR .
+//                                                  $this->front));
+//
+//                $cropped = imagecropauto($front, IMG_CROP_DEFAULT);
+//                imagepng($cropped, "./star-with-alpha-crop.png");
+//                dd($cropped);
+//
+//                if ($cropped !== false) { // in case a new image resource was returned
+//                    imagedestroy($front);    // we destroy the original image
+//                    $front = $cropped;       // and assign the cropped image to $im
+//                    dd($front);
+//                }
+//
+//            });
             $grid->column('素材图下载')->display(function () {
                 return "
 <a href='{$this->front_uri}' download='front-{$this->id}.png' target='_blank' class='btn btn-default'>正面</a>
