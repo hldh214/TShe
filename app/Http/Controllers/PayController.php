@@ -35,10 +35,9 @@ class PayController extends Controller
 
     public function wxpay(Request $request)
     {
-        $total_fee *= 100;
         $openid    = session('openid');
         $out_trade_no = $request->get('out_trade_no');
-        $total_fee = $request->get('total_fee');
+        $total_fee = $request->get('total_fee') * 100;
         $body = $request->get('body');
         if (is_null($openid)) {
             return redirect()->route('oauth', ['service' => 'weixin']);
