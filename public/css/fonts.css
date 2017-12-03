@@ -1,0 +1,54 @@
+@font-face {
+    font-family: "文悦新青年体";
+    src: url("/font/文悦新青年体.otf") format('opentype');
+}
+
+@font-face {
+    font-family: "微软雅黑Bold";
+    src: url("/font/微软雅黑Bold.ttf") format('truetype');
+}
+
+@font-face {
+    font-family: "华文行楷";
+    src: url("/font/华文行楷.ttf") format('truetype');
+}
+
+@font-face {
+    font-family: "华文中宋";
+    src: url("/font/华文中宋.ttf") format('truetype');
+}
+
+@font-face {
+    font-family: "隶书";
+    src: url("/font/隶书.ttf") format('truetype');
+}
+
+@font-face {
+    font-family: "Bauhaus 93";
+    src: url("/font/Bauhaus 93.ttf") format('truetype');
+}
+
+@font-face {
+    font-family: "Century725 Cn BT";
+    src: url("/font/Century725 Cn BT.ttf") format('truetype');
+}
+
+@font-face {
+    font-family: "College";
+    src: url("/font/College.ttf") format('truetype');
+}
+
+@font-face {
+    font-family: "EnglishTowne-Normal";
+    src: url("/font/EnglishTowne-Normal.ttf") format('truetype');
+}
+
+@font-face {
+    font-family: "Jillian Gothic";
+    src: url("/font/Jillian Gothic.ttf") format('truetype');
+}
+
+@font-face {
+    font-family: "JudasCaps Wd";
+    src: url("/font/JudasCaps Wd.ttf") format('truetype');
+}

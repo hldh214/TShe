@@ -8,6 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="https://cdn.bootcss.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/fonts.css">
     <style>
         body {
             background-color: #f4f7fa;
@@ -440,7 +441,7 @@
             </label>
         </p>
     </div>
-    <div class="options"><div class="options_select"><div class="options_select_box" style="width: 276px;"><div class="options_select_item options_item_relative"><i class="me_icon icon_image"></i><div class="options_item_txt">相册</div><input type="file" class="options_input_file editor-active" id="materials-upload"></div><div class="options_select_item" id="show-materials-modal"><div class="options_select_item options_item_relative"><i class="me_icon"></i><div class="options_item_txt">素材库</div></div><div class="options_icon_picture"><i class="icon_picture"></i></div></div><div class="options_select_item invisible" id="show-words-modal"><i class="me_icon icon_txt"></i><div class="options_item_txt">文字</div></div></div></div></div>
+    <div class="options"><div class="options_select"><div class="options_select_box" style="width: 276px;"><div class="options_select_item options_item_relative"><i class="me_icon icon_image"></i><div class="options_item_txt">相册</div><input type="file" class="options_input_file editor-active" id="materials-upload"></div><div class="options_select_item" id="show-materials-modal"><div class="options_select_item options_item_relative"><i class="me_icon"></i><div class="options_item_txt">素材库</div></div><div class="options_icon_picture"><i class="icon_picture"></i></div></div><div class="options_select_item" id="show-words-modal"><i class="me_icon icon_txt"></i><div class="options_item_txt">文字</div></div></div></div></div>
 </div>
 <div class="modal fade" id="materials-modal">
     <div class="modal-dialog" role="document">
@@ -527,6 +528,39 @@
                             <button class="btn btn-warning btn-lg" type="button" id="set-word">完成</button>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="font-family">字体选择</label>
+                        </div>
+                        <div class="col-8">
+                            <select id="font-family" class="form-control">
+                                <option value="文悦新青年体">文悦新青年体</option>
+                                <option value="微软雅黑Bold">微软雅黑Bold</option>
+                                <option value="华文行楷">华文行楷</option>
+                                <option value="华文中宋">华文中宋</option>
+                                <option value="隶书">隶书</option>
+                                <option value="Century725 Cn BT">Century725 Cn BT</option>
+                                <option value="Jillian Gothic">Jillian Gothic</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="font-color">颜色选择</label>
+                        </div>
+                        <div class="col-8">
+                            <select id="font-color" class="form-control">
+                                <option value="#000000">黑色</option>
+                                <option value="#FFFFFF">白色</option>
+                                <option value="#C0C0C0">银色</option>
+                                <option value="#DAA520">金色</option>
+                                <option value="#FF0000">红色</option>
+                                <option value="#0000FF">蓝色</option>
+                                <option value="#FFFF00">黄色</option>
+                                <option value="#008000">绿色</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
                 <div class="list-group">
                     @foreach($words as $word)
@@ -589,6 +623,7 @@
 <script src="https://cdn.bootcss.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
 <script src="https://cdn.bootcss.com/jquery.lazyloadxt/1.1.0/jquery.lazyloadxt.min.js"></script>
 <script src="https://cdn.bootcss.com/jquery.lazyloadxt/1.1.0/jquery.lazyloadxt.bootstrap.min.js"></script>
+<script src="https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js"></script>
 <script>
     // settings
     fabric.Canvas.prototype.customiseControls({
@@ -782,7 +817,10 @@
     });
 
     $('#set-word').on('click', function () {
-        canvas.add(new fabric.Text($('#word').val()));
+        canvas.add(new fabric.Text($('#word').val(), {
+            fontFamily: $('#font-family').val(),
+            fill: $('#font-color').val()
+        }));
         $('#words-modal').modal('hide');
     });
 
@@ -893,14 +931,23 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-</script>
-<script>
+    WebFont.load({
+        custom: {
+            families: [
+                // zh-cn
+                '文悦新青年体', '微软雅黑Bold', '华文行楷', '华文中宋', '隶书',
+                // eng
+                'Jillian Gothic', 'Century725 Cn BT'
+            ]
+        }
+    });
+
     $(document).ready(function () {
         $('#loading').hide();
         $('[data-toggle="tooltip"]').tooltip('show');
         @if(request()->has('type'))
-            $('#collapse{{ request()->get('type') }}').addClass('show');
-            $('#materials-modal').modal();
+        $('#collapse{{ request()->get('type') }}').addClass('show');
+        $('#materials-modal').modal();
         @endif
     });
 </script>
