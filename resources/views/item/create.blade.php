@@ -564,6 +564,17 @@
                             </select>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="font-direction">文字方向</label>
+                        </div>
+                        <div class="col-8">
+                            <select id="font-direction" class="form-control">
+                                <option value="horizontal">横排</option>
+                                <option value="vertical">竖排</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
                 <div class="list-group">
                     @foreach($words as $word)
@@ -820,7 +831,11 @@
     });
 
     $('#set-word').on('click', function () {
-        canvas.add(new fabric.Text($('#word').val(), {
+        var word = $('#word').val();
+        if ($('#font-direction').val() === 'vertical') {
+            word = word.split('').join('\n');
+        }
+        canvas.add(new fabric.Text(word, {
             fontFamily: $('#font-family').val(),
             fill: $('#font-color').val()
         }));
