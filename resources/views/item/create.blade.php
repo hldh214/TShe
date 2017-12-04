@@ -539,6 +539,9 @@
                                 <option value="华文行楷">华文行楷</option>
                                 <option value="华文中宋">华文中宋</option>
                                 <option value="隶书">隶书</option>
+                                <option value="DisneyPark">DisneyPark</option>
+                                <option value="Diploma">Diploma</option>
+                                <option value="AmarilloUSAF">AmarilloUSAF</option>
                                 <option value="Century725 Cn BT">Century725 Cn BT</option>
                                 <option value="Jillian Gothic">Jillian Gothic</option>
                             </select>
@@ -937,7 +940,7 @@
                 // zh-cn
                 '文悦新青年体', '微软雅黑Bold', '华文行楷', '华文中宋', '隶书',
                 // eng
-                'Jillian Gothic', 'Century725 Cn BT'
+                'Jillian Gothic', 'Century725 Cn BT', 'AmarilloUSAF', 'Diploma', 'DisneyPark'
             ]
         }
     });

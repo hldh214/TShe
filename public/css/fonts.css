@@ -24,23 +24,8 @@
 }
 
 @font-face {
-    font-family: "Bauhaus 93";
-    src: url("/font/Bauhaus 93.ttf") format('truetype');
-}
-
-@font-face {
     font-family: "Century725 Cn BT";
     src: url("/font/Century725 Cn BT.ttf") format('truetype');
-}
-
-@font-face {
-    font-family: "College";
-    src: url("/font/College.ttf") format('truetype');
-}
-
-@font-face {
-    font-family: "EnglishTowne-Normal";
-    src: url("/font/EnglishTowne-Normal.ttf") format('truetype');
 }
 
 @font-face {
@@ -49,6 +34,16 @@
 }
 
 @font-face {
-    font-family: "JudasCaps Wd";
-    src: url("/font/JudasCaps Wd.ttf") format('truetype');
+    font-family: "AmarilloUSAF";
+    src: url("/font/AmarilloUSAF.ttf") format('truetype');
+}
+
+@font-face {
+    font-family: "Diploma";
+    src: url("/font/Diploma.ttf") format('truetype');
+}
+
+@font-face {
+    font-family: "DisneyPark";
+    src: url("/font/DisneyPark.ttf") format('truetype');
 }
