@@ -10,6 +10,7 @@
 ![screenshot5](screenshots/5.jpg)
 ![screenshot6](screenshots/6.jpg)
 ![screenshot7](screenshots/7.jpg)
+![screenshot8](screenshots/8.jpg)
 
 
 ## Table of Contents
@@ -45,12 +46,14 @@ $ php artisan db:seed
 
 4. http://laravel-admin.org/docs/#/zh/installation
 
+
 ## Usage 
 
 1. Register a new user at http://tshe.dev/register
 2. Your admin panel will be available at http://tshe.dev/admin
 
 Note: Depending on your configuration you may need to define a site within NGINX or Apache; Your URL domain may change from localhost to what you have defined.
+
 
 ## Contribution
 
