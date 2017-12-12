@@ -299,73 +299,6 @@
         .tooltip {
             z-index: 1049;
         }
-
-        .tip {
-            z-index: 1049;
-            color: #ff6f6f;
-            font-size: 12px;
-            margin: auto;
-            border: 1px solid grey;
-        }
-
-
-        /*新增素材库内容*/
-
-        .collapse.show {
-            display: block;
-        }
-
-        .card {
-            position: static;
-            display: -ms-flexbox;
-            display: flex;
-            -ms-flex-direction: column;
-            flex-direction: inherit;
-            min-width: 0;
-            word-wrap: break-word;
-            background-color: #fff;
-            background-clip: border-box;
-            border: 0;
-            border-radius: .25rem;
-        }
-
-        .card h5 a {
-            font-size: 1rem !important;
-            color: #d3d3d3 !important;
-        }
-
-        .card-header {
-            background-color: rgba(0, 0, 0, .03);
-            border-bottom: 1px solid rgba(0, 0, 0, .125);
-            width: 20%;
-            text-align: center;
-            padding: 10px 0;
-        }
-
-        .modal-body {
-            padding: 0;
-        }
-
-        /*.collapse {*/
-            /*width: 80%;*/
-        /*}*/
-
-        .card-body {
-            padding: 0;
-            position: absolute;
-            top: 0;
-            left: 20%;
-        }
-
-        .container-fluid {
-            padding-top: 15px;
-        }
-
-        .container-fluid .col {
-            text-align: left;
-            width: 30%;
-            flex-basis:auto;
-        }
     </style>
     <title>定制 - {{ env('APP_NAME') }}</title>
 </head>
@@ -387,9 +320,6 @@
     data-toggle="tooltip" data-placement="bottom" title="{{ $user->coupons->where('id', 1)->first()->name }}"
     @endif
     >完成定制</button>
-    <div class="tip">
-        <span>单面仅支持使用一张素材</span>
-    </div>
 </nav>
 <div class="container">
     <div class="canvas-wrap">
@@ -425,15 +355,12 @@
 </div>
 <div class="fixed-bottom">
     <div class="controls collapse">
-        <p class="mt-3">
-            <button class="btn btn-danger" id="delete-canvas-item">删除</button>
+        <p>
+            <label>
+                <span>旋转</span>
+                <input type="range" id="angle-control" value="0" min="0" max="360">
+            </label>
         </p>
-        {{--<p>--}}
-            {{--<label>--}}
-                {{--<span>旋转</span>--}}
-                {{--<input type="range" id="angle-control" value="0" min="0" max="360">--}}
-            {{--</label>--}}
-        {{--</p>--}}
         <p>
             <label>
                 <span>大小</span>
@@ -681,10 +608,10 @@
     });
 
     fabric.Object.prototype.setControlsVisibility({
-        tl: false,
-        tr: false,
-        br: false,
-        bl: false,
+        // tl: false,
+        // tr: false,
+        // br: false,
+        // bl: false,
         mt: false, // middle top disable
         mb: false, // midle bottom
         ml: false, // middle left
@@ -703,10 +630,10 @@
     // dumb
 //    fabric.Object.prototype.lockMovementX = true;
 //    fabric.Object.prototype.lockMovementY = true;
-    fabric.Object.prototype.lockScalingX = true;
-    fabric.Object.prototype.lockScalingY = true;
-    fabric.Object.prototype.lockUniScaling = true;
-    fabric.Object.prototype.lockRotation = true;
+//     fabric.Object.prototype.lockScalingX = true;
+//     fabric.Object.prototype.lockScalingY = true;
+//     fabric.Object.prototype.lockUniScaling = true;
+//     fabric.Object.prototype.lockRotation = true;
 
     var selected_object = null;
     var canvas = null;
@@ -752,12 +679,12 @@
 
     $('.navbar, .navbar *, .canvas-background, .switch').on('click', function () {
         canvas.deactivateAllWithDispatch().renderAll();
-    })
+    });
 
     var fabric_event = {
-//        'object:scaling': updateControls,
-//        'object:resizing': updateControls,
-//        'object:rotating': updateControls,
+       'object:scaling': updateControls,
+       'object:resizing': updateControls,
+       'object:rotating': updateControls,
         'object:selected': function (obj) {
             if (deleting === true) {
                 // mobile platform problem
@@ -787,11 +714,13 @@
             } else {
                 object_count[1]--;
             }
-//            deleting = true;
+           deleting = true;
             onSelectionCleared();
         },
         'after:render': function () {
-            if (['[1,0]', '[0,1]', '[1,1]'].indexOf(JSON.stringify(object_count)) !== -1) {
+            // only you~~~ on each side
+            // if (['[1,0]', '[0,1]', '[1,1]'].indexOf(JSON.stringify(object_count)) !== -1) {
+            if ((object_count[0] > 0) || (object_count[1] > 0)) {
                 $('#submit-button').prop('disabled', false).addClass('btn-warning').removeClass('btn-secondary');
                 return;
             }

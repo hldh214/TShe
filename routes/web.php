@@ -12,7 +12,6 @@
 */
 
 Route::get('/', 'IndexController@index')->name('index');
-Route::get('/guide', 'IndexController@guide')->name('guide');
 Route::get('/stories', 'IndexController@stories')->name('stories');
 Route::get('/topics', 'IndexController@topics')->name('topics');
 Route::get('/stories/{id}', 'IndexController@story')->name('story');

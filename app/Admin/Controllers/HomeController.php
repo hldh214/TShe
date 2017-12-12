@@ -14,10 +14,7 @@ class HomeController extends Controller
     public function index()
     {
         return Admin::content(function (Content $content) {
-            $content->body('<h1>
-            汇道
-            <small>专注于全网营销策划、网站建设、SEO优化、社会化营销</small>
-        </h1>');
+            $content->body('<h1>if you want to keep a secret you must also hide it from yourself.</h1>');
         });
     }
 }

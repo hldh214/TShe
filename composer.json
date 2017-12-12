@@ -52,9 +52,6 @@
         "patches": {
             "gloudemans/shoppingcart": {
                 "Revised fix for missing timestamp": "patches/311.diff"
-            },
-            "encore/laravel-admin": {
-                "asked by client 4 copyleft": "patches/copyleft.diff"
             }
         }
     },

@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="{{ env('THEME_COLOR') }}">
-    <link href="{{ asset('img/ico.ico') }}" rel="Shortcut Icon">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -31,8 +30,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        <img src="{{ asset('img/logo.png') }}">
-                        <!-- {{ config('app.name', 'Laravel') }} -->
+                        {{ config('app.name', 'Laravel') }}
                     </a>
                 </div>
 
@@ -45,7 +43,6 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="{{ route('index') }}">首页</a></li>
-                        <li><a href="{{ route('guide') }}">轻松上手</a></li>
                         <li><a href="{{ route('items.create') }}">一件起定</a></li>
                         <li><a href="{{ route('stories') }}">T-show</a></li>
                         <li><a href="{{ route('topics') }}">更多专题</a></li>
@@ -90,10 +87,6 @@
                     首页
                     <span class="pull-right glyphicon glyphicon-chevron-right"></span>
                 </a>
-                <a class="list-group-item" href="{{ route('guide') }}">
-                    轻松上手
-                    <span class="pull-right glyphicon glyphicon-chevron-right"></span>
-                </a>
                 <a class="list-group-item" href="{{ route('items.create') }}">
                     一件起定
                     <span class="pull-right glyphicon glyphicon-chevron-right"></span>
@@ -106,11 +99,6 @@
                     更多专题
                     <span class="pull-right glyphicon glyphicon-chevron-right"></span>
                 </a>
-            </div>
-
-            <div class="copyright">
-                <p>Copyright &copy; 2017 中山市经典先生商贸有限公司</p>
-                <p>粤ICP备17137906号-1</p>
             </div>
         </div>
 

@@ -11,15 +11,10 @@ class IndexController extends Controller
 {
     public function index()
     {
-        $carousels = Carousel::all();
+        $carousels   = Carousel::all();
         $indexImages = IndexImage::all();
 
         return view('index.index', compact('carousels', 'indexImages'));
-    }
-
-    public function guide()
-    {
-        return view('index.guide');
     }
 
     public function stories()
