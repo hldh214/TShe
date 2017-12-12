@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="https://cdn.bootcss.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/fonts.css">
+    <link href='http://fonts.font.im/css?family=Caveat+Brush|Caveat:700|Itim|Tillana:700&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
     <style>
         body {
             background-color: #f4f7fa;
@@ -461,16 +461,10 @@
                         </div>
                         <div class="col-8">
                             <select id="font-family" class="form-control">
-                                <option value="文悦新青年体">文悦新青年体</option>
-                                <option value="微软雅黑Bold">微软雅黑Bold</option>
-                                <option value="华文行楷">华文行楷</option>
-                                <option value="华文中宋">华文中宋</option>
-                                <option value="隶书">隶书</option>
-                                <option value="DisneyPark">DisneyPark</option>
-                                <option value="Diploma">Diploma</option>
-                                <option value="AmarilloUSAF">AmarilloUSAF</option>
-                                <option value="Century725 Cn BT">Century725 Cn BT</option>
-                                <option value="Jillian Gothic">Jillian Gothic</option>
+                                <option value="Caveat Brush">Caveat Brush</option>
+                                <option value="Caveat">Caveat</option>
+                                <option value="Itim">Itim</option>
+                                <option value="Tillana">Tillana</option>
                             </select>
                         </div>
                     </div>
@@ -881,10 +875,7 @@
     WebFont.load({
         custom: {
             families: [
-                // zh-cn
-                '文悦新青年体', '微软雅黑Bold', '华文行楷', '华文中宋', '隶书',
-                // eng
-                'Jillian Gothic', 'Century725 Cn BT', 'AmarilloUSAF', 'Diploma', 'DisneyPark'
+                'Caveat Brush', 'Caveat', 'Itim', 'Tillana'
             ]
         }
     });
