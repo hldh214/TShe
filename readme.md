@@ -11,6 +11,19 @@
 ![screenshot6](screenshots/6.jpg)
 ![screenshot7](screenshots/7.jpg)
 
+
+## Table of Contents
+
+- [TShe](#tshe)
+  * [Screenshots](#screenshots)
+  * [Install](#install)
+  * [Usage](#usage)
+  * [Contribution](#contribution)
+  * [License](#license)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
+
 ## Install
 
 1. Run in your terminal:
